@@ -1,0 +1,11 @@
+package com.gomech.api.modules.iam.repositories;
+
+import com.gomech.api.modules.iam.models.Unit;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface UnitRepository extends JpaRepository<Unit, UUID> {
+}
