@@ -1,208 +1,84 @@
 # GoMech
 
-GoMech is a SaaS platform designed to help mechanical workshops manage operations, customers, services, finances and business performance in a single environment.
+GoMech is the orchestration repository for the GoMech V2 platform used by mechanical workshops to manage operations, customers, services, finances, and AI-assisted workflows in one place.
 
-The platform aims to replace spreadsheets, fragmented tools and manual processes with a modern management system focused on operational efficiency, automation and business growth.
+## Repository Architecture
 
----
-
-## Problem
-
-Many small and medium-sized workshops still rely on paper records, spreadsheets and disconnected systems to manage their daily operations.
-
-This often leads to:
-
-* Loss of operational control
-* Difficulty tracking services and customers
-* Financial management issues
-* Lack of business visibility
-* Time-consuming manual processes
-
-GoMech was created to solve these challenges through a centralized and scalable platform.
-
----
-
-## Solution
-
-GoMech provides a complete management environment for mechanical workshops, including:
-
-* Customer management
-* Vehicle management
-* Service order management
-* Financial control
-* Dashboard and business insights
-* Workflow automation
-* AI-assisted features
-* Operational reporting
-
-The platform is being designed with scalability, maintainability and long-term product evolution in mind.
-
----
-
-## Architecture
-
-The project is organized into independent services and applications.
-
-### Frontend
-
-Modern web application responsible for the user experience and business workflows.
-
-**Technologies**
-
-* React
-* TypeScript
-* Vite
-* Tailwind CSS
-
-Repository:
+This workspace orchestrates independent domain repositories via **Git Submodules**:
 
 ```text
-gomech-frontend
+gomech/
+├── ai/        # Git Submodule -> DeyvidJesus/gomech-ai-service-v2 (FastAPI AI Service)
+├── backend/   # Git Submodule -> DeyvidJesus/gomech-backend-v2 (Spring Boot 3.3 Modular Monolith)
+├── frontend/  # Git Submodule -> DeyvidJesus/gomech-frontend-v2 (React 18 + Vite Web App)
+├── docs/      # Shared architecture ADRs, blueprints, and database specifications
+└── docker-compose.yml # Unified local development stack
+```
+
+### Component Repositories
+
+| Submodule | Repository | Technology | Description |
+| :--- | :--- | :--- | :--- |
+| **`ai`** | [`gomech-ai-service-v2`](https://github.com/DeyvidJesus/gomech-ai-service-v2) | Python 3.12, FastAPI | Autonomous diagnostic agents and AI processing |
+| **`backend`** | [`gomech-backend-v2`](https://github.com/DeyvidJesus/gomech-backend-v2) | Java 21, Spring Boot 3.3, PostgreSQL 16 | Core business logic, Clean Architecture, RLS multi-tenancy |
+| **`frontend`** | [`gomech-frontend-v2`](https://github.com/DeyvidJesus/gomech-frontend-v2) | React 18, TypeScript, Vite, TanStack | Modern workshop management web application |
+
+---
+
+## Cloning & Working with Submodules
+
+### Clone with Submodules
+
+To clone the entire project including all service repositories:
+
+```bash
+git clone --recurse-submodules git@github.com:DeyvidJesus/gomech.git
+```
+
+### If Already Cloned
+
+To initialize and fetch all submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+### Pulling Latest Changes for All Submodules
+
+```bash
+git submodule update --remote --merge
 ```
 
 ---
 
-### Backend
+## Local Development Stack
 
-Core business service responsible for APIs, authentication, business rules and data persistence.
+The local development stack is orchestrated from the repository root with Docker Compose:
 
-**Technologies**
+1. Copy the shared environment template:
+   ```bash
+   cp .env.example .env
+   ```
 
-* Java
-* Spring Boot
-* Spring Security
-* PostgreSQL
-* JPA / Hibernate
+2. Start the full stack:
+   ```bash
+   docker compose up --build
+   ```
 
-Repository:
+### Active Services:
 
-```text
-gomech-backend
-```
-
----
-
-### AI Service
-
-Dedicated service responsible for intelligent automation features and AI-powered workflows.
-
-**Technologies**
-
-* Python
-* FastAPI
-* AI Integrations
-
-Repository:
-
-```text
-gomech-ai-service
-```
+- **Frontend**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:8080](http://localhost:8080)
+- **AI Service**: [http://localhost:8000](http://localhost:8000)
+- **PostgreSQL 16**: `localhost:5432` (`gomech_db`)
 
 ---
 
-## Technology Stack
+## Documentation
 
-### Frontend
+- [docs/adr/README.md](docs/adr/README.md) — Architecture Decision Records (ADRs 001–012)
+- [docs/BACKEND_ARCHITECTURE.md](docs/BACKEND_ARCHITECTURE.md) — Modular monolith & Clean Architecture guide
+- [docs/DATABASE_READINESS_REPORT.md](docs/DATABASE_READINESS_REPORT.md) — PostgreSQL, Flyway, and RLS specifications
+- [docs/STARTUP_GUIDE.md](docs/STARTUP_GUIDE.md) — Local environment setup and execution
+- [docs/CI_GUIDE.md](docs/CI_GUIDE.md) — CI/CD validation baseline
 
-* React
-* TypeScript
-* Vite
-* Tailwind CSS
-
-### Backend
-
-* Java
-* Spring Boot
-* Spring Security
-* JPA / Hibernate
-
-### Database
-
-* PostgreSQL
-
-### Infrastructure
-
-* Docker
-* GitHub
-* CI/CD
-
-### AI
-
-* Python
-* FastAPI
-* AI APIs
-
----
-
-## Current Development Focus
-
-Current priorities include:
-
-* Authentication and authorization
-* Customer management
-* Vehicle management
-* Service order workflows
-* Financial modules
-* AI-assisted operational features
-* Dashboard and analytics
-* System scalability
-
----
-
-## Engineering Principles
-
-The project follows a set of engineering principles:
-
-* Clean Architecture
-* Separation of Concerns
-* Domain-Oriented Design
-* Scalable System Design
-* Maintainable Codebase
-* API-First Development
-
----
-
-## Roadmap
-
-### MVP
-
-* User authentication
-* Customer management
-* Vehicle registration
-* Service order management
-* Basic financial tracking
-
-### Phase 2
-
-* Dashboards
-* Business metrics
-* Reporting
-* Workflow automation
-
-### Phase 3
-
-* AI-powered assistants
-* Predictive insights
-* Advanced automations
-
----
-
-## Project Status
-
-🚧 Currently under active development.
-
-GoMech is evolving from concept validation into a production-ready SaaS platform.
-
----
-
-## Author
-
-Deyvid Gondim
-
-Software Engineer focused on building scalable systems, SaaS products and modern digital solutions.
-
-LinkedIn:
-https://linkedin.com/in/deyvid-gondim
-
-Portfolio:
-https://portfoliodeyvid.netlify.app

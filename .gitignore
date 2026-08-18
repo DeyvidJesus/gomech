@@ -1,0 +1,42 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+*.secret
+
+# Logs
+*.log
+logs/
+
+# Node / frontend
+node_modules/
+dist/
+coverage/
+.vite/
+
+# Java / Spring Boot
+target/
+
+# Python / FastAPI
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Tooling
+.cache/
+tmp/
+
+# Docker overrides
+docker-compose.override.yml

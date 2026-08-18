@@ -1,0 +1,9 @@
+[submodule "ai"]
+	path = ai
+	url = git@github.com:DeyvidJesus/gomech-ai-service-v2.git
+[submodule "backend"]
+	path = backend
+	url = git@github.com:DeyvidJesus/gomech-backend-v2.git
+[submodule "frontend"]
+	path = frontend
+	url = git@github.com:DeyvidJesus/gomech-frontend-v2.git

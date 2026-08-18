@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  frontend:
+    name: Frontend Lint and Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build
+
+  backend:
+    name: Backend Build and Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    # Integration tests boot the full application context, which runs Flyway against PostgreSQL.
+    # Image and credentials mirror the postgres service in backend/docker-compose.yml and the
+    # local profile defaults, so the same test runs identically here and on a developer machine.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gomech_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d gomech_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Make Maven wrapper executable
+        run: chmod +x mvnw
+
+      - name: Enforce module architecture rules
+        run: ./mvnw -B -ntp test -Dtest='ModuleArchitectureRulesTest,ModuleArchitectureRuleFixturesTest' -DfailIfNoTests=false
+
+      - name: Run unit tests
+        run: ./mvnw -B -ntp test
+
+      - name: Run integration tests
+        run: ./mvnw -B -ntp test-compile failsafe:integration-test failsafe:verify
+
+      - name: Package application
+        run: ./mvnw -B -ntp -DskipTests package
+
+  ai:
+    name: AI Lint and Build Checks
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ai
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            ai/requirements.txt
+            ai/requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run lint
+        run: ruff check app
+
+      - name: Run build check
+        run: python -m compileall app
+
+      - name: Import application
+        run: python -c "from app.main import app; print(app.title)"
