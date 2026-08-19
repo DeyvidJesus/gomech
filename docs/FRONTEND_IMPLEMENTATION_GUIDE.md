@@ -353,6 +353,28 @@ api.interceptors.response.use(
 
 ---
 
+### 4.7 Módulo Operações / CRM: Histórico de Serviços do Veículo & Dossiê de Manutenções
+
+#### 1. Modelo de Agregação e Métricas de Manutenção
+- Agrega **exclusivamente ordens de serviço e vistorias concluídas (`COMPLETED`)**, fornecendo uma visão auditável da vida útil do veículo para clientes e colaboradores da oficina.
+- **Métricas Calculadas em Tempo Real**:
+  - `totalServicesCount`: Total de passagens/ordens concluídas.
+  - `totalSpent`: Valor acumulado investido no veículo (R$).
+  - `averageTicket`: Ticket médio por passagem.
+  - `lastRecordedMileage`: Quilometragem mais recente registrada.
+  - `totalPartsReplacedCount`: Quantidade de peças substituídas ao longo da história.
+  - `firstServiceDate` e `lastServiceDate`: Datas da primeira e da última passagem.
+
+#### 2. Endpoints Disponíveis:
+- **Consulta Completa do Histórico**:
+  - `GET /api/v1/operations/vehicles/{vehicleId}/history`
+  - Retorna dados cadastrais do veículo e cliente, métricas consolidadas, linha do tempo detalhada com ordens de serviço (`workOrders`) e peças/serviços executados, além das vistorias técnicas (`inspections`) e apontamentos críticos.
+- **Dossiê / Relatório Exportável para o Cliente**:
+  - `GET /api/v1/operations/vehicles/{vehicleId}/history/export`
+  - Retorna o relatório formatado com identificador único (`reportId`), código de autenticidade para validação pública (`authenticityVerificationCode`), lista certificada de serviços e cláusula de garantia de 90 dias conforme CDC.
+
+---
+
 ## 5. Padrão Global de Tratamento de Erros (RFC 7807)
 
 O backend retorna todos os erros no formato **RFC 7807 Problem Detail**:
