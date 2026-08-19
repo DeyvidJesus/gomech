@@ -10,3 +10,4 @@
 - [ADR-008: In-Process Domain Event Bus](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-008-in-process-domain-event-bus.md)
 - [ADR-012: PostgreSQL Migration Baseline and Persistence Conventions](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-012-postgresql-migration-baseline.md)
 - [ADR-012 (RLS): PostgreSQL Row Level Security (RLS) as Defense in Depth](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-012-postgresql-rls.md)
+- [ADR-013: AWS Cloud Infrastructure, Database Persistence, and Deployment Strategy](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-013-aws-cloud-infrastructure-and-deployment.md)
