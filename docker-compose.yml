@@ -35,6 +35,9 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       AI_SERVICE_URL: http://ai:8000
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-mock-google-client-id}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-mock-google-client-secret}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-http://localhost:5173/auth/callback/google}
     ports:
       - "${BACKEND_PORT}:8080"
     depends_on:
