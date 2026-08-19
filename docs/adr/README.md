@@ -8,6 +8,7 @@
 - [ADR-004 (OAuth): Google OAuth 2.0 and OpenID Connect (OIDC) Authentication Integration](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-004-oauth2-and-oidc-integration.md)
 - [ADR-005: JWT Access Tokens, Refresh Token Rotation, and Session Lifecycle](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-005-jwt-and-refresh-tokens.md)
 - [ADR-006: Role-Based Access Control (RBAC), Permissions (PBAC), and Unit Scoping](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-006-rbac-and-permissions.md)
+- [ADR-007: Core Entitlement Contract and Subscription-Backed Billing Evaluation](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-007-entitlement-contract-and-billing.md)
 - [ADR-008: In-Process Domain Event Bus](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-008-in-process-domain-event-bus.md)
 - [ADR-012: PostgreSQL Migration Baseline and Persistence Conventions](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-012-postgresql-migration-baseline.md)
 - [ADR-012 (RLS): PostgreSQL Row Level Security (RLS) as Defense in Depth](/home/deyvid/Documents/work/gomech-project/gomech/docs/adr/ADR-012-postgresql-rls.md)
