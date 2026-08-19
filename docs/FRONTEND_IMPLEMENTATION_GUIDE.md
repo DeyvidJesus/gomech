@@ -87,9 +87,9 @@ Abaixo está o mapeamento de **todas as 36 telas** criadas no Stitch para as rot
 | `or_amentos_listagem` | `/operations/quotes` | Operations | ✅ Entregue | `GET /api/v1/quotes?customerId=...&vehicleId=...&status=...`<br>`DELETE /api/v1/quotes/{id}` |
 | `or_amentos_novo_or_amento` | `/operations/quotes/new`<br>`/operations/quotes/$id` | Operations | ✅ Entregue | `POST /api/v1/quotes`<br>`POST /api/v1/quotes/from-inspection/{id}`<br>`GET /api/v1/quotes/{id}`<br>`PUT /api/v1/quotes/{id}/items` |
 | `portal_do_cliente_aprova_o_de_or_amento` | `/portal/quotes/$id` | Operations | ✅ Entregue | `POST /api/v1/quotes/{id}/customer-decision`<br>`POST /api/v1/quotes/{id}/approve`<br>`POST /api/v1/quotes/{id}/send` |
-| `ordens_de_servi_o_listagem` | `/operations/work-orders` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders` |
-| `ordens_de_servi_o_kanban` | `/operations/work-orders/kanban` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders/kanban` |
-| `ordens_de_servi_o_detalhes` | `/operations/work-orders/$id` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders/{id}` |
+| `ordens_de_servi_o_listagem` | `/operations/work-orders` | Operations | ✅ Entregue | `GET /api/v1/work-orders?customerId=...&vehicleId=...&status=...`<br>`DELETE /api/v1/work-orders/{id}` |
+| `ordens_de_servi_o_kanban` | `/operations/work-orders/kanban` | Operations | ✅ Entregue | `GET /api/v1/work-orders/kanban?unitId=...`<br>`PUT /api/v1/work-orders/{id}/status` |
+| `ordens_de_servi_o_detalhes` | `/operations/work-orders/$id`<br>`/operations/work-orders/new` | Operations | ✅ Entregue | `POST /api/v1/work-orders`<br>`POST /api/v1/work-orders/from-quote/{quoteId}`<br>`GET /api/v1/work-orders/{id}`<br>`PUT /api/v1/work-orders/{id}`<br>`PUT /api/v1/work-orders/{id}/items`<br>`POST /api/v1/work-orders/{id}/complete` |
 | `estoque_listagem_de_produtos` | `/inventory/products` | Inventory | ⏳ Fase 5 | `GET /api/v1/products` |
 | `estoque_cadastro_de_produto` | `/inventory/products/new` | Inventory | ⏳ Fase 5 | `POST /api/v1/products` |
 | `estoque_movimenta_es` | `/inventory/movements` | Inventory | ⏳ Fase 5 | `GET /api/v1/inventory/movements` |
@@ -318,6 +318,38 @@ api.interceptors.response.use(
   - Botão "Enviar ao Cliente": `POST /api/v1/quotes/{id}/send` (habilitado apenas quando `INTERNAL_APPROVED`).
 - **Portal do Cliente / Decisão (`portal_do_cliente_aprova_o_de_or_amento/code.html` -> `/portal/quotes/$id`)**:
   - `POST /api/v1/quotes/{id}/customer-decision` com `{ "approved": true/false, "notes": "..." }`.
+
+---
+
+### 4.6 Módulo Operações: Ordens de Serviço & Quadro Kanban (Work Orders)
+
+#### 1. Ciclo de Vida e Modelagem de Execução Técnica
+- **Tipos de Item**: `PART` (Peça) e `SERVICE` (Mão de Obra / Serviço).
+- **Status do Item**: `PENDING` (Pendente), `IN_PROGRESS` (Em Execução), `COMPLETED` (Concluído).
+- **Máquina de Estados da Ordem de Serviço**:
+  - `DRAFT`: Em planejamento/montagem de serviços e peças.
+  - `OPEN`: Aberta e atribuída a um box/baia, aguardando início da execução.
+  - `IN_PROGRESS`: Em execução técnica pelo mecânico responsável.
+  - `WAITING_PARTS`: Pausada aguardando chegada de peças do estoque/fornecedor.
+  - `WAITING_CUSTOMER`: Pausada aguardando autorização/resposta do cliente.
+  - `COMPLETED`: Serviço 100% finalizado (dispara evento transacional `WorkOrderCompletedEvent`).
+  - `CANCELED`: Cancelada com motivo registrado.
+
+#### 2. Telas & Componentes a Conectar:
+- **Listagem de Ordens de Serviço (`ordens_de_servi_o_listagem/code.html` -> `/operations/work-orders`)**:
+  - `GET /api/v1/work-orders?unitId={unitId}&status=...&page=0&size=20`.
+  - Exibe número da OS (`orderNumber`), cliente, veículo, mecânico responsável, box e totalizadores.
+- **Quadro Kanban Operacional (`ordens_de_servi_o_kanban/code.html` -> `/operations/work-orders/kanban`)**:
+  - `GET /api/v1/work-orders/kanban?unitId={unitId}`.
+  - Retorna 4 colunas ativas (`OPEN`, `IN_PROGRESS`, `WAITING_PARTS`, `WAITING_CUSTOMER`).
+  - Drag-and-drop ou troca de coluna chama `PUT /api/v1/work-orders/{id}/status` com `{ "status": "...", "notes": "..." }`.
+- **Detalhes e Execução Técnica (`ordens_de_servi_o_detalhes/code.html` -> `/operations/work-orders/$id`)**:
+  - Consulta: `GET /api/v1/work-orders/{id}`.
+  - Conversão a partir de orçamento aprovado: `POST /api/v1/work-orders/from-quote/{quoteId}`.
+  - Atualização de dados gerais (box, mecânico, km inicial): `PUT /api/v1/work-orders/{id}`.
+  - Edição dinâmica de itens e peças adicionais: `PUT /api/v1/work-orders/{id}/items`.
+  - Finalização da OS: `POST /api/v1/work-orders/{id}/complete` enviando `{ "endMileage": 50015, "technicalNotes": "...", "customerNotes": "..." }`.
+  - Cancelamento: `DELETE /api/v1/work-orders/{id}?reason=...`.
 
 ---
 
