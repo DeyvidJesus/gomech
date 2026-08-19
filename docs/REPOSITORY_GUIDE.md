@@ -12,37 +12,39 @@ It standardizes:
 - local development expectations
 - secrets handling rules
 
-## Monorepo Layout
+## Repository Layout & Submodules
 
 ```text
 gomech/
-├── ai/          # FastAPI AI service
-├── backend/     # Spring Boot modular monolith
-├── docs/        # Shared documentation
-└── frontend/    # Web application
+├── ai/          # Git Submodule -> DeyvidJesus/gomech-ai-service-v2 (FastAPI)
+├── backend/     # Git Submodule -> DeyvidJesus/gomech-backend-v2 (Spring Boot 3.3)
+├── frontend/    # Git Submodule -> DeyvidJesus/gomech-frontend-v2 (React 18 + Vite)
+├── docs/        # Core engineering guides and ADRs
+└── docker-compose.yml # Multi-service local stack
 ```
 
-## Directory Ownership
+## Submodule & Directory Ownership
 
-### `frontend/`
+### `frontend/` (`gomech-frontend-v2`)
 
-- Contains the web application source code and UI-specific tooling.
+- Contains the web application source code and UI tooling (React 18, Vite, TypeScript, Tailwind).
 - Owns browser-facing assets, frontend tests, and package-manager configuration.
 
-### `backend/`
+### `backend/` (`gomech-backend-v2`)
 
-- Contains the Spring Boot application source code.
-- Owns domain modules, persistence, migrations, API contracts, and backend tests.
+- Contains the Spring Boot 3.3 modular monolith source code.
+- Owns domain modules, persistence, Flyway migrations, API contracts, RLS policies, and backend tests.
 
-### `ai/`
+### `ai/` (`gomech-ai-service-v2`)
 
-- Contains the independent FastAPI service and AI-specific dependencies.
+- Contains the FastAPI Python 3.12 service.
 - Owns AI prompts, agent orchestration, service-level tests, and Python tooling.
 
 ### `docs/`
 
-- Contains shared product, architecture, setup, and repository documentation.
-- Documentation should describe how to work in the repo without tribal knowledge.
+- Contains shared engineering guides (`STARTUP_GUIDE.md`, `CI_GUIDE.md`, `BACKEND_ARCHITECTURE.md`) and Architectural Decision Records (`docs/adr/`).
+- Higher-level product specifications, UX wireframes, and project roadmaps are maintained in **Linear Docs**.
+
 
 ## Git Conventions
 
