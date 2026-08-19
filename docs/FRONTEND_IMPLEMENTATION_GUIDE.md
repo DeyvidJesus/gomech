@@ -84,9 +84,9 @@ Abaixo está o mapeamento de **todas as 36 telas** criadas no Stitch para as rot
 | `agenda_check_in_di_rio` | `/operations/scheduling/checkin` | Operations | ✅ Entregue | `GET /api/v1/appointments?date=...`<br>`PUT /api/v1/appointments/{id}/status` |
 | `agenda_novo_agendamento` | `/operations/scheduling/new` | Operations | ✅ Entregue | `POST /api/v1/appointments`<br>`GET /api/v1/customers`<br>`GET /api/v1/vehicles` |
 | `mechanical_precision` (Checklist / Inspeções) | `/operations/inspections`<br>`/operations/inspections/$id` | Operations | ✅ Entregue | `POST /api/v1/inspections`<br>`GET /api/v1/inspections`<br>`GET /api/v1/inspections/{id}`<br>`PUT /api/v1/inspections/{id}/items`<br>`POST /api/v1/inspections/{id}/complete`<br>`DELETE /api/v1/inspections/{id}` |
-| `or_amentos_listagem` | `/operations/quotes` | Operations | ⏳ Fase 3 | `GET /api/v1/quotes` |
-| `or_amentos_novo_or_amento` | `/operations/quotes/new` | Operations | ⏳ Fase 3 | `POST /api/v1/quotes` |
-| `portal_do_cliente_aprova_o_de_or_amento` | `/portal/quotes/$id` | Operations | ⏳ Fase 3 | `POST /api/v1/portal/quotes/{id}/approve` |
+| `or_amentos_listagem` | `/operations/quotes` | Operations | ✅ Entregue | `GET /api/v1/quotes?customerId=...&vehicleId=...&status=...`<br>`DELETE /api/v1/quotes/{id}` |
+| `or_amentos_novo_or_amento` | `/operations/quotes/new`<br>`/operations/quotes/$id` | Operations | ✅ Entregue | `POST /api/v1/quotes`<br>`POST /api/v1/quotes/from-inspection/{id}`<br>`GET /api/v1/quotes/{id}`<br>`PUT /api/v1/quotes/{id}/items` |
+| `portal_do_cliente_aprova_o_de_or_amento` | `/portal/quotes/$id` | Operations | ✅ Entregue | `POST /api/v1/quotes/{id}/customer-decision`<br>`POST /api/v1/quotes/{id}/approve`<br>`POST /api/v1/quotes/{id}/send` |
 | `ordens_de_servi_o_listagem` | `/operations/work-orders` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders` |
 | `ordens_de_servi_o_kanban` | `/operations/work-orders/kanban` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders/kanban` |
 | `ordens_de_servi_o_detalhes` | `/operations/work-orders/$id` | Operations | ⏳ Fase 4 | `GET /api/v1/work-orders/{id}` |
@@ -283,6 +283,41 @@ api.interceptors.response.use(
   - Atualização contínua: `PUT /api/v1/inspections/{id}/items` enviando a lista de itens com `status`, `notes`, `recommendedAction` e `photoUrls`.
   - Finalizar Laudo: `POST /api/v1/inspections/{id}/complete` com `{ "generalNotes": "..." }`.
   - *Obs:* Após a finalização, a tela exibe o laudo em modo somente leitura com botão "Gerar Orçamento a partir desta Vistoria".
+
+---
+
+### 4.5 Módulo Operações: Orçamentos & Dupla Aprovação (Quotes)
+
+#### 1. Cálculo Determinístico e Modelagem de Itens
+- **Tipos de Item**: `PART` (Peça) e `LABOR` (Mão de Obra).
+- **Fórmulas de Cálculo**:
+  - $\text{Bruto} = \text{quantity} \times \text{unitPrice}$
+  - $\text{Líquido} = \text{Bruto} - \text{discountAmount}$
+  - $\text{Imposto} = \text{Líquido} \times (\text{taxRate} / 100)$
+  - $\text{Total} = \text{Líquido} + \text{Imposto}$
+- **Máquina de Estados de Dupla Aprovação**:
+  - `DRAFT`: Orçamento em elaboração (permite edição dinâmica de peças e serviços).
+  - `PENDING_INTERNAL_APPROVAL`: Submetido para aprovação do gerente/administrador.
+  - `INTERNAL_APPROVED`: Aprovado internamente pela oficina. (**Obrigatório antes de enviar ao cliente**).
+  - `SENT_TO_CUSTOMER`: Enviado para avaliação e aprovação do cliente.
+  - `CUSTOMER_APPROVED`: Aprovado pelo cliente (pronto para conversão em Ordem de Serviço).
+  - `CUSTOMER_REJECTED`: Rejeitado pelo cliente (com motivo registrado).
+  - `REVISION`: Devolvido para ajustes técnicos ou comerciais.
+  - `CANCELED`: Cancelado.
+
+#### 2. Telas & Componentes a Conectar:
+- **Listagem de Orçamentos (`or_amentos_listagem/code.html` -> `/operations/quotes`)**:
+  - `GET /api/v1/quotes?unitId={unitId}&status=...&page=0&size=20`.
+  - Badges por status e separação visual de total de peças e total de mão de obra.
+- **Novo Orçamento / Edição (`or_amentos_novo_or_amento/code.html` -> `/operations/quotes/new` e `/operations/quotes/$id`)**:
+  - Criação avulsa: `POST /api/v1/quotes` (`customerId`, `vehicleId`, `items`).
+  - Geração a partir da vistoria: `POST /api/v1/quotes/from-inspection/{inspectionId}`.
+  - Edição dinâmica de itens: `PUT /api/v1/quotes/{id}/items` com recálculo automático no frontend e sincronização.
+  - Botão "Submeter para Aprovação Gerencial": `POST /api/v1/quotes/{id}/submit-approval`.
+  - Botão "Aprovar (Gerente)": `POST /api/v1/quotes/{id}/approve`.
+  - Botão "Enviar ao Cliente": `POST /api/v1/quotes/{id}/send` (habilitado apenas quando `INTERNAL_APPROVED`).
+- **Portal do Cliente / Decisão (`portal_do_cliente_aprova_o_de_or_amento/code.html` -> `/portal/quotes/$id`)**:
+  - `POST /api/v1/quotes/{id}/customer-decision` com `{ "approved": true/false, "notes": "..." }`.
 
 ---
 
