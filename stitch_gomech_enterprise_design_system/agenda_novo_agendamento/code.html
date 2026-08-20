@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Elite Auto Service - Schedule Appointment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fff8f6",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "inverse-surface": "#3d2d26",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#fee2d8",
+                        "on-background": "#271812",
+                        "secondary": "#555f6f",
+                        "secondary-fixed": "#d9e3f6",
+                        "primary-container": "#ff6500",
+                        "surface-variant": "#f8ddd2",
+                        "inverse-on-surface": "#ffede7",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-container": "#596373",
+                        "surface-dim": "#f0d4ca",
+                        "primary": "#a33e00",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#00ad4e",
+                        "inverse-primary": "#ffb596",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#f8ddd2",
+                        "outline": "#8e7164",
+                        "surface": "#fff8f6",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-primary-fixed": "#360f00",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "primary-fixed": "#ffdbcd",
+                        "on-secondary-fixed": "#121c2a",
+                        "primary-fixed-dim": "#ffb596",
+                        "tertiary": "#006e2f",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#fff1ec",
+                        "surface-container": "#ffe9e2",
+                        "outline-variant": "#e3bfb1",
+                        "background": "#fff8f6",
+                        "secondary-container": "#d6e0f3",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#a33e00",
+                        "on-tertiary-container": "#003714",
+                        "on-primary-container": "#551d00",
+                        "tertiary-fixed": "#6bff8f",
+                        "on-surface": "#271812",
+                        "on-surface-variant": "#5a4136",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "20px",
+                        "base": "4px",
+                        "2xl": "48px",
+                        "topbar-height": "64px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "3xl": "64px",
+                        "sidebar-width": "260px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Manrope"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .flat-interactive:hover {
+            background-color: #F9FAFB;
+        }
+        .form-input-glow:focus {
+            outline: none;
+            border-color: #a33e00;
+            box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md flex antialiased">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 bottom-0 w-sidebar-width flex flex-col p-md gap-xs bg-surface-container-lowest border-r border-outline-variant z-40 hidden lg:flex">
+<div class="flex items-center gap-sm mb-lg">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Workshop Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH7uVo8NyGRpTeab8aP-A-KCkmDTUu1iTnWUNsZ63hcokobmOOv1AEcgpuwJuEroXhH_me55vc4Qamgdfnb29vKY0ql6R3Kr6VarDMXIruWSz7HKJP2LXD_cOn3oOa_RR_Q8AsPT8Jre3ZeTLFLJVymXXkOu-M3Ox8fF1QC-cAwRLl-ObW0y9zzwSlh4WodyJVrNKc0GlruhmQfihdJdpWDNcz28xEN_q0ZjLt4DBuHlXjs0mPIMHIwsTr0NWhTbWuaXlquemAI_k"/>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary truncate">Elite Auto Service</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Main Bay 01</p>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-[#E85D00] text-on-primary font-label-md text-label-md py-sm px-md rounded-lg flex items-center justify-center gap-xs mb-md transition-colors active:translate-y-px">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span>
+            Quick Scan
+        </button>
+<nav class="flex-1 overflow-y-auto flex flex-col gap-xs">
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="font-label-md text-label-md">Vehicles</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">request_quote</span>
+<span class="font-label-md text-label-md">Quotes</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">build</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Financials</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-label-md text-label-md">Staff</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg bg-secondary-container text-on-secondary-container font-bold active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-label-md text-label-md">Schedule</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant flex flex-col gap-xs">
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Support</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 lg:ml-sidebar-width">
+<!-- TopNavBar Component -->
+<header class="fixed top-0 right-0 left-0 lg:left-sidebar-width z-30 flex justify-between items-center px-lg h-topbar-height bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-md w-full max-w-xl">
+<!-- Mobile menu button -->
+<button class="lg:hidden text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<div class="relative w-full max-w-md hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 font-body-sm text-body-sm text-on-background placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors form-input-glow" placeholder="Search customers, vehicles, or jobs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md shrink-0">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors hidden sm:block">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="bg-primary hover:bg-[#E85D00] text-on-primary font-label-md text-label-md py-1.5 px-4 rounded-lg transition-colors active:translate-y-px hidden sm:block">
+                    New Job
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant shrink-0 ml-2">
+<img alt="Workshop Manager Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfrUt2tDMPYLxekRaAWImFdT7GG0eY_woZ6YVJ5UFng0Cs2bhs2XyuUyx6DpwtAWZ6ozWLPQbbPdP8TqA7m6duNyRLDpcnVuVor-0rrWiLysc2CnduWXTxNSPhrdASN4Y1xUfJLuzMwMSnMtk0NoRlU2chyvzF4kZQar2KLJEYTEfqoEucIWjGFLIVp-vCnKctRfSmB0aMtsI7ubSvi7mypdsINxFPtZbItFXQgnyYmMgv3YoeqGqdkxBah0TEMjg0JQEUQMxUAWA"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-y-auto mt-topbar-height p-md sm:p-lg lg:p-xl bg-background">
+<div class="max-w-7xl mx-auto">
+<div class="mb-lg flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-1">New Appointment</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Schedule a new service request and assign resources.</p>
+</div>
+</div>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-lg">
+<!-- Left Column: Details -->
+<div class="xl:col-span-7 flex flex-col gap-lg">
+<!-- Customer & Vehicle Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">person_search</span>
+                                Customer Details
+                            </h3>
+<div class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Search Customer</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 font-body-md text-body-md text-on-background form-input-glow transition-all" placeholder="Name, phone, or email" type="text" value="Michael Chang"/>
+</div>
+<!-- Selected Customer Preview -->
+<div class="mt-3 p-3 bg-surface-container-low border border-outline-variant rounded-lg flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm">MC</div>
+<div>
+<p class="font-label-md text-label-md text-on-background">Michael Chang</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">+1 (555) 019-8472 • m.chang@example.com</p>
+</div>
+</div>
+<button class="text-primary font-label-sm text-label-sm hover:underline">Change</button>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Select Vehicle</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<!-- Selected Vehicle -->
+<div class="border-2 border-primary bg-surface-container-lowest rounded-lg p-3 cursor-pointer relative">
+<div class="absolute top-2 right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px]">check</span>
+</div>
+<p class="font-label-md text-label-md text-on-background">2019 Toyota Tacoma</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">TRD Off-Road • LIC: XYZ-1234</p>
+</div>
+<!-- Other Vehicle -->
+<div class="border border-outline-variant bg-surface-container-lowest rounded-lg p-3 cursor-pointer flat-interactive transition-colors">
+<p class="font-label-md text-label-md text-on-background">2015 Honda Civic</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">EX-L • LIC: ABC-9876</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Service Details Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">build_circle</span>
+                                Service Requirements
+                            </h3>
+<div class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Primary Service Type</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-background form-input-glow appearance-none">
+<option>Diagnostics &amp; Inspection</option>
+<option selected="">Routine Maintenance (Oil, Filters)</option>
+<option>Brake Service</option>
+<option>Engine Repair</option>
+<option>Tire Service</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Customer Concerns / Notes</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md text-on-background form-input-glow resize-none" placeholder="Describe the issue or customer requests in detail..." rows="4">Customer mentioned a slight squeaking noise when applying brakes at low speeds. Also requested synthetic oil for the change.</textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Scheduling -->
+<div class="xl:col-span-5 flex flex-col gap-lg">
+<div class="bg-surface border border-outline-variant rounded-xl shadow-sm flex flex-col h-full">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-sm mb-4">
+<span class="material-symbols-outlined text-primary">event_available</span>
+                                    Date &amp; Time
+                                </h3>
+<!-- Date Picker (Simplified) -->
+<div class="mb-4">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md text-on-background">October 2023</span>
+<div class="flex gap-1">
+<button class="p-1 rounded hover:bg-surface-container"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+<button class="p-1 rounded hover:bg-surface-container"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center font-body-sm text-body-sm mb-1">
+<div class="text-on-surface-variant">Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div class="text-on-surface-variant">Sa</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center font-body-sm text-body-sm">
+<div class="p-1 text-on-surface-variant/50">24</div>
+<div class="p-1 text-on-surface-variant/50">25</div>
+<div class="p-1 text-on-surface-variant/50">26</div>
+<div class="p-1 text-on-surface-variant/50">27</div>
+<div class="p-1 text-on-surface-variant/50">28</div>
+<div class="p-1 text-on-surface-variant/50">29</div>
+<div class="p-1 text-on-surface-variant/50">30</div>
+<div class="p-1 text-on-surface-variant/50">1</div>
+<div class="p-1 hover:bg-surface-container rounded cursor-pointer">2</div>
+<div class="p-1 hover:bg-surface-container rounded cursor-pointer">3</div>
+<div class="p-1 bg-primary text-on-primary rounded font-bold cursor-pointer">4</div>
+<div class="p-1 hover:bg-surface-container rounded cursor-pointer">5</div>
+<div class="p-1 hover:bg-surface-container rounded cursor-pointer">6</div>
+<div class="p-1 text-on-surface-variant/50">7</div>
+</div>
+</div>
+<!-- Time Slots -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Available Times (Oct 4)</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 border border-outline-variant rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm opacity-50 cursor-not-allowed">08:00 AM</button>
+<button class="py-2 border border-outline-variant rounded bg-surface-container-lowest text-on-background font-label-sm text-label-sm hover:border-primary transition-colors">09:00 AM</button>
+<button class="py-2 border border-primary bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">10:00 AM</button>
+<button class="py-2 border border-outline-variant rounded bg-surface-container-lowest text-on-background font-label-sm text-label-sm hover:border-primary transition-colors">11:00 AM</button>
+<button class="py-2 border border-outline-variant rounded bg-surface-container-lowest text-on-background font-label-sm text-label-sm hover:border-primary transition-colors">01:00 PM</button>
+<button class="py-2 border border-outline-variant rounded bg-surface-container-lowest text-on-background font-label-sm text-label-sm hover:border-primary transition-colors">02:30 PM</button>
+</div>
+</div>
+</div>
+<div class="p-lg flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-sm mb-4">
+<span class="material-symbols-outlined text-primary">engineering</span>
+                                    Resource Allocation
+                                </h3>
+<div class="space-y-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Assign Technician</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 font-body-md text-body-md text-on-background form-input-glow appearance-none">
+<option>Auto-Assign (Next Available)</option>
+<option selected="">Sarah Jenkins (Master Tech)</option>
+<option>Mike Torres (Lube Tech)</option>
+<option>David Kim (Diagnostic Spec.)</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Estimated Duration</label>
+<div class="flex items-center gap-2">
+<input class="w-20 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-center font-body-md text-body-md text-on-background form-input-glow" type="number" value="1.5"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Hours</span>
+</div>
+</div>
+<!-- Visual Timeline Indicator -->
+<div class="mt-4 pt-4 border-t border-outline-variant">
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Bay 2 Schedule (Oct 4)</label>
+<div class="h-6 flex rounded overflow-hidden border border-outline-variant bg-surface-container-lowest">
+<div class="w-1/6 bg-secondary-fixed border-r border-outline-variant" title="8am - Busy"></div>
+<div class="w-1/6 bg-surface-container-lowest border-r border-outline-variant" title="10am - Free"></div>
+<div class="w-1/6 bg-primary opacity-30 border-r border-outline-variant relative" title="Selected Slot">
+<div class="absolute inset-0 border-2 border-primary"></div>
+</div>
+<div class="w-1/6 bg-surface-container-lowest border-r border-outline-variant" title="2pm - Free"></div>
+<div class="w-2/6 bg-secondary-fixed" title="3pm onwards - Busy"></div>
+</div>
+<div class="flex justify-between mt-1 text-[10px] text-on-surface-variant font-medium">
+<span>8am</span>
+<span>12pm</span>
+<span>5pm</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="p-lg bg-surface-container-low border-t border-outline-variant rounded-b-xl flex justify-end gap-3">
+<button class="px-4 py-2 font-label-md text-label-md text-on-background hover:bg-surface-variant rounded-lg transition-colors border border-transparent hover:border-outline-variant">
+                                    Cancel
+                                </button>
+<button class="px-6 py-2 bg-primary hover:bg-[#E85D00] text-on-primary font-label-md text-label-md rounded-lg transition-colors active:translate-y-px shadow-sm">
+                                    Schedule Appointment
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

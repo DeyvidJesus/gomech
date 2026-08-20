@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Join GoMech - Professional Workshop Management</title>
+<!-- Google Fonts: Manrope (Display/Headline) & Inter (Body/Label) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Provided) -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#360f00",
+                      "surface-container": "#ffe9e2",
+                      "inverse-on-surface": "#ffede7",
+                      "inverse-surface": "#3d2d26",
+                      "on-primary-container": "#551d00",
+                      "on-tertiary-fixed": "#002109",
+                      "on-secondary-fixed": "#121c2a",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#f0d4ca",
+                      "tertiary-container": "#00ad4e",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#f8ddd2",
+                      "on-tertiary-container": "#003714",
+                      "surface-bright": "#fff8f6",
+                      "on-secondary-fixed-variant": "#3d4756",
+                      "on-surface-variant": "#5a4136",
+                      "surface-container-high": "#fee2d8",
+                      "secondary-fixed": "#d9e3f6",
+                      "on-primary-fixed-variant": "#7d2d00",
+                      "primary": "#a33e00",
+                      "on-error-container": "#93000a",
+                      "surface-container-low": "#fff1ec",
+                      "secondary-fixed-dim": "#bdc7d9",
+                      "on-secondary-container": "#596373",
+                      "surface-container-highest": "#f8ddd2",
+                      "primary-fixed": "#ffdbcd",
+                      "background": "#fff8f6",
+                      "tertiary-fixed-dim": "#4ae176",
+                      "secondary-container": "#d6e0f3",
+                      "secondary": "#555f6f",
+                      "primary-fixed-dim": "#ffb596",
+                      "inverse-primary": "#ffb596",
+                      "surface-tint": "#a33e00",
+                      "surface": "#fff8f6",
+                      "on-surface": "#271812",
+                      "primary-container": "#ff6500",
+                      "outline-variant": "#e3bfb1",
+                      "tertiary-fixed": "#6bff8f",
+                      "on-tertiary-fixed-variant": "#005321",
+                      "tertiary": "#006e2f",
+                      "on-background": "#271812",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "outline": "#8e7164"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "3xl": "64px",
+                      "sidebar-width": "260px",
+                      "topbar-height": "64px",
+                      "sm": "8px",
+                      "2xl": "48px",
+                      "lg": "24px",
+                      "base": "4px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-sm": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Manrope"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                      "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                      "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                      "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                      "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                      "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                      "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Custom input focus transition to match industrial precision aesthetic */
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 101, 0, 0.15); /* primary-container with opacity */
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Split Screen Container -->
+<div class="flex w-full min-h-screen">
+<!-- Left Column: Registration Form -->
+<div class="w-full lg:w-[480px] shrink-0 flex flex-col justify-center px-lg py-2xl sm:px-xl lg:px-3xl relative z-10 bg-surface-container-lowest">
+<div class="w-full max-w-sm mx-auto lg:mx-0">
+<!-- Header Section -->
+<div class="flex items-center gap-base mb-xl">
+<div class="flex items-center gap-xs">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-on-primary font-label-sm">1</span>
+<span class="font-label-md text-primary">Conta</span>
+</div>
+<div class="h-px w-8 bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-xs opacity-50">
+<span class="flex items-center justify-center w-6 h-6 rounded-full border border-outline font-label-sm">2</span>
+<span class="font-label-md text-on-surface">Plano</span>
+</div>
+<div class="h-px w-8 bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-xs opacity-50">
+<span class="flex items-center justify-center w-6 h-6 rounded-full border border-outline font-label-sm">3</span>
+<span class="font-label-md text-on-surface">Pagamento</span>
+</div>
+</div><div class="mb-xl">
+<img alt="GoMech Logo" class="h-10 w-auto object-contain mb-md rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdnByAkrf7UCdPUToaIUtNSmC6OKojORVxbC8QKuDw8iRSvNndFgyhuPS8WYAwtS4Ik3DEbZDLyfsB4WDUD-wH038jWQkI2adctHti_yOeXiiNhJj3dOm45Ezg6apUHuzVu14mu2Xxbg08v4IxeZmVC8jo_q9usHPY929uhNpz2YRVDDpqE6Gn0DyrJsQNv0Q9eVVOdeEjjb15Rz6NkTHjDLhI6pqlCJd4uSONE1UWzKmt39Ce-DgpbGEEEpiClRWHjQGYTx07pZg"/>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs tracking-tight">Join GoMech</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Set up your professional workspace.</p>
+</div>
+<!-- Registration Form -->
+<form class="flex flex-col gap-md" onsubmit="event.preventDefault();">
+<!-- Full Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="fullName">Full Name</label>
+<input class="h-[48px] px-md rounded border border-outline-variant bg-surface-container-lowest font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-all duration-200" id="fullName" name="fullName" placeholder="John Doe" required="" type="text"/>
+</div>
+<!-- Work Email -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="email">Work Email</label>
+<input class="h-[48px] px-md rounded border border-outline-variant bg-surface-container-lowest font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-all duration-200" id="email" name="email" placeholder="john@workshop.com" required="" type="email"/>
+</div>
+<!-- Phone Number -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="phone">Phone Number</label>
+<input class="h-[48px] px-md rounded border border-outline-variant bg-surface-container-lowest font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-all duration-200" id="phone" name="phone" placeholder="+1 (555) 000-0000" required="" type="tel"/>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<input class="h-[48px] px-md rounded border border-outline-variant bg-surface-container-lowest font-body-md text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-all duration-200" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+<!-- Terms of Service -->
+<div class="flex items-start gap-sm mt-sm">
+<div class="flex h-6 items-center">
+<input class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary focus:ring-offset-0 bg-surface-container-lowest transition-colors cursor-pointer" id="terms" name="terms" required="" type="checkbox"/>
+</div>
+<div class="text-sm leading-6">
+<label class="font-body-sm text-body-sm text-on-surface-variant cursor-pointer" for="terms">
+                                I agree to the <a class="text-primary hover:underline font-medium" href="#">Terms of Service</a> and <a class="text-primary hover:underline font-medium" href="#">Privacy Policy</a>.
+                            </label>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="mt-md h-[48px] w-full rounded flex items-center justify-center bg-primary text-on-primary font-label-md text-label-md hover:bg-[#E85D00] active:translate-y-[1px] transition-all duration-150 ease-in-out" type="submit">Escolher Plano</button>
+</form>
+<div class="mt-xl text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Already have an account? <a class="text-primary font-medium hover:underline" href="#">Sign in</a>
+</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Brand Illustration -->
+<div class="hidden lg:flex flex-1 relative bg-inverse-surface items-center justify-center overflow-hidden border-l border-outline-variant">
+<!-- Atmospheric Background Image -->
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" data-alt="A cinematic, high-key lighting shot of a modern, immaculately clean automotive service bay. Sleek, high-tech diagnostic equipment stands next to a pristine sports car on a lift. The aesthetic is industrial yet highly sophisticated, utilizing a color palette of crisp whites, subtle grays, and strategic accents of vibrant orange to match the GoMech brand. The mood is precise, professional, and forward-looking, emphasizing technological advancement in auto repair." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0N7SsS-O4zHN-npd1PALSuWbjEgw-lxlOafUhlokBEp_zJcyc77PqRDf30svppKAzSuv7C-JzZ5kzVwgJg2aRDbijKH9VBVLOgaqyUkpr_uJVA2Wwfc1OYiIeYZ91vMm6C0ttfRiuwlPBJnunTBQUOQlnfeSXdU1ImPjezZ-zfxjw8-XsJf7B8pE5XVWLBQU6DTnI6Nq-bOQ9Ua9ZzFGwv9lcs1CQ9-hTh1PghrynwyV2a5_ZJ5M-B3AsG9JMiMwuxBCNjmQmjEw"/>
+<!-- Gradient Overlay for text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-inverse-surface/40 to-transparent"></div>
+<!-- Content Container -->
+<div class="relative z-10 w-full max-w-2xl px-3xl self-end pb-3xl">
+<div class="inline-flex items-center gap-sm px-md py-sm rounded-full bg-surface-container-lowest/10 border border-outline-variant/30 backdrop-blur-sm mb-lg">
+<span class="material-symbols-outlined text-primary-fixed text-[18px]">verified</span>
+<span class="font-label-sm text-label-sm text-inverse-on-surface tracking-wider uppercase">Enterprise Grade</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-inverse-on-surface mb-md">
+                    Modernizing your<br/>workshop operations.
+                </h2>
+<p class="font-body-lg text-body-lg text-surface-variant max-w-lg">
+                    Join thousands of high-performance service bays using GoMech to streamline job cards, manage inventory, and deliver precision service.
+                </p>
+<!-- Decorative industrial element -->
+<div class="mt-xl flex items-center gap-md">
+<div class="h-px w-12 bg-primary"></div>
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary-fixed/50"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary-fixed/20"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Service Orders Kanban</title>
+<!-- Google Fonts: Manrope (Display/Headline) & Inter (Body/Label) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for Kanban board to match industrial/modern vibe */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff8f6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bfb1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a33e00; 
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#596373",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-fixed": "#121c2a",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-surface-variant": "#5a4136",
+                        "tertiary-container": "#00ad4e",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#ffede7",
+                        "on-secondary": "#ffffff",
+                        "outline": "#8e7164",
+                        "surface": "#fff8f6",
+                        "inverse-surface": "#3d2d26",
+                        "surface-container-low": "#fff1ec",
+                        "surface-bright": "#fff8f6",
+                        "surface-container-high": "#fee2d8",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary-container": "#ff6500",
+                        "surface-tint": "#a33e00",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "on-primary-container": "#551d00",
+                        "on-background": "#271812",
+                        "on-tertiary-container": "#003714",
+                        "secondary-container": "#d6e0f3",
+                        "primary": "#a33e00",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#f0d4ca",
+                        "tertiary": "#006e2f",
+                        "secondary": "#555f6f",
+                        "on-surface": "#271812",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "inverse-primary": "#ffb596",
+                        "surface-container": "#ffe9e2",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "background": "#fff8f6",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "on-primary-fixed": "#360f00",
+                        "secondary-fixed": "#d9e3f6",
+                        "primary-fixed": "#ffdbcd",
+                        "surface-variant": "#f8ddd2",
+                        "tertiary-fixed": "#6bff8f",
+                        "primary-fixed-dim": "#ffb596",
+                        "surface-container-highest": "#f8ddd2",
+                        "outline-variant": "#e3bfb1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "20px",
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "3xl": "64px",
+                        "lg": "24px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "topbar-height": "64px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-screen overflow-hidden flex">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed h-full w-sidebar-width left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-20">
+<!-- Brand / Header -->
+<div class="flex items-center gap-3 mb-xl px-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined icon-fill">settings</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">GoMech</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Downtown Service Bay</p>
+</div>
+</div>
+<!-- Primary CTA -->
+<button class="w-full mb-lg py-2 px-4 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Job Card
+        </button>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span> Clients
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">directions_car</span> Vehicles
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">request_quote</span> Quotes
+            </a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-3 px-4 py-2 text-primary bg-primary-fixed rounded-xl font-semibold font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px] icon-fill">receipt_long</span> Orders
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span> Stock
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span> Financial
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span> Calendar
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span> AI Insights
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">admin_panel_settings</span> Admin
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span> Settings
+            </a>
+</nav>
+<!-- Footer Links -->
+<div class="pt-4 mt-4 border-t border-outline-variant flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span> Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span> Logout
+            </a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-topbar-height border-b border-outline-variant bg-surface flex justify-between items-center px-lg ml-sidebar-width z-10 transition-all duration-200 ease-in-out">
+<!-- Search & Global Nav -->
+<div class="flex items-center gap-xl h-full">
+<div class="relative flex items-center group">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-transparent rounded-lg text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-all w-64 outline-none placeholder:text-on-surface-variant" placeholder="Search orders, clients, VIN..." type="text"/>
+</div>
+<nav class="hidden lg:flex items-center h-full gap-lg">
+<a class="h-full flex items-center text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors border-b-2 border-transparent hover:border-outline-variant" href="#">Workshops</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors border-b-2 border-transparent hover:border-outline-variant" href="#">Teams</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors border-b-2 border-transparent hover:border-outline-variant" href="#">Reports</a>
+</nav>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="px-4 py-1.5 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+                Quick Check-in
+            </button>
+<button class="px-4 py-1.5 bg-primary text-on-primary rounded font-label-sm text-label-sm hover:bg-surface-tint transition-colors shadow-sm">
+                Create Order
+            </button>
+<div class="flex items-center gap-2 ml-sm pl-sm border-l border-outline-variant">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings_suggest</span>
+</button>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant hover:ring-2 ring-primary transition-all ml-2 focus:outline-none">
+<img alt="Manager Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of an automotive service manager, male, wearing a clean branded polo shirt. Well-lit indoor environment suggesting a clean, modern office space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLnK4PbW-Jw5UBtTsdzp1_VtmoEQJ-o-au_Ey0CxmfHT3UNt_GlRvgyrAzCjkckRHOI8MSVeKaL56BDfv9PbFyJBydpk55HKXniqk2yMshCePe2HuoOoicltUNVc56Kf43d-khL_BvnFxTzMDW_37F-ToVCKQpnpaZzqnSRElDwy4j1olM-3iXgWgniBO5fveMY1p3PGz4yeLCb8hoSJAXH93k5znnAL5L9ZHftlCrGxolztoz0JHgFNmSAoXHuJAVT-mP97JGvCo"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Kanban Board -->
+<main class="ml-sidebar-width mt-topbar-height w-[calc(100%-260px)] h-[calc(100vh-64px)] flex flex-col bg-background">
+<!-- Board Header / Toolbar -->
+<div class="px-lg py-md flex justify-between items-center border-b border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-background">Service Orders (Ordens de Serviço)</h2>
+<span class="px-2 py-0.5 bg-surface-container rounded-full text-on-surface-variant font-label-sm text-label-sm">42 Active</span>
+</div>
+<!-- Filters / View Toggles -->
+<div class="flex items-center gap-sm">
+<div class="flex bg-surface-container-low rounded-lg p-0.5 border border-outline-variant">
+<button class="px-3 py-1 bg-surface-container-lowest text-on-surface rounded shadow-sm font-label-sm text-label-sm">Board</button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface rounded font-label-sm text-label-sm">List</button>
+</div>
+<button class="flex items-center gap-1 px-3 py-1.5 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filters
+                </button>
+</div>
+</div>
+<!-- Kanban Columns Container (High Density: p-sm) -->
+<div class="flex-1 overflow-x-auto p-sm flex gap-sm bg-background items-start">
+<!-- COLUMN: Queued (Aguardando) -->
+<div class="flex-shrink-0 w-[300px] flex flex-col max-h-full bg-surface-container-low rounded-lg border border-outline-variant">
+<!-- Column Header -->
+<div class="p-sm flex justify-between items-center border-b border-outline-variant sticky top-0 bg-surface-container-low rounded-t-lg z-10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<h3 class="font-label-md text-label-md text-on-surface">Queued (Aguardando)</h3>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container-highest px-1.5 py-0.5 rounded">12</span>
+</div>
+<!-- Cards Container -->
+<div class="p-sm flex flex-col gap-sm overflow-y-auto min-h-[150px]">
+<!-- Card: Low Priority -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#OS-4091</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-[9px] uppercase tracking-wider">Low</span>
+</div>
+<div class="pl-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Toyota Corolla 2020</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Maria Silva</p>
+</div>
+<!-- Progress -->
+<div class="pl-1 mt-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-[9px] text-on-surface-variant">Diagnostics</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">0/3</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[0%] rounded-full"></div>
+</div>
+</div>
+<!-- Footer -->
+<div class="flex justify-between items-center pl-1 mt-1 pt-2 border-t border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-label-sm text-[10px]">0</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-[12px] text-on-surface-variant">person</span>
+</div>
+</div>
+</div>
+<!-- Card: Medium Priority -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#OS-4095</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-[9px] uppercase tracking-wider">Medium</span>
+</div>
+<div class="pl-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Honda Civic EXL</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Carlos Mendes</p>
+</div>
+<div class="pl-1 mt-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-[9px] text-on-surface-variant">Parts Check</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">1/4</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[25%] rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pl-1 mt-1 pt-2 border-t border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">attach_file</span>
+<span class="font-label-sm text-[10px]">2</span>
+</div>
+<img alt="Tech" class="w-5 h-5 rounded-full border border-outline-variant" data-alt="Small avatar of a female mechanic looking directly at the camera, wearing protective glasses. High-key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfXIshu5xtrqGL9sBUMM4sDih21Q383UccgLxclmoMmtoCtHFYHQcdeMb9EvVbftKeiS0moNvyo5Nz93MD-bb-rZ4E1vh9VaGGLChuxt0WBu34ckEsHXeOrpYX5-qK3uHMCVJCsNjV_O30OrcBMCbwQFEF1BGqU-CeubB0_6Ab8Ke8Dsy-EEvDReKdiG6itsafsrZhYBUUhe_jsvFrwIZuNYEOW_LupBwOX_-0dOPWmA96IB88uHDcIOzeQq3C0BSPHcQYSiPB0XU"/>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN: In Progress (Em Execução) -->
+<div class="flex-shrink-0 w-[300px] flex flex-col max-h-full bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="p-sm flex justify-between items-center border-b border-outline-variant sticky top-0 bg-surface-container-low rounded-t-lg z-10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<h3 class="font-label-md text-label-md text-on-surface">In Progress (Em Execução)</h3>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container-highest px-1.5 py-0.5 rounded">5</span>
+</div>
+<div class="p-sm flex flex-col gap-sm overflow-y-auto min-h-[150px]">
+<!-- Card: High Priority -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#OS-4088</span>
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-[9px] uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">local_fire_department</span> High
+                            </span>
+</div>
+<div class="pl-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Ford F-150 Raptor</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Enterprise Fleet Co.</p>
+</div>
+<div class="pl-1 mt-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-[9px] text-on-surface-variant">Engine Overhaul</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">4/8</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error w-[50%] rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pl-1 mt-1 pt-2 border-t border-outline-variant">
+<div class="flex items-center gap-3 text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">chat_bubble_outline</span>
+<span class="font-label-sm text-[10px]">3</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label-sm text-[10px] text-primary">2h left</span>
+</div>
+</div>
+<div class="flex -space-x-2">
+<img alt="Tech" class="w-5 h-5 rounded-full border border-surface-container-lowest relative z-10" data-alt="Small avatar of a male senior technician with a beard, wearing a dark grey mechanic uniform. Modern industrial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjEea5pePl2tr_N3J6uzYATod7XhJ_X8EFdj07SkUtR2ypW-fhWHI5AjHRnGoV5_hIX9uB45GRPkQ3IT4ggr-fkoUpVZu6kEQNsRF0LVuBElB7XUEgHG74R3ozchLKu1i1mkzErKnaRt1V5xa-ivb2QI71_cxAs86WxJA1EVNlLMT890EI9F9qOgKZB5ZQjVSJGUv13zxn8JIsarKzjJKt_0hrshl3Zw_vWkaZVkop8MuzpExwYvP-L6qm7L6LaNK-eunlboinck4"/>
+<img alt="Apprentice" class="w-5 h-5 rounded-full border border-surface-container-lowest relative z-0" data-alt="Small avatar of a young male apprentice mechanic looking focused. Bright, clean workshop background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChyvc1USb7eQ9CiUHN05nt-6jDwWEqDaUYLCZoYO0nwFlgXnYKU5Xop5yVuTMAEFdrsI3mY0YJo6NP6BlflFi5NpKR-6LAHSk_73NSca4DA223RTWhttIMBAIQioBdLdcM6zvQSggyZQ32Gih1aypZJ7dUZtVab3xxHUivuQyxy4Qqnq6sHcXvviUAJPyzc407ng_2Sov0WVCJkfSP70tGaikS7MHWz1E73mRuJlFPrIq2unMeLMTY6p_dhdW4tiqXRpi7vrObSE0"/>
+</div>
+</div>
+</div>
+<!-- Card: Medium Priority -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#OS-4102</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-[9px] uppercase tracking-wider">Medium</span>
+</div>
+<div class="pl-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Jeep Compass 4x4</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Ana Paula</p>
+</div>
+<div class="pl-1 mt-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-[9px] text-on-surface-variant">Suspension Repair</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">2/3</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[66%] rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pl-1 mt-1 pt-2 border-t border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<!-- empty state icon -->
+</div>
+<img alt="Tech" class="w-5 h-5 rounded-full border border-outline-variant" data-alt="Small avatar of a male senior technician with a beard, wearing a dark grey mechanic uniform. Modern industrial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1dEL_eGPktG8Zf6DM0ZUCRCon6EXr6Hk2vqYpZTDYbCgkSq4H2x2EftsiijJoAvX-QE11Zydy1VOwK3MjphSOBaRCAPHUkqPojEASOOtDvjXfB7WbQA31XqPnPedvp9DUSEGgcpF1nUv2EUp6Hbb-cWwK46NGrlKw2U_peVI8WIakoeH4Cl6ZupgCK8XRiVcul74J4Sn6VaBW0TmXwpmFTTm9IyaGZ58LDBvfBlM44URUvc-kgZ208IlQ48rmiSXYA0VDmGwJDU0"/>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN: Review (Revisão Técnica) -->
+<div class="flex-shrink-0 w-[300px] flex flex-col max-h-full bg-surface-container-low rounded-lg border border-outline-variant opacity-90">
+<div class="p-sm flex justify-between items-center border-b border-outline-variant sticky top-0 bg-surface-container-low rounded-t-lg z-10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<h3 class="font-label-md text-label-md text-on-surface">Review (Revisão Técnica)</h3>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container-highest px-1.5 py-0.5 rounded">3</span>
+</div>
+<div class="p-sm flex flex-col gap-sm overflow-y-auto min-h-[150px]">
+<!-- Card: Medium Priority, Waiting Review -->
+<div class="bg-surface-container-lowest border border-primary-fixed-dim border-l-4 border-l-primary-container rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">#OS-4075</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-[9px] uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">fact_check</span> QA Pending
+                            </span>
+</div>
+<div class="pl-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Volkswagen Polo</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Roberto Alves</p>
+</div>
+<div class="pl-1 mt-1">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-[9px] text-on-surface-variant">General Service</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">5/5</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[100%] rounded-full"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pl-1 mt-1 pt-2 border-t border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary">assignment_late</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-[10px] text-on-surface-variant">Assigned to Manager</span>
+<img alt="Tech" class="w-5 h-5 rounded-full border border-outline-variant" data-alt="A professional headshot of an automotive service manager, male, wearing a clean branded polo shirt. Well-lit indoor environment suggesting a clean, modern office space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOTx9LCTmwv1v-LG8BZq2eFZDNcMBBKgmIJNXOL5ymxxbf0raSBJphj6cD3hGrhOJ-cdX3p2Q-AabW3iuuxegiwfJR8BaAQowPijtQp1v3LHhawfvzn_2yVjmJ3LAMpCowBaoEJCZHJF0TG9NhCKFi-eKfDEeSM_A5cGJTK7SWPedbt3w6WRhz8SUL38zrlMD5DXYYtGAYHiHqG9iubOUL7MjXKsa9sZ--S2pLgPOthDsKgUPKu9wFzd2uQuuFs5kmQcP6v67MqIg"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN: Finished (Finalizado) -->
+<div class="flex-shrink-0 w-[300px] flex flex-col max-h-full bg-surface-container-low rounded-lg border border-outline-variant opacity-75">
+<div class="p-sm flex justify-between items-center border-b border-outline-variant sticky top-0 bg-surface-container-low rounded-t-lg z-10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<h3 class="font-label-md text-label-md text-on-surface">Finished (Finalizado)</h3>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container-highest px-1.5 py-0.5 rounded">24</span>
+</div>
+<div class="p-sm flex flex-col gap-sm overflow-y-auto min-h-[150px]">
+<!-- Card: Finished -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant line-through decoration-outline-variant">#OS-4010</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-[9px] uppercase tracking-wider flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">done_all</span> Done
+                            </span>
+</div>
+<div class="pl-1 opacity-70">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">BMW 320i M Sport</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Premium Motors Ltd.</p>
+</div>
+</div>
+<!-- Card: Finished -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-sm gap-2 relative overflow-hidden group hover:-translate-y-[1px] hover:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim"></div>
+<div class="flex justify-between items-start pl-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant line-through decoration-outline-variant">#OS-4008</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-[9px] uppercase tracking-wider flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px]">done_all</span> Done
+                            </span>
+</div>
+<div class="pl-1 opacity-70">
+<h4 class="font-label-md text-label-md text-on-surface mb-0.5">Hyundai HB20</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Client: Lucas Ferreira</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty Column Space for scrolling effect -->
+<div class="flex-shrink-0 w-4 h-full"></div>
+</div>
+</main>
+</body></html>

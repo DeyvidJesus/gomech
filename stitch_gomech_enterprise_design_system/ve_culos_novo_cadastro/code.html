@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Add Vehicle</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#551d00",
+                    "error-container": "#ffdad6",
+                    "secondary": "#555f6f",
+                    "primary-fixed-dim": "#ffb596",
+                    "on-primary-fixed-variant": "#7d2d00",
+                    "surface-container-low": "#fff1ec",
+                    "on-primary-fixed": "#360f00",
+                    "surface-container": "#ffe9e2",
+                    "on-tertiary-fixed-variant": "#005321",
+                    "secondary-fixed-dim": "#bdc7d9",
+                    "inverse-on-surface": "#ffede7",
+                    "on-secondary-fixed": "#121c2a",
+                    "secondary-container": "#d6e0f3",
+                    "outline": "#8e7164",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#00ad4e",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#f8ddd2",
+                    "surface-container-high": "#fee2d8",
+                    "on-secondary-container": "#596373",
+                    "inverse-surface": "#3d2d26",
+                    "surface-tint": "#a33e00",
+                    "surface": "#fff8f6",
+                    "on-surface": "#271812",
+                    "surface-dim": "#f0d4ca",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#002109",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "on-background": "#271812",
+                    "inverse-primary": "#ffb596",
+                    "background": "#fff8f6",
+                    "outline-variant": "#e3bfb1",
+                    "primary-fixed": "#ffdbcd",
+                    "surface-bright": "#fff8f6",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#f8ddd2",
+                    "tertiary": "#006e2f",
+                    "on-tertiary-container": "#003714",
+                    "on-surface-variant": "#5a4136",
+                    "on-secondary": "#ffffff",
+                    "primary": "#a33e00",
+                    "on-secondary-fixed-variant": "#3d4756",
+                    "tertiary-fixed": "#6bff8f",
+                    "secondary-fixed": "#d9e3f6",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#ff6500"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "base": "4px",
+                    "2xl": "48px",
+                    "xl": "32px",
+                    "gutter": "20px",
+                    "topbar-height": "64px",
+                    "sm": "8px",
+                    "sidebar-width": "260px",
+                    "3xl": "64px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Manrope"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                    "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for a cleaner SaaS look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bfb1; /* outline-variant */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e7164; /* outline */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen w-screen overflow-hidden flex font-body-md text-body-md antialiased">
+<!-- SideNavBar -->
+<nav class="fixed h-full w-sidebar-width left-0 top-0 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-lg px-md z-20">
+<!-- Header -->
+<div class="mb-xl px-4 flex flex-col">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-bold font-headline-sm text-headline-sm">G</div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary tracking-tight">GoMech</h1>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-1 uppercase tracking-wider">Downtown Service Bay</span>
+</div>
+<!-- CTA -->
+<button class="mb-lg w-full bg-primary hover:bg-[#E85D00] active:translate-y-[1px] text-on-primary font-label-md text-label-md py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Job Card
+        </button>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+<!-- ACTIVE TAB: Vehicles -->
+<a class="flex items-center gap-3 px-4 py-2 text-primary bg-primary-fixed rounded-xl font-semibold scale-95 origin-left transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<span class="font-label-md text-label-md">Vehicles</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">request_quote</span>
+<span class="font-label-md text-label-md">Quotes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Stock</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Financial</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">AI Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150 active:opacity-80 scale-95 origin-left" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<!-- Footer Links -->
+<div class="pt-4 mt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container rounded-xl transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace -->
+<div class="flex-1 ml-sidebar-width flex flex-col h-full relative">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-topbar-height bg-surface border-b border-outline-variant flex justify-between items-center px-lg z-10 transition-all duration-200 ease-in-out">
+<!-- Left: Search -->
+<div class="flex-1 max-w-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all shadow-sm" placeholder="Search plates, clients, or jobs..." type="text"/>
+</div>
+</div>
+<!-- Middle: Navigation Links (Optional in context of deep form, but kept per JSON) -->
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" href="#">Workshops</a>
+<a class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" href="#">Teams</a>
+<a class="text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" href="#">Reports</a>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface rounded-lg transition-colors">
+<span class="material-symbols-outlined">settings_suggest</span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right hidden md:block">
+<div class="font-label-md text-label-md font-semibold text-on-surface">Admin User</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Manager</div>
+</div>
+<div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center group-hover:ring-2 ring-primary-fixed-dim transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<main class="flex-1 overflow-y-auto pt-[88px] pb-xl px-lg">
+<div class="max-w-5xl mx-auto w-full">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-lg">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<a class="hover:text-primary transition-colors flex items-center gap-1 font-label-sm text-label-sm uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                                Vehicles
+                            </a>
+<span class="text-outline">/</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface">Add New</span>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Register Vehicle</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Enter vehicle specifications and link to a client profile.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-transparent border border-outline-variant text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-lowest transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim">
+                            Cancel
+                        </button>
+<button class="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-[#E85D00] transition-colors shadow-sm active:translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-primary-fixed focus:ring-offset-2 focus:ring-offset-surface">
+                            Save Vehicle
+                        </button>
+</div>
+</div>
+<!-- Form Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Primary Vehicle Details (Span 8) -->
+<div class="lg:col-span-8 flex flex-col gap-lg">
+<!-- Core Identifiers Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md lg:p-lg shadow-sm">
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-md pb-xs border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+                                Identification
+                            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-md gap-y-4">
+<!-- License Plate -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="plate">License Plate <span class="text-error">*</span></label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all uppercase" id="plate" placeholder="ABC-1234" required="" type="text"/>
+</div>
+<!-- VIN -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="vin">VIN (Chassi Number) <span class="text-error">*</span></label>
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all uppercase font-mono text-[13px]" id="vin" maxlength="17" placeholder="17-character VIN" required="" type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-surface-tint" title="Decode VIN" type="button">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Specifications Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md lg:p-lg shadow-sm">
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-md pb-xs border-b border-outline-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">settings_b_roll</span>
+                                Specifications
+                            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-md gap-y-4">
+<!-- Brand -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="brand">Make / Brand</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all appearance-none cursor-pointer" id="brand">
+<option disabled="" selected="" value="">Select Brand</option>
+<option value="toyota">Toyota</option>
+<option value="honda">Honda</option>
+<option value="ford">Ford</option>
+<option value="chevrolet">Chevrolet</option>
+<option value="bmw">BMW</option>
+<!-- Add more options as needed -->
+</select>
+</div>
+<!-- Model -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="model">Model</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all" id="model" placeholder="e.g. Corolla, Civic" type="text"/>
+</div>
+<!-- Year -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="year">Model Year</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all" id="year" max="2025" min="1950" placeholder="YYYY" type="number"/>
+</div>
+<!-- Color -->
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="color">Exterior Color</label>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 pl-9 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all" id="color" placeholder="e.g. Silver, Black" type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">palette</span>
+</div>
+</div>
+</div>
+<!-- Current KM -->
+<div class="md:col-span-2">
+<label class="block text-label-md font-label-md text-on-surface-variant mb-1.5" for="km">Current Mileage (KM)</label>
+<div class="relative max-w-xs">
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-3 py-2 pr-12 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all text-right font-mono" id="km" placeholder="0" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-label-sm font-label-sm text-on-surface-variant">KM</span>
+</div>
+<p class="text-label-sm font-label-sm text-outline mt-1">Leave blank if unknown.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Client Linking & Context (Span 4) -->
+<div class="lg:col-span-4 flex flex-col gap-lg">
+<!-- Client Link Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm relative overflow-hidden">
+<!-- Subtle decorative top accent -->
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-fixed-dim"></div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-3 flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-primary text-[20px]">person_add</span>
+                                Ownership
+                            </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">Link this vehicle to an existing client profile or create a new one.</p>
+<!-- Searchable Dropdown Mockup -->
+<div class="relative mb-4">
+<label class="sr-only" for="client-search">Search Client</label>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-lg pl-10 pr-4 py-2.5 text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all" id="client-search" placeholder="Search by name, phone or email..." type="text"/>
+<!-- Mock Dropdown Results (Hidden by default, shown for UI demonstration) -->
+<div class="absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg overflow-hidden hidden" id="client-dropdown">
+<ul class="max-h-[200px] overflow-y-auto py-1">
+<li class="px-4 py-2 hover:bg-surface-container cursor-pointer flex items-center justify-between group border-b border-outline-variant/30 last:border-0">
+<div>
+<div class="font-label-md text-label-md text-on-surface">John Doe</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">+1 (555) 123-4567</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity text-[18px]">add_link</span>
+</li>
+<li class="px-4 py-2 hover:bg-surface-container cursor-pointer flex items-center justify-between group">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Acme Corp Fleet</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">fleet@acme.com</div>
+</div>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity text-[18px]">add_link</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- OR Divider -->
+<div class="flex items-center gap-3 my-4">
+<div class="h-px flex-1 bg-outline-variant"></div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-widest">OR</span>
+<div class="h-px flex-1 bg-outline-variant"></div>
+</div>
+<button class="w-full py-2 bg-transparent border border-dashed border-outline-variant text-primary font-label-md text-label-md rounded-lg hover:bg-surface-container-low hover:border-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                                Create New Client
+                            </button>
+</div>
+<!-- Validation / Help Note Card -->
+<div class="bg-surface-container rounded-xl p-md border border-outline-variant/50">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">info</span>
+<div>
+<h4 class="text-label-md font-label-md text-on-surface mb-1">VIN Decoder</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Entering a valid 17-character VIN will automatically attempt to populate the Brand, Model, and Year fields using the NHTSA database.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Simple script to toggle mock dropdown for interactive feel -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('client-search');
+            const dropdown = document.getElementById('client-dropdown');
+
+            searchInput.addEventListener('focus', () => {
+                dropdown.classList.remove('hidden');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+
+            // Mock selection
+            const listItems = dropdown.querySelectorAll('li');
+            listItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const name = item.querySelector('.text-on-surface').innerText;
+                    searchInput.value = name;
+                    dropdown.classList.add('hidden');
+                    
+                    // Visual feedback that it's linked (turn input background slightly tinted)
+                    searchInput.classList.add('bg-surface-container-low', 'border-primary', 'text-primary');
+                    searchInput.classList.remove('bg-surface');
+                });
+            });
+        });
+    </script>
+</body></html>

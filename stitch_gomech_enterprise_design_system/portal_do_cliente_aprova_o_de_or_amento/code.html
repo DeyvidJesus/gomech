@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Client Approval Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fff8f6",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "inverse-on-surface": "#ffede7",
+                        "background": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#6bff8f",
+                        "on-surface-variant": "#5a4136",
+                        "surface-dim": "#f0d4ca",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#360f00",
+                        "secondary-fixed": "#d9e3f6",
+                        "outline-variant": "#e3bfb1",
+                        "outline": "#8e7164",
+                        "on-surface": "#271812",
+                        "primary-fixed": "#ffdbcd",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#fff1ec",
+                        "surface-container": "#ffe9e2",
+                        "primary-container": "#ff6500",
+                        "on-background": "#271812",
+                        "surface-variant": "#f8ddd2",
+                        "on-tertiary-fixed": "#002109",
+                        "surface": "#fff8f6",
+                        "on-tertiary-container": "#003714",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#fee2d8",
+                        "tertiary": "#006e2f",
+                        "inverse-surface": "#3d2d26",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#f8ddd2",
+                        "secondary-container": "#d6e0f3",
+                        "surface-tint": "#a33e00",
+                        "inverse-primary": "#ffb596",
+                        "tertiary-container": "#00ad4e",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "secondary": "#555f6f",
+                        "on-secondary-container": "#596373",
+                        "primary-fixed-dim": "#ffb596",
+                        "primary": "#a33e00",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "on-secondary-fixed": "#121c2a",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "on-primary-container": "#551d00",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "3xl": "64px",
+                        "xl": "32px",
+                        "topbar-height": "64px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "sidebar-width": "260px",
+                        "gutter": "20px",
+                        "2xl": "48px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Manrope"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff8f6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bfb1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e7164; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center py-xl px-md sm:px-lg font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Main Document Container -->
+<main class="w-full max-w-4xl bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col">
+<!-- Header Section -->
+<header class="p-lg md:p-xl border-b border-outline-variant bg-surface-container-lowest relative overflow-hidden">
+<!-- Decorative Pattern (Subtle Gear Motif) -->
+<div class="absolute -top-12 -right-12 text-surface-container opacity-50 pointer-events-none select-none">
+<span class="material-symbols-outlined text-[120px] fill-icon">settings</span>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-lg relative z-10">
+<div class="flex items-center gap-md">
+<div class="w-[48px] h-[48px] bg-primary text-on-primary rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">build_circle</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">GoMech</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Elite Auto Service</p>
+</div>
+</div>
+<div class="text-left md:text-right">
+<div class="inline-flex items-center gap-sm px-sm py-xs bg-surface-container-high rounded-full mb-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface">AWAITING APPROVAL</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Quote #QT-2023-8942</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Issued: October 24, 2023</p>
+</div>
+</div>
+</header>
+<!-- Vehicle & Client Info -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-lg p-lg md:p-xl border-b border-outline-variant bg-surface">
+<div class="flex flex-col gap-sm">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase">Vehicle Details</h2>
+<div class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-outline mt-xs">directions_car</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">2019 Toyota RAV4</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">VIN: 2T3H1RFV8KWXXXXXX • Odometer: 45,210 mi</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">License Plate: ABC-1234</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-sm md:items-end">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase md:text-right">Prepared For</h2>
+<div class="flex items-start gap-sm md:flex-row-reverse md:text-right">
+<span class="material-symbols-outlined text-outline mt-xs">person</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Alex Johnson</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">alex.j@example.com</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">(555) 123-4567</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Summary of Work -->
+<section class="p-lg md:p-xl border-b border-outline-variant">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase mb-md">Summary of Recommended Work</h2>
+<div class="bg-surface-container-low p-md rounded-lg border border-outline-variant">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                    Based on our comprehensive 50-point inspection, we recommend replacing the front brake pads and rotors due to excessive wear (below 2mm). Additionally, the scheduled 45k mile synthetic oil service is due. We noticed minor uneven wear on the front tires, so an alignment is strongly recommended to preserve tire life.
+                </p>
+</div>
+</section>
+<!-- Detailed Breakdown (Read-Only Table) -->
+<section class="p-lg md:p-xl border-b border-outline-variant">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase mb-md">Detailed Breakdown</h2>
+<div class="overflow-x-auto rounded-lg border border-outline-variant">
+<table class="w-full text-left border-collapse min-w-[600px]">
+<thead>
+<tr class="bg-surface-container font-label-sm text-label-sm text-on-surface border-b border-outline-variant">
+<th class="p-md font-semibold">Service / Part Description</th>
+<th class="p-md font-semibold text-center w-24">Type</th>
+<th class="p-md font-semibold text-right w-24">Qty</th>
+<th class="p-md font-semibold text-right w-32">Unit Price</th>
+<th class="p-md font-semibold text-right w-32">Line Total</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Group 1 -->
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<td class="px-md py-sm font-label-sm text-label-sm text-on-surface-variant uppercase bg-surface" colspan="5">Front Brake Service</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md">
+<span class="block font-medium">OEM Front Brake Pads</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant mt-xs">Part #BP-7742</span>
+</td>
+<td class="p-md text-center"><span class="inline-block px-xs py-1 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px]">PART</span></td>
+<td class="p-md text-right">1</td>
+<td class="p-md text-right">$85.00</td>
+<td class="p-md text-right">$85.00</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md">
+<span class="block font-medium">OEM Front Rotors</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant mt-xs">Part #RT-3319</span>
+</td>
+<td class="p-md text-center"><span class="inline-block px-xs py-1 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px]">PART</span></td>
+<td class="p-md text-right">2</td>
+<td class="p-md text-right">$110.00</td>
+<td class="p-md text-right">$220.00</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md">
+<span class="block font-medium">Labor: Replace Pads &amp; Rotors</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant mt-xs">Includes system bleed</span>
+</td>
+<td class="p-md text-center"><span class="inline-block px-xs py-1 rounded bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">LABOR</span></td>
+<td class="p-md text-right">2.5 hr</td>
+<td class="p-md text-right">$120.00</td>
+<td class="p-md text-right">$300.00</td>
+</tr>
+<!-- Group 2 -->
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<td class="px-md py-sm font-label-sm text-label-sm text-on-surface-variant uppercase bg-surface" colspan="5">45k Mile Maintenance</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md">
+<span class="block font-medium">Full Synthetic Oil Change &amp; Filter</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant mt-xs">0W-20, up to 5 qts</span>
+</td>
+<td class="p-md text-center"><span class="inline-block px-xs py-1 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px]">PKG</span></td>
+<td class="p-md text-right">1</td>
+<td class="p-md text-right">$89.99</td>
+<td class="p-md text-right">$89.99</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-md">
+<span class="block font-medium">Four-Wheel Alignment</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant mt-xs">Laser precision alignment</span>
+</td>
+<td class="p-md text-center"><span class="inline-block px-xs py-1 rounded bg-surface-variant text-on-surface-variant font-label-sm text-[10px]">LABOR</span></td>
+<td class="p-md text-right">1 hr</td>
+<td class="p-md text-right">$129.00</td>
+<td class="p-md text-right">$129.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Totals Section -->
+<section class="p-lg md:p-xl border-b border-outline-variant bg-surface flex flex-col items-end">
+<div class="w-full max-w-sm flex flex-col gap-sm">
+<div class="flex justify-between items-center font-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span>$823.99</span>
+</div>
+<div class="flex justify-between items-center font-body-md text-on-surface-variant">
+<span>Shop Supplies (3%)</span>
+<span>$24.72</span>
+</div>
+<div class="flex justify-between items-center font-body-md text-on-surface-variant">
+<span>Sales Tax (8.25%)</span>
+<span>$70.02</span>
+</div>
+<div class="h-px w-full bg-outline-variant my-sm"></div>
+<div class="flex justify-between items-end">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total Estimation</span>
+<span class="font-display-lg text-display-lg text-on-surface">$918.73</span>
+</div>
+<p class="text-right font-body-sm text-body-sm text-on-surface-variant mt-xs">Valid for 30 days. Final bill may vary by ±10%.</p>
+</div>
+</section>
+<!-- Terms & Signature -->
+<section class="p-lg md:p-xl bg-surface-container-lowest">
+<div class="flex flex-col gap-lg">
+<label class="flex items-start gap-md cursor-pointer group">
+<div class="relative flex items-center justify-center mt-1">
+<input class="peer appearance-none w-5 h-5 border-2 border-outline rounded-sm checked:bg-primary checked:border-primary focus:ring-2 focus:ring-primary-container focus:outline-none transition-colors" id="terms-checkbox" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-on-primary text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface leading-relaxed select-none group-hover:text-primary transition-colors">
+                        I hereby authorize the above repair work to be done along with the necessary material, and hereby grant you and/or your employees permission to operate the car or truck herein described on streets, highways or elsewhere for the purpose of testing and/or inspection. An express mechanic's lien is hereby acknowledged on above car or truck to secure the amount of repairs thereto.
+                    </span>
+</label>
+<div class="flex flex-col gap-sm max-w-sm">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase" for="digital-signature">Digital Signature</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-lg text-on-surface focus:border-primary focus:ring-[3px] focus:ring-primary-container/30 transition-all outline-none placeholder:text-outline disabled:opacity-50 disabled:bg-surface-container-low" disabled="" id="digital-signature" placeholder="Type your full name to sign" type="text"/>
+<p class="font-body-sm text-body-sm text-error hidden" id="signature-error">Please accept the terms before signing.</p>
+</div>
+</div>
+</section>
+<!-- Actions -->
+<footer class="p-lg md:p-xl bg-surface-container border-t border-outline-variant flex flex-col sm:flex-row justify-end items-center gap-md">
+<button class="w-full sm:w-auto px-lg py-sm font-label-md text-label-md bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg hover:bg-surface-container-low hover:border-outline transition-all active:translate-y-[1px] flex items-center justify-center gap-sm h-[48px]">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+                Decline / Contact Shop
+            </button>
+<!-- Using Tertiary for Success/Approve action as it's the green hue in the palette -->
+<button class="w-full sm:w-auto px-xl py-sm font-label-md text-label-md bg-tertiary text-on-tertiary rounded-lg hover:bg-tertiary-container hover:text-on-tertiary-container transition-all active:translate-y-[1px] flex items-center justify-center gap-sm h-[48px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled="" id="approve-btn">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                Approve Service
+            </button>
+</footer>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const termsCheckbox = document.getElementById('terms-checkbox');
+            const signatureInput = document.getElementById('digital-signature');
+            const approveBtn = document.getElementById('approve-btn');
+            const signatureError = document.getElementById('signature-error');
+
+            // Handle checkbox change
+            termsCheckbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                signatureInput.disabled = !isChecked;
+                
+                if (isChecked) {
+                    signatureInput.focus();
+                    signatureError.classList.add('hidden');
+                } else {
+                    signatureInput.value = '';
+                    approveBtn.disabled = true;
+                }
+                validateForm();
+            });
+
+            // Handle signature input
+            signatureInput.addEventListener('input', () => {
+                validateForm();
+            });
+
+            // Click signature when disabled
+            signatureInput.addEventListener('click', (e) => {
+                if (signatureInput.disabled) {
+                    signatureError.classList.remove('hidden');
+                    // Shake animation for checkbox label
+                    const label = termsCheckbox.closest('label');
+                    label.style.transform = 'translateX(-5px)';
+                    setTimeout(() => label.style.transform = 'translateX(5px)', 50);
+                    setTimeout(() => label.style.transform = 'translateX(-5px)', 100);
+                    setTimeout(() => label.style.transform = 'translateX(0)', 150);
+                }
+            });
+
+            function validateForm() {
+                const isValid = termsCheckbox.checked && signatureInput.value.trim().length >= 2;
+                approveBtn.disabled = !isValid;
+                
+                if (isValid) {
+                    approveBtn.classList.add('shadow-[0_4px_12px_rgba(0,110,47,0.3)]'); // Tertiary color glow
+                } else {
+                    approveBtn.classList.remove('shadow-[0_4px_12px_rgba(0,110,47,0.3)]');
+                }
+            }
+        });
+    </script>
+</body></html>

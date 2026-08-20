@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Vehicles</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#551d00",
+                        "error-container": "#ffdad6",
+                        "secondary": "#555f6f",
+                        "primary-fixed-dim": "#ffb596",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "surface-container-low": "#fff1ec",
+                        "on-primary-fixed": "#360f00",
+                        "surface-container": "#ffe9e2",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "inverse-on-surface": "#ffede7",
+                        "on-secondary-fixed": "#121c2a",
+                        "secondary-container": "#d6e0f3",
+                        "outline": "#8e7164",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#00ad4e",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#f8ddd2",
+                        "surface-container-high": "#fee2d8",
+                        "on-secondary-container": "#596373",
+                        "inverse-surface": "#3d2d26",
+                        "surface-tint": "#a33e00",
+                        "surface": "#fff8f6",
+                        "on-surface": "#271812",
+                        "surface-dim": "#f0d4ca",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#002109",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-background": "#271812",
+                        "inverse-primary": "#ffb596",
+                        "background": "#fff8f6",
+                        "outline-variant": "#e3bfb1",
+                        "primary-fixed": "#ffdbcd",
+                        "surface-bright": "#fff8f6",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#f8ddd2",
+                        "tertiary": "#006e2f",
+                        "on-tertiary-container": "#003714",
+                        "on-surface-variant": "#5a4136",
+                        "on-secondary": "#ffffff",
+                        "primary": "#a33e00",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "tertiary-fixed": "#6bff8f",
+                        "secondary-fixed": "#d9e3f6",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#ff6500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "base": "4px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "gutter": "20px",
+                        "topbar-height": "64px",
+                        "sm": "8px",
+                        "sidebar-width": "260px",
+                        "3xl": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Manrope"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #fff8f6; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden">
+<aside class="fixed h-full w-sidebar-width left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-lg px-md z-30">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">GoMech</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-xs">Downtown Service Bay</p>
+</div>
+<button class="w-full mb-lg bg-primary text-on-primary py-md px-md rounded-xl font-label-md text-label-md flex justify-center items-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Job Card
+        </button>
+<nav class="flex-1 overflow-y-auto space-y-1 pr-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Clients</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-primary bg-primary-fixed rounded-xl font-semibold scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined icon-fill">directions_car</span>
+<span class="font-label-md text-label-md">Vehicles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">request_quote</span>
+<span class="font-label-md text-label-md">Quotes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Stock</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Financial</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Calendar</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">AI Insights</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-label-md text-label-md">Admin</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors scale-95 duration-150 active:opacity-80" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] h-topbar-height border-b border-outline-variant bg-surface flex justify-between items-center px-lg z-20 transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-lg h-full">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-sm text-on-surface-variant text-[20px]">search</span>
+<input class="pl-[36px] pr-sm py-sm bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-[240px] transition-all" placeholder="Search GoMech..." type="text"/>
+</div>
+<nav class="flex h-full">
+<a class="flex items-center h-full px-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md" href="#">Workshops</a>
+<a class="flex items-center h-full px-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md" href="#">Teams</a>
+<a class="flex items-center h-full px-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-md py-sm border border-outline-variant bg-surface-container-lowest text-on-surface font-label-sm text-label-sm rounded-lg hover:bg-surface-container transition-colors">Quick Check-in</button>
+<button class="px-md py-sm bg-primary text-on-primary font-label-sm text-label-sm rounded-lg hover:opacity-90 transition-opacity">Create Order</button>
+<div class="flex items-center gap-xs ml-sm border-l border-outline-variant pl-md">
+<button class="p-xs text-on-surface-variant hover:text-on-surface rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
+<button class="p-xs text-on-surface-variant hover:text-on-surface rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">settings_suggest</span></button>
+<button class="p-xs text-primary rounded-full hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">account_circle</span></button>
+</div>
+</div>
+</header>
+<main class="ml-sidebar-width pt-topbar-height h-screen overflow-y-auto bg-background p-xl">
+<div class="max-w-[1400px] mx-auto">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Vehicles</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Manage client vehicles, service history, and upcoming maintenance.</p>
+</div>
+<button class="bg-primary text-on-primary px-md py-sm rounded-xl font-label-md text-label-md flex items-center gap-sm hover:opacity-90 transition-opacity shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span> Add Vehicle
+                </button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-sm mb-lg flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">filter_alt</span>
+<select class="pl-xl pr-lg py-sm bg-surface text-on-surface border border-outline-variant rounded-lg font-label-sm text-label-sm appearance-none focus:outline-none focus:border-primary">
+<option>All Brands</option>
+<option>Toyota</option>
+<option>Ford</option>
+<option>BMW</option>
+</select>
+</div>
+<div class="relative">
+<select class="px-md py-sm bg-surface text-on-surface border border-outline-variant rounded-lg font-label-sm text-label-sm appearance-none focus:outline-none focus:border-primary">
+<option>Any Year</option>
+<option>2023</option>
+<option>2022</option>
+<option>Older</option>
+</select>
+</div>
+<div class="relative">
+<select class="px-md py-sm bg-surface text-on-surface border border-outline-variant rounded-lg font-label-sm text-label-sm appearance-none focus:outline-none focus:border-primary">
+<option>Service Status</option>
+<option>Due Soon</option>
+<option>Overdue</option>
+<option>Up to date</option>
+</select>
+</div>
+<button class="px-md py-sm text-primary font-label-sm text-label-sm hover:bg-surface-container rounded-lg transition-colors">Clear</button>
+</div>
+<div class="flex items-center bg-surface border border-outline-variant rounded-lg p-[2px]">
+<button class="p-xs bg-surface-container-lowest text-on-surface rounded shadow-sm border border-outline-variant"><span class="material-symbols-outlined text-[18px] block">grid_view</span></button>
+<button class="p-xs text-on-surface-variant hover:text-on-surface rounded"><span class="material-symbols-outlined text-[18px] block">view_list</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md hover:bg-surface transition-colors group cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">directions_car</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Toyota Tacoma</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2021 • V6 TRD Off-Road</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="grid grid-cols-2 gap-sm mb-md">
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">License Plate</p>
+<p class="font-label-md text-label-md text-on-surface uppercase tracking-wider">ABC-1234</p>
+</div>
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">Last Service</p>
+<p class="font-body-md text-body-md text-on-surface">Oct 12, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-sm border-t border-outline-variant">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container">JD</div>
+<span class="font-body-sm text-body-sm text-on-surface">John Doe</span>
+</div>
+<span class="inline-flex items-center gap-xs px-2 py-1 rounded-full bg-tertiary-container/10 text-tertiary-container font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Up to date
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md hover:bg-surface transition-colors group cursor-pointer shadow-sm">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">local_shipping</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Ford F-150</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2019 • Lariat 4x4</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="grid grid-cols-2 gap-sm mb-md">
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">License Plate</p>
+<p class="font-label-md text-label-md text-on-surface uppercase tracking-wider">XYZ-9876</p>
+</div>
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">Last Service</p>
+<p class="font-body-md text-body-md text-on-surface">Jan 05, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-sm border-t border-outline-variant">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container">AC</div>
+<span class="font-body-sm text-body-sm text-on-surface">Apex Construction</span>
+</div>
+<span class="inline-flex items-center gap-xs px-2 py-1 rounded-full bg-error/10 text-error font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Overdue
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md hover:bg-surface transition-colors group cursor-pointer shadow-sm border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">directions_car</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">BMW M3</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2022 • Competition</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="grid grid-cols-2 gap-sm mb-md">
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">License Plate</p>
+<p class="font-label-md text-label-md text-on-surface uppercase tracking-wider">M-PWR-01</p>
+</div>
+<div class="bg-surface p-sm rounded-lg border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-[2px]">Last Service</p>
+<p class="font-body-md text-body-md text-on-surface">Sep 28, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-sm border-t border-outline-variant">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container">SL</div>
+<span class="font-body-sm text-body-sm text-on-surface">Sarah Lance</span>
+</div>
+<span class="inline-flex items-center gap-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Due Soon
+                        </span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

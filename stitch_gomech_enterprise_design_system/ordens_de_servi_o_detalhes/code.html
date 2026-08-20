@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Service Order Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#596373",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-fixed": "#121c2a",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "on-surface-variant": "#5a4136",
+                        "tertiary-container": "#00ad4e",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#ffede7",
+                        "on-secondary": "#ffffff",
+                        "outline": "#8e7164",
+                        "surface": "#fff8f6",
+                        "inverse-surface": "#3d2d26",
+                        "surface-container-low": "#fff1ec",
+                        "surface-bright": "#fff8f6",
+                        "surface-container-high": "#fee2d8",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "primary-container": "#ff6500",
+                        "surface-tint": "#a33e00",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "on-primary-container": "#551d00",
+                        "on-background": "#271812",
+                        "on-tertiary-container": "#003714",
+                        "secondary-container": "#d6e0f3",
+                        "primary": "#a33e00",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#f0d4ca",
+                        "tertiary": "#006e2f",
+                        "secondary": "#555f6f",
+                        "on-surface": "#271812",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "inverse-primary": "#ffb596",
+                        "surface-container": "#ffe9e2",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "background": "#fff8f6",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "on-primary-fixed": "#360f00",
+                        "secondary-fixed": "#d9e3f6",
+                        "primary-fixed": "#ffdbcd",
+                        "surface-variant": "#f8ddd2",
+                        "tertiary-fixed": "#6bff8f",
+                        "primary-fixed-dim": "#ffb596",
+                        "surface-container-highest": "#f8ddd2",
+                        "outline-variant": "#e3bfb1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "20px",
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "sm": "8px",
+                        "3xl": "64px",
+                        "lg": "24px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "topbar-height": "64px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for high-density tables */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3bfb1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8e7164; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-hidden h-screen flex">
+<!-- SideNavBar (Suppressed due to deep detail view context, but keeping structure per prompt hints if needed. For a "drawer/modal style full page", we focus on the content canvas. Assuming standalone full-page view for Service Order as requested. Will render shell but dim it to show modal context.) -->
+<!-- Dimmer Overlay for Modal Context -->
+<div class="fixed inset-0 bg-on-background/40 z-40 backdrop-blur-sm"></div>
+<!-- Main Modal Canvas -->
+<main class="fixed inset-y-0 right-0 z-50 w-full md:w-[calc(100%-80px)] lg:w-[1200px] bg-surface-container-lowest shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.05)] flex flex-col transform transition-transform duration-300 ease-in-out border-l border-outline-variant">
+<!-- Header Section -->
+<header class="h-topbar-height border-b border-outline-variant px-lg flex items-center justify-between bg-surface-container-lowest shrink-0">
+<div class="flex items-center gap-md">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+<div>
+<div class="flex items-center gap-sm">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Order #SO-9924-A</h1>
+<span class="px-2 py-1 bg-surface-container-high text-primary font-label-sm text-label-sm rounded-DEFAULT border border-outline-variant">IN PROGRESS</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="h-9 px-4 flex items-center gap-2 text-primary font-label-md text-label-md hover:bg-surface-container rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                    Print
+                </button>
+<button class="h-9 px-4 flex items-center gap-2 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md hover:bg-surface-container rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                    Edit
+                </button>
+<button class="h-9 px-4 flex items-center gap-2 bg-primary hover:bg-[#E85D00] text-on-primary font-label-md text-label-md rounded-DEFAULT transition-colors shadow-sm active:translate-y-px">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                    Close Order
+                </button>
+</div>
+</header>
+<!-- Content Area - 3 Column Layout -->
+<div class="flex-1 overflow-y-auto p-lg bg-surface">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Task Checklist -->
+<div class="lg:col-span-4 flex flex-col gap-md">
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant p-md flex flex-col gap-sm">
+<div class="flex items-center justify-between pb-sm border-b border-outline-variant">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Task Checklist</h2>
+<span class="font-label-sm text-label-sm text-primary">2 / 5 Completed</span>
+</div>
+<div class="flex flex-col gap-xs mt-sm">
+<!-- Task 1 -->
+<div class="group flex items-start gap-sm p-sm rounded-DEFAULT hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface line-through opacity-70">Comprehensive Diagnostic</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tech: Mike R. • 08:30 AM</p>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="group flex items-start gap-sm p-sm rounded-DEFAULT hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface line-through opacity-70">Oil &amp; Filter Change (Synthetic)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tech: Mike R. • 09:15 AM</p>
+</div>
+</div>
+<!-- Task 3 -->
+<div class="group flex items-start gap-sm p-sm rounded-DEFAULT bg-surface-container border border-primary-fixed-dim transition-colors cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-variation-settings: 'FILL' 0;">check_box_outline_blank</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Front Brake Pad Replacement</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<p class="font-body-sm text-body-sm text-primary">In Progress</p>
+</div>
+</div>
+</div>
+<!-- Task 4 -->
+<div class="group flex items-start gap-sm p-sm rounded-DEFAULT hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-variation-settings: 'FILL' 0;">check_box_outline_blank</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Rotor Resurfacing</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pending Parts</p>
+</div>
+</div>
+<!-- Task 5 -->
+<div class="group flex items-start gap-sm p-sm rounded-DEFAULT hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-variation-settings: 'FILL' 0;">check_box_outline_blank</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Multi-point Inspection</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Scheduled</p>
+</div>
+</div>
+</div>
+<button class="mt-sm w-full h-8 flex items-center justify-center gap-2 border border-dashed border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:border-primary hover:text-primary rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                            Add Task
+                        </button>
+</section>
+</div>
+<!-- Middle Column: Parts Used -->
+<div class="lg:col-span-5 flex flex-col gap-md">
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant flex flex-col h-full overflow-hidden">
+<div class="p-md pb-sm border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Parts &amp; Materials</h2>
+<button class="text-primary font-label-sm text-label-sm hover:underline">Scan Part</button>
+</div>
+<!-- High Density Table -->
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant sticky top-0">
+<tr>
+<th class="py-2 px-md border-b border-outline-variant font-medium">PART NO / DESC</th>
+<th class="py-2 px-sm border-b border-outline-variant font-medium text-right">QTY</th>
+<th class="py-2 px-sm border-b border-outline-variant font-medium text-right">UNIT</th>
+<th class="py-2 px-md border-b border-outline-variant font-medium text-right">TOTAL</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors group h-9">
+<td class="py-1 px-md">
+<div class="truncate w-48 font-medium">SYN-5W30-GAL</div>
+<div class="text-[10px] text-on-surface-variant truncate w-48">Castrol Edge Full Synthetic</div>
+</td>
+<td class="py-1 px-sm text-right">6.5</td>
+<td class="py-1 px-sm text-right">$8.50</td>
+<td class="py-1 px-md text-right font-medium">$55.25</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group h-9">
+<td class="py-1 px-md">
+<div class="truncate w-48 font-medium">FIL-OF-890</div>
+<div class="text-[10px] text-on-surface-variant truncate w-48">Premium Oil Filter Cartridge</div>
+</td>
+<td class="py-1 px-sm text-right">1</td>
+<td class="py-1 px-sm text-right">$14.00</td>
+<td class="py-1 px-md text-right font-medium">$14.00</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group h-9 bg-surface-container/30">
+<td class="py-1 px-md">
+<div class="flex items-center gap-2">
+<div class="truncate w-40 font-medium">BRK-PAD-F-OEM</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary" title="Recently Added"></span>
+</div>
+<div class="text-[10px] text-on-surface-variant truncate w-48">Ceramic Front Pad Set (OEM)</div>
+</td>
+<td class="py-1 px-sm text-right">1</td>
+<td class="py-1 px-sm text-right">$89.99</td>
+<td class="py-1 px-md text-right font-medium">$89.99</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group h-9 text-on-surface-variant opacity-60">
+<td class="py-1 px-md">
+<div class="truncate w-48 font-medium">BRK-ROTOR-F</div>
+<div class="text-[10px] truncate w-48">Awaiting Authorization</div>
+</td>
+<td class="py-1 px-sm text-right">-</td>
+<td class="py-1 px-sm text-right">-</td>
+<td class="py-1 px-md text-right font-medium">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md border-t border-outline-variant bg-surface-container-low">
+<div class="flex justify-between items-center mb-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Parts Subtotal</span>
+<span class="font-body-sm text-body-sm text-on-surface">$159.24</span>
+</div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Labor (Est. 2.5h)</span>
+<span class="font-body-sm text-body-sm text-on-surface">$250.00</span>
+</div>
+<div class="flex justify-between items-center mt-sm pt-sm border-t border-outline-variant border-dashed">
+<span class="font-headline-sm text-headline-sm text-on-surface">Current Total</span>
+<span class="font-headline-sm text-headline-sm text-primary">$409.24</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: AI Diagnostic & Vehicle Info -->
+<div class="lg:col-span-3 flex flex-col gap-md">
+<!-- Vehicle & Customer Info -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant p-md">
+<div class="flex items-start justify-between mb-sm">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">2019 BMW X5</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">xDrive40i • Black Sapphire</p>
+</div>
+<div class="w-10 h-10 rounded-DEFAULT bg-surface-container-high flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">directions_car</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-sm gap-x-md mt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Plate</p>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">XYZ-9876</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Mileage</p>
+<p class="font-body-sm text-body-sm text-on-surface font-medium">42,105 mi</p>
+</div>
+<div class="col-span-2">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">VIN</p>
+<p class="font-body-sm text-body-sm text-on-surface font-mono text-[11px] bg-surface-container-low p-1 rounded mt-1 border border-outline-variant/50">WBAKL234509X87654</p>
+</div>
+</div>
+<hr class="my-md border-outline-variant"/>
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md text-label-md">
+                                SJ
+                            </div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">Sarah Jenkins</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">+1 (555) 234-5678</p>
+</div>
+<button class="w-7 h-7 rounded flex items-center justify-center hover:bg-surface-container text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</button>
+</div>
+</section>
+<!-- AI Diagnostic Summary -->
+<section class="bg-gradient-to-br from-surface-container-lowest to-surface-container-low rounded-lg border border-primary-fixed-dim p-md relative overflow-hidden">
+<!-- Decorative Gear Motif Watermark -->
+<span class="material-symbols-outlined absolute -bottom-6 -right-6 text-[120px] text-primary/5 select-none pointer-events-none" style="font-variation-settings: 'FILL' 1;">settings</span>
+<div class="flex items-center gap-2 mb-sm relative z-10">
+<span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+<h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">AI Diagnostic Insight</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface relative z-10 leading-relaxed">
+                            OBD-II scan indicates code <strong class="text-error font-mono">P0011</strong> (Camshaft Position Timing). Given mileage (42k) and model history, recommend inspecting VANOS solenoids before replacing sensors. High probability of oil sludge buildup affecting timing actuation.
+                        </p>
+<div class="mt-sm pt-sm border-t border-outline-variant/50 relative z-10 flex gap-2">
+<span class="px-2 py-0.5 bg-surface-container rounded text-[10px] font-label-sm text-on-surface-variant border border-outline-variant">VANOS SYSTEM</span>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container rounded text-[10px] font-label-sm border border-error/20">TSB AVAILABLE</span>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</body></html>

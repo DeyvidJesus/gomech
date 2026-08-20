@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Service Orders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for a cleaner SaaS look */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3bfb1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8e7164; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-container": "#596373", "on-tertiary-fixed": "#002109", "on-secondary-fixed": "#121c2a", "on-primary": "#ffffff", "tertiary-fixed-dim": "#4ae176", "on-surface-variant": "#5a4136", "tertiary-container": "#00ad4e", "surface-container-lowest": "#ffffff", "inverse-on-surface": "#ffede7", "on-secondary": "#ffffff", "outline": "#8e7164", "surface": "#fff8f6", "inverse-surface": "#3d2d26", "surface-container-low": "#fff1ec", "surface-bright": "#fff8f6", "surface-container-high": "#fee2d8", "on-tertiary-fixed-variant": "#005321", "primary-container": "#ff6500", "surface-tint": "#a33e00", "secondary-fixed-dim": "#bdc7d9", "on-primary-container": "#551d00", "on-background": "#271812", "on-tertiary-container": "#003714", "secondary-container": "#d6e0f3", "primary": "#a33e00", "on-tertiary": "#ffffff", "on-error": "#ffffff", "surface-dim": "#f0d4ca", "tertiary": "#006e2f", "secondary": "#555f6f", "on-surface": "#271812", "on-primary-fixed-variant": "#7d2d00", "inverse-primary": "#ffb596", "surface-container": "#ffe9e2", "on-error-container": "#93000a", "error-container": "#ffdad6", "error": "#ba1a1a", "background": "#fff8f6", "on-secondary-fixed-variant": "#3d4756", "on-primary-fixed": "#360f00", "secondary-fixed": "#d9e3f6", "primary-fixed": "#ffdbcd", "surface-variant": "#f8ddd2", "tertiary-fixed": "#6bff8f", "primary-fixed-dim": "#ffb596", "surface-container-highest": "#f8ddd2", "outline-variant": "#e3bfb1",
+                        "primary-hover": "#E85D00"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"
+                    },
+                    spacing: {
+                        gutter: "20px", "sidebar-width": "260px", md: "16px", xs: "4px", base: "4px", sm: "8px", "3xl": "64px", lg: "24px", "2xl": "48px", xl: "32px", "topbar-height": "64px"
+                    },
+                    fontFamily: {
+                        "label-md": ["Inter"], "headline-md": ["Manrope"], "body-md": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Manrope"], "body-sm": ["Inter"], "body-lg": ["Inter"], "display-lg": ["Manrope"], "headline-sm": ["Manrope"]
+                    },
+                    fontSize: {
+                        "label-md": ["13px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Shared Component: SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-lg px-md fixed h-full w-sidebar-width left-0 top-0 border-r border-outline-variant bg-surface-container-lowest z-20">
+<div class="flex items-center gap-sm mb-xl px-4">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm">G</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary tracking-tight">GoMech</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Downtown Service Bay</p>
+</div>
+</div>
+<button class="mb-xl w-full flex items-center justify-center gap-2 bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg hover:bg-primary-hover transition-colors scale-95 duration-150 active:opacity-80">
+<span class="material-symbols-outlined">add</span>
+            New Job Card
+        </button>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">group</span>Clients</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">directions_car</span>Vehicles</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">request_quote</span>Quotes</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-primary bg-primary-fixed rounded-xl font-semibold font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Orders</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Stock</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">payments</span>Financial</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Calendar</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span>AI Insights</a></li>
+</ul>
+<div class="mt-8 mb-4 px-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">Configuration</div>
+<ul class="space-y-1">
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>Admin</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a></li>
+</ul>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<ul class="space-y-1">
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span>Support</a></li>
+<li><a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface transition-colors hover:bg-surface-container rounded-xl font-label-md text-label-md scale-95 duration-150 active:opacity-80" href="#"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a></li>
+</ul>
+</div>
+</nav>
+<!-- Shared Component: TopNavBar -->
+<header class="hidden md:flex justify-between items-center px-lg h-full ml-sidebar-width fixed top-0 right-0 w-[calc(100%-260px)] h-topbar-height border-b border-outline-variant bg-surface z-10 transition-all duration-200 ease-in-out">
+<div class="flex items-center gap-xl h-full">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 w-64 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-fixed focus:border-primary transition-all" placeholder="Search orders, VINs, customers..." type="text"/>
+</div>
+<nav class="flex h-full items-center gap-lg font-label-sm text-label-sm">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg px-2 py-1 transition-colors" href="#">Workshops</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg px-2 py-1 transition-colors" href="#">Teams</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg px-2 py-1 transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant font-label-md text-label-md px-3 py-1.5 hover:bg-surface-container-low rounded-lg transition-colors border border-outline-variant bg-surface-container-lowest">Quick Check-in</button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-1.5 rounded-lg hover:bg-primary-hover transition-colors shadow-sm">Create Order</button>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors w-8 h-8 flex items-center justify-center hover:bg-surface-container-low rounded-full"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors w-8 h-8 flex items-center justify-center hover:bg-surface-container-low rounded-full"><span class="material-symbols-outlined text-[20px]">settings_suggest</span></button>
+<img alt="Manager Avatar" class="w-8 h-8 rounded-full border border-outline-variant cursor-pointer object-cover" data-alt="A professional headshot of a workshop manager, softly lit against a neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGckuH35mXNrcFFzZdT0cnKcTmcW1IA0Ue2c2pqjHbqdxSpa1WPRdNbVGn2DwM9DVNrhsJqUPuRhH_l83S7EuX8HuvgXqSmKG7bgXY4MEerhBHfONsLhp8p6lxpiukHBrBOTgAbpqvVUwfERA5Ou0g8okrjeZVaIwYYtcxRrOvrNV1YUiyz_SmbIbYf38Ilt2vDigaoViiX0j7y2crTSCwROThFPFDljdQ9D1fjBAG1GFyCFN8PP-666oZNAICEhZu0udI3Q9KOwQ"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] mt-[64px] p-lg min-h-[calc(100vh-64px)]">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Service Orders</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage and track active repairs and maintenance tasks.</p>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-lg hover:bg-primary-hover transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Service Order
+            </button>
+</div>
+<!-- Filters & Tools Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-t-xl p-md flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<!-- Text Search inside list -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="pl-9 pr-3 py-1.5 w-60 bg-surface border border-outline-variant rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-fixed focus:border-primary transition-all" placeholder="Filter by ID or Name..." type="text"/>
+</div>
+<div class="h-5 w-px bg-outline-variant mx-1"></div>
+<!-- Dropdown Filters -->
+<button class="flex items-center gap-2 bg-surface border border-outline-variant text-on-surface font-label-sm text-label-sm px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
+                        Status <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-2 bg-surface border border-outline-variant text-on-surface font-label-sm text-label-sm px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
+                        Technician <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-2 bg-surface border border-outline-variant text-on-surface font-label-sm text-label-sm px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
+                        Date Range <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+</button>
+</div>
+<div class="flex items-center gap-sm">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded-lg text-on-surface bg-surface-container hover:bg-surface-container-low transition-colors" title="List View">
+<span class="material-symbols-outlined text-[18px]">view_list</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Kanban View">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+</button>
+<button class="text-primary font-label-sm text-label-sm px-2 hover:underline ml-2">Export CSV</button>
+</div>
+</div>
+<!-- Active Filter Chips -->
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-1">Active Filters:</span>
+<span class="inline-flex items-center gap-1 bg-surface-container border border-outline-variant rounded-full px-2.5 py-0.5 font-label-sm text-label-sm text-on-surface">
+                    Status: In Progress
+                    <button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container border border-outline-variant rounded-full px-2.5 py-0.5 font-label-sm text-label-sm text-on-surface">
+                    Tech: Mike R.
+                    <button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<button class="font-label-sm text-label-sm text-primary hover:underline ml-1">Clear All</button>
+</div>
+</div>
+<!-- Data Grid Container -->
+<div class="bg-surface-container-lowest border-x border-b border-outline-variant rounded-b-xl overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead class="bg-surface-bright border-b border-outline-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<tr>
+<th class="px-md py-sm font-medium w-12 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary-fixed" type="checkbox"/>
+</th>
+<th class="px-md py-sm font-medium cursor-pointer hover:text-on-surface group">
+<div class="flex items-center gap-1">Order ID <span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_downward</span></div>
+</th>
+<th class="px-md py-sm font-medium">Customer</th>
+<th class="px-md py-sm font-medium">Vehicle</th>
+<th class="px-md py-sm font-medium">Status</th>
+<th class="px-md py-sm font-medium">Technician</th>
+<th class="px-md py-sm font-medium">Start Date</th>
+<th class="px-md py-sm font-medium">Est. End</th>
+<th class="px-md py-sm font-medium text-right">Total Value</th>
+<th class="px-md py-sm font-medium w-12"></th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group h-[48px]">
+<td class="px-md py-xs text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary-fixed opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</td>
+<td class="px-md py-xs font-medium text-primary">#ORD-9021</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm">JD</div>
+<div>
+<div class="font-medium text-on-surface">John Doe</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">555-0192</div>
+</div>
+</div>
+</td>
+<td class="px-md py-xs">
+<div class="font-medium">Ford F-150</div>
+<div class="text-[11px] text-on-surface-variant font-mono">XYZ-1234</div>
+</td>
+<td class="px-md py-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-primary-fixed text-on-primary-fixed-variant border border-primary-fixed-dim">
+                                In Progress
+                            </span>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<img alt="Technician" class="w-6 h-6 rounded-full object-cover border border-outline-variant" data-alt="A small circular portrait of a male mechanic wearing a dark uniform, smiling subtly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6s-ln4pgZQF46w7DSK7svOlOzR2k2TX4cagIDxrHGqfyZY-3MQJ5ETXO1FO4aXAThkbOjmon9B918NABXuVgCOWtkcO6XohtZhKOQjcBZqLqqq0KaizfsLaopTLj3gt-nv9b5xsKDiGUhBbo5i9F8HsopRoJHAf0L3MVSKs08YSH9iDXMuSpxdlQx6TwZ9lYXyhj2GN3wXgliPodIR4UG7w2SJi8_gwDI-pLM8_1ZdplrPAgMaDzMeqD6_MV06dZ8C2JFPJ3P1Z8"/>
+<span>Mike R.</span>
+</div>
+</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 24, 08:30 AM</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 25, 05:00 PM</td>
+<td class="px-md py-xs text-right font-medium">$1,250.00</td>
+<td class="px-md py-xs text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group h-[48px]">
+<td class="px-md py-xs text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary-fixed opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</td>
+<td class="px-md py-xs font-medium text-primary">#ORD-9020</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm">AS</div>
+<div>
+<div class="font-medium text-on-surface">Alice Smith</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">555-8832</div>
+</div>
+</div>
+</td>
+<td class="px-md py-xs">
+<div class="font-medium">Toyota Camry</div>
+<div class="text-[11px] text-on-surface-variant font-mono">ABC-9876</div>
+</td>
+<td class="px-md py-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-error-container text-on-error-container border border-[#ffb4ab]">
+                                Awaiting Parts
+                            </span>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant border border-outline-variant flex items-center justify-center text-[10px] text-on-surface-variant">--</div>
+<span class="text-on-surface-variant italic text-sm">Unassigned</span>
+</div>
+</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 23, 02:15 PM</td>
+<td class="px-md py-xs text-on-surface-variant">TBD</td>
+<td class="px-md py-xs text-right font-medium">$450.00</td>
+<td class="px-md py-xs text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group h-[48px]">
+<td class="px-md py-xs text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary-fixed opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</td>
+<td class="px-md py-xs font-medium text-primary">#ORD-9019</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm">BJ</div>
+<div>
+<div class="font-medium text-on-surface">Bob Johnson</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">555-2211</div>
+</div>
+</div>
+</td>
+<td class="px-md py-xs">
+<div class="font-medium">Honda CR-V</div>
+<div class="text-[11px] text-on-surface-variant font-mono">DEF-4567</div>
+</td>
+<td class="px-md py-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-tertiary-fixed text-on-tertiary-fixed border border-[#4ae176]">
+                                Completed
+                            </span>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<img alt="Technician" class="w-6 h-6 rounded-full object-cover border border-outline-variant" data-alt="A small circular portrait of a female mechanic looking directly at the camera, wearing safety glasses resting on her head." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIVBzdhK0fT4iH6CSpNADPMloXM6JZAGLievvV4KVSOgI2Qy63Uvog9YfgUjyPHIpF-vp1oUG_lVjBUS1t6vw773n-XdwgELJo98ISpN--z7LjyyfY4RfoRKdt_uPXArNaeTPK9Dd_ij84FAR2Wsnf__cEqss_Jnx58agVyT0yhWo-oXif8E2VM9viuX6uIiVwmeukuvoYm7TtUt5bEKwbGASsd3PFScpDXFiLNMRqCAy2p811jq5bzEvdAmIprINZx2ux6hW3RzU"/>
+<span>Sarah L.</span>
+</div>
+</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 22, 09:00 AM</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 22, 04:30 PM</td>
+<td class="px-md py-xs text-right font-medium">$89.99</td>
+<td class="px-md py-xs text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group h-[48px]">
+<td class="px-md py-xs text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary-fixed opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox"/>
+</td>
+<td class="px-md py-xs font-medium text-primary">#ORD-9018</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm">cw</div>
+<div>
+<div class="font-medium text-on-surface">Corporate Wheels Inc.</div>
+<div class="text-[11px] text-on-surface-variant leading-tight">Fleet Account</div>
+</div>
+</div>
+</td>
+<td class="px-md py-xs">
+<div class="font-medium">MB Sprinter 2500</div>
+<div class="text-[11px] text-on-surface-variant font-mono">VAN-002</div>
+</td>
+<td class="px-md py-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-surface-variant text-on-surface border border-outline-variant">
+                                Pending
+                            </span>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-2">
+<img alt="Technician" class="w-6 h-6 rounded-full object-cover border border-outline-variant" data-alt="A small circular portrait of an older male mechanic with a grey beard, looking professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbpQMwY2a3VQjl8sjWmqjL3M4rN5eBq2P6zEfBknTBP1In6ny608FIc-aBLaTceUstDrdqPf41266bTes-k3c_SmH308ctBXXnTNcxaozJHHi9mxsaui0JxGEPR8PPeiFkUfVHSUCVxwJbGNNNvqGzzneeC0hRJ8Ro0giwHBYVM99aNk8BM4hYV8Rm08-8jQru1jKC3qEpm2gdz5RPoYwoYh5BwSxCty8IHDKvQMHdingb1zEirJDU6BBvyHQbYuYLkArlmN4rZyg"/>
+<span>Dave C.</span>
+</div>
+</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 24, 11:00 AM</td>
+<td class="px-md py-xs text-on-surface-variant">Oct 26, 12:00 PM</td>
+<td class="px-md py-xs text-right font-medium">$2,100.50</td>
+<td class="px-md py-xs text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Footer / Pagination -->
+<div class="bg-surface-bright px-md py-3 border-t border-outline-variant flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 4 of 48 entries</p>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container rounded transition-colors disabled:opacity-50" disabled=""><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center font-label-sm text-label-sm rounded bg-primary-fixed text-primary">1</button>
+<button class="w-8 h-8 flex items-center justify-center font-label-sm text-label-sm rounded hover:bg-surface-container text-on-surface-variant transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center font-label-sm text-label-sm rounded hover:bg-surface-container text-on-surface-variant transition-colors">3</button>
+<span class="px-1 text-on-surface-variant">...</span>
+<button class="w-8 h-8 flex items-center justify-center font-label-sm text-label-sm rounded hover:bg-surface-container text-on-surface-variant transition-colors">12</button>
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container rounded transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

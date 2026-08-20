@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Subscription &amp; Billing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "on-secondary-container": "#596373",
+                        "surface-container-highest": "#f8ddd2",
+                        "primary-fixed": "#ffdbcd",
+                        "background": "#fff8f6",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "secondary-container": "#d6e0f3",
+                        "secondary": "#555f6f",
+                        "primary-fixed-dim": "#ffb596",
+                        "inverse-primary": "#ffb596",
+                        "surface-tint": "#a33e00",
+                        "surface": "#fff8f6",
+                        "on-surface": "#271812",
+                        "primary-container": "#ff6500",
+                        "outline-variant": "#e3bfb1",
+                        "tertiary-fixed": "#6bff8f",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "tertiary": "#006e2f",
+                        "on-background": "#271812",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "outline": "#8e7164",
+                        "on-primary-fixed": "#360f00",
+                        "surface-container": "#ffe9e2",
+                        "inverse-on-surface": "#ffede7",
+                        "on-primary-container": "#551d00",
+                        "inverse-surface": "#3d2d26",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#002109",
+                        "on-secondary-fixed": "#121c2a",
+                        "tertiary-container": "#00ad4e",
+                        "surface-dim": "#f0d4ca",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#f8ddd2",
+                        "surface-bright": "#fff8f6",
+                        "on-tertiary-container": "#003714",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "on-surface-variant": "#5a4136",
+                        "surface-container-high": "#fee2d8",
+                        "secondary-fixed": "#d9e3f6",
+                        "primary": "#a33e00",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#fff1ec"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "sm": "8px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "3xl": "64px",
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "gutter": "20px",
+                        "lg": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Manrope"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for mechanical feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8ddd2; /* surface-variant */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bfb1; /* outline-variant */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e7164; /* outline */
+        }
+        
+        /* Interactive button press effect */
+        .btn-press:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 right-0 h-topbar-height z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-lg w-[calc(100%-260px)] ml-[260px]">
+<!-- Search Bar (on_left) -->
+<div class="flex items-center">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary-fixed-dim transition-all w-64 text-body-md text-on-surface" placeholder="Search invoices, plans..." type="text"/>
+</div>
+</div>
+<!-- Trailing Actions & Profile -->
+<div class="flex items-center gap-md">
+<button class="text-on-secondary-fixed-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-inverse-primary cursor-pointer transition-colors w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-secondary-fixed-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-inverse-primary cursor-pointer transition-colors w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-secondary-fixed-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-inverse-primary cursor-pointer transition-colors w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a mechanic workshop manager in modern attire, well-lit studio setting, clean background, conveying competence and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZqjiR2IVuthFleNrvPOU64CrM0284o_wDkjA_8neGWuL36cN9aU0LeKFgGaSW1MKiLAWuoqHqe-_2ZAb5TOh4i1ulmxKBQ_rWdwlHU4eL-DUvN3XJMoyxVQ7bMNVXM4Gm-vM8q2cXPeV3aqAdm9NNlM0NLvp4z26XcmxT5HcrP0Z3oYPxemNwpBHAQu6SB2vvFBIAinlNJZK2Df1XWhblDpVSALzCpatN7lA9_T9AadHv4cahn7AzqS2Iq6mojz0IP2FWpcMh25s"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">J. Doe</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Admin</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col p-md overflow-y-auto z-50">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 mb-xl px-2">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">GoMech</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Precision Workshop</p>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary-container text-on-primary hover:bg-[#E85D00] btn-press transition-all py-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 mb-xl shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Job Card
+        </button>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">groups</span>
+                Clients
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">directions_car</span>
+                Vehicles
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">request_quote</span>
+                Quotes
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">shopping_cart</span>
+                Orders
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">payments</span>
+                Financial
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">calendar_today</span>
+                Calendar
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-on-secondary-fixed-variant transition-all rounded-lg font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">psychology</span>
+                AI Insights
+            </a>
+<!-- Active State Navigation -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold font-label-md text-label-md scale-[0.98] transition-transform duration-150 relative overflow-hidden" href="#">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<span class="material-symbols-outlined text-[20px] text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Administration
+            </a>
+</nav>
+<!-- Footer Links -->
+<div class="mt-auto pt-xl border-t border-outline-variant flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-error-container hover:text-error transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                Sign Out
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] mt-[64px] h-[calc(100vh-64px)] overflow-y-auto bg-background p-lg relative">
+<!-- Page Header -->
+<div class="mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-background tracking-tight mb-2">Subscription &amp; Billing</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your GoMech plan, billing details, and view past invoices.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-lg mb-xl">
+<!-- Subscription Overview (Left Column - Span 8) -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-1 gap-lg">
+<!-- Current Plan Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg flex flex-col relative overflow-hidden">
+<!-- Subtle background decoration -->
+<div class="absolute -right-10 -top-10 text-surface-container-high opacity-50 pointer-events-none">
+<span class="material-symbols-outlined text-[160px]">diamond</span>
+</div>
+<div class="flex justify-between items-start mb-xl relative z-10">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-2.5 py-1 bg-tertiary-container text-on-tertiary-container rounded-full font-label-sm text-label-sm uppercase tracking-wider">Active Plan</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Elite Workshop Pro</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Billed Monthly</p>
+</div>
+<div class="text-right">
+<div class="font-headline-lg text-headline-lg text-on-surface">$199<span class="font-body-md text-body-md text-on-surface-variant">/mo</span></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md py-md border-y border-outline-variant mb-xl relative z-10">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Next Renewal</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Nov 15, 2023</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Billing Cycle</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Auto-renew active</span>
+</div>
+</div>
+<div class="flex gap-md mt-auto relative z-10">
+<button class="bg-primary-container text-on-primary hover:bg-[#E85D00] btn-press transition-all px-6 py-2 rounded-lg font-label-md text-label-md shadow-sm">
+                            Change Plan
+                        </button>
+<button class="bg-surface text-on-surface border border-outline-variant hover:bg-surface-container-low btn-press transition-all px-6 py-2 rounded-lg font-label-md text-label-md">
+                            Cancel Subscription
+                        </button>
+</div>
+</div>
+<!-- Usage Metrics -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xl">Resource Usage</h3>
+<div class="space-y-lg">
+<!-- Metric 1: Seats -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">engineering</span>
+<span class="font-label-md text-label-md text-on-surface">Mechanic Seats</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface">8</strong> / 10 used</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 80%;"></div>
+</div>
+</div>
+<!-- Metric 2: Bays -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">garage</span>
+<span class="font-label-md text-label-md text-on-surface">Active Bays</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface">12</strong> / 15 used</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container rounded-full" style="width: 80%;"></div>
+</div>
+</div>
+<!-- Metric 3: Storage -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">cloud</span>
+<span class="font-label-md text-label-md text-on-surface">Document Storage</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface">45GB</strong> / 50GB</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 90%;"></div>
+</div>
+<p class="mt-2 font-body-sm text-body-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">warning</span> Approaching limit
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Span 4 -->
+<div class="col-span-12 lg:col-span-4 grid grid-cols-1 gap-lg">
+<!-- Payment Method -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Payment Method</h3>
+</div>
+<div class="border border-outline-variant rounded-lg p-md mb-md flex items-center justify-between bg-surface-container-lowest">
+<div class="flex items-center gap-3">
+<div class="w-12 h-8 bg-secondary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">credit_card</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">MasterCard ending in 8829</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expires 12/25</p>
+</div>
+</div>
+<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary-container rounded text-[10px] font-bold uppercase">Default</span>
+</div>
+<button class="w-full bg-surface text-primary border border-outline-variant hover:bg-surface-container-low hover:border-primary transition-all py-2 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit Payment Method
+                    </button>
+</div>
+<!-- Add-ons Promotions -->
+<div class="bg-gradient-to-br from-surface-container-low to-surface-container-high border border-outline-variant rounded-xl p-lg relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">psychology</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2 relative z-10">AI Advanced Module</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md relative z-10">Automate quoting and inventory predictions with our latest AI tools.</p>
+<div class="font-headline-sm text-headline-sm text-primary mb-md relative z-10">+$49<span class="font-body-sm text-body-sm text-on-surface-variant">/mo</span></div>
+<button class="w-full bg-primary-container text-on-primary hover:bg-[#E85D00] btn-press transition-all py-2 rounded-lg font-label-md text-label-md relative z-10">
+                        Add to Plan
+                    </button>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl p-lg flex items-center justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">+50GB Extra Storage</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">$10/mo</p>
+</div>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Billing History Table -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden mb-xl">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Billing History</h3>
+<button class="text-primary font-label-md text-label-md hover:underline bg-transparent">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-lg font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="py-3 px-lg font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Invoice ID</th>
+<th class="py-3 px-lg font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Amount</th>
+<th class="py-3 px-lg font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="py-3 px-lg font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-3 px-lg">Oct 15, 2023</td>
+<td class="py-3 px-lg font-medium">INV-2023-1089</td>
+<td class="py-3 px-lg">$199.00</td>
+<td class="py-3 px-lg">
+<span class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded-full font-label-sm text-label-sm">Paid</span>
+</td>
+<td class="py-3 px-lg text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-low inline-flex">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-3 px-lg">Sep 15, 2023</td>
+<td class="py-3 px-lg font-medium">INV-2023-0942</td>
+<td class="py-3 px-lg">$199.00</td>
+<td class="py-3 px-lg">
+<span class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded-full font-label-sm text-label-sm">Paid</span>
+</td>
+<td class="py-3 px-lg text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-low inline-flex">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-3 px-lg">Aug 15, 2023</td>
+<td class="py-3 px-lg font-medium">INV-2023-0811</td>
+<td class="py-3 px-lg">$199.00</td>
+<td class="py-3 px-lg">
+<span class="px-2 py-1 bg-tertiary-container text-on-tertiary-container rounded-full font-label-sm text-label-sm">Paid</span>
+</td>
+<td class="py-3 px-lg text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-md hover:bg-surface-container-low inline-flex">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</body></html>

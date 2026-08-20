@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech Workshop Admin - Staff &amp; Roles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#006e2f",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#ffe9e2",
+                    "outline-variant": "#e3bfb1",
+                    "on-tertiary-container": "#003714",
+                    "on-primary-fixed-variant": "#7d2d00",
+                    "on-primary-container": "#551d00",
+                    "secondary-fixed": "#d9e3f6",
+                    "on-secondary-container": "#596373",
+                    "surface-container-low": "#fff1ec",
+                    "primary-container": "#ff6500",
+                    "primary": "#a33e00",
+                    "inverse-primary": "#ffb596",
+                    "tertiary-fixed": "#6bff8f",
+                    "background": "#fff8f6",
+                    "secondary-fixed-dim": "#bdc7d9",
+                    "secondary-container": "#d6e0f3",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#3d2d26",
+                    "surface-container-highest": "#f8ddd2",
+                    "surface-container-high": "#fee2d8",
+                    "on-secondary-fixed": "#121c2a",
+                    "secondary": "#555f6f",
+                    "surface-dim": "#f0d4ca",
+                    "tertiary-container": "#00ad4e",
+                    "surface-variant": "#f8ddd2",
+                    "primary-fixed-dim": "#ffb596",
+                    "primary-fixed": "#ffdbcd",
+                    "on-surface-variant": "#5a4136",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#360f00",
+                    "on-secondary": "#ffffff",
+                    "outline": "#8e7164",
+                    "on-background": "#271812",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#ffede7",
+                    "surface": "#fff8f6",
+                    "on-tertiary-fixed": "#002109",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#3d4756",
+                    "surface-bright": "#fff8f6",
+                    "surface-tint": "#a33e00",
+                    "on-surface": "#271812",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005321"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "20px",
+                    "base": "4px",
+                    "2xl": "48px",
+                    "3xl": "64px",
+                    "topbar-height": "64px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "sidebar-width": "260px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "headline-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for mechanical feel */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3bfb1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a33e00; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 z-50 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width h-topbar-height flex justify-between items-center px-lg ml-sidebar-width w-[calc(100%-260px)]">
+<!-- Left: Search -->
+<div class="flex items-center w-1/3">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border border-transparent hover:border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg py-[8px] pl-[36px] pr-sm font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant transition-all outline-none" placeholder="Search workshop, jobs, or parts..." type="text"/>
+</div>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-md">
+<!-- Trailing Secondary Action -->
+<button class="flex items-center gap-xs px-sm py-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-DEFAULT font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+                Switch Workshop
+            </button>
+<div class="h-[24px] w-px bg-outline-variant mx-xs"></div>
+<!-- Trailing Icon Actions -->
+<button class="w-[36px] h-[36px] rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-[8px] right-[8px] w-[8px] h-[8px] bg-primary rounded-full border border-surface"></span>
+</button>
+<button class="w-[36px] h-[36px] rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+<!-- Trailing Primary Action (Profile) -->
+<button class="ml-sm flex items-center gap-sm p-xs pr-sm rounded-full border border-outline-variant hover:bg-surface-container-low transition-colors">
+<img alt="User Profile Avatar" class="w-[32px] h-[32px] rounded-full object-cover" data-alt="A small, professional headshot photo of an automotive workshop manager wearing a clean, dark blue mechanic uniform shirt. The lighting is bright and modern, set against a neutral light grey background, fitting for a B2B SaaS dashboard profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfD7yvw9M6N2FPbM_oLujMlrdKv14cSAjjFE4QmsD0zXXfqMmBxTQRKTXb7AuXPruNeFn4q1r5MNtvrpi8r-fl77IohK0KqS8yo2E7MdgELxu4dvkIxQe9gvrKmYgjVeb5geuhcsRLjITcwoFySKm0SXMGXaivwKl2xvCxyCEH2XZaMQVqEoKEF8uo7qq9WXBlIXAi4HiPmJx3Jmp0yznnf_scfaQ2WpgjxsIQXF_EwqU3OzkDiQ-4OJ4Q5gbftrWPd6lH64BUQyM"/>
+<span class="font-label-md text-label-md text-on-surface hidden lg:block">Profile</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-inverse-surface fixed left-0 top-0 h-screen w-sidebar-width border-r border-outline-variant dark:border-outline flex flex-col py-lg z-40">
+<!-- Header -->
+<div class="px-md mb-xl flex items-center gap-sm">
+<div class="w-[40px] h-[40px] bg-primary-container rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined fill">build_circle</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">GoMech</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Workshop Admin</p>
+</div>
+</div>
+<!-- CTA -->
+<div class="px-md mb-md">
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md py-[10px] rounded-xl flex items-center justify-center gap-sm shadow-sm transition-all active:translate-y-px">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Job
+            </button>
+</div>
+<!-- Tabs -->
+<div class="flex-1 overflow-y-auto px-sm space-y-[2px]">
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+                Dashboard
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">build</span>
+                Jobs
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">inventory_2</span>
+                Inventory
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">group</span>
+                Customers
+            </a>
+<!-- Active Tab: Staff & Roles -->
+<a class="flex items-center gap-md bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-xl px-md py-sm border-l-4 border-primary font-label-md text-label-md translate-x-1 transition-transform duration-150 relative" href="#">
+<span class="material-symbols-outlined text-[20px] fill">admin_panel_settings</span>
+                Staff &amp; Roles
+            </a>
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+                Settings
+            </a>
+</div>
+<!-- Footer Tabs -->
+<div class="px-sm mt-auto pt-md border-t border-outline-variant space-y-[2px]">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">help</span>
+                Help Center
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-on-secondary-fixed-variant transition-colors duration-200 rounded-xl font-label-md text-label-md group text-error hover:text-error" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar-width mt-topbar-height p-lg min-h-[calc(100vh-64px)] bg-background">
+<div class="max-w-7xl mx-auto space-y-md">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-md mb-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Staff Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Manage your workshop mechanics, managers, and system access.</p>
+</div>
+<div class="flex items-center gap-sm">
+<button class="bg-surface border border-outline-variant text-on-surface font-label-md text-label-md px-md py-[10px] rounded-lg hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-md py-[10px] rounded-lg hover:bg-primary-container transition-colors shadow-sm active:translate-y-px flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Invite User
+                    </button>
+</div>
+</div>
+<!-- Filters & Controls Bar -->
+<div class="bg-surface rounded-xl border border-outline-variant p-sm flex flex-wrap items-center justify-between gap-sm">
+<!-- Left: Search & Tabs -->
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface border border-outline-variant hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary rounded-md py-[6px] pl-[32px] pr-sm font-body-sm text-body-sm text-on-surface transition-all outline-none" placeholder="Search staff..." type="text"/>
+</div>
+<div class="h-[24px] w-px bg-outline-variant"></div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high text-on-surface font-label-sm text-label-sm px-sm py-[4px] rounded-full border border-outline-variant flex items-center gap-xs">
+                            Role: All <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<button class="bg-surface text-on-surface-variant font-label-sm text-label-sm px-sm py-[4px] rounded-full border border-transparent hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+                            Status: Active <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Right: View Toggles -->
+<div class="flex items-center gap-xs bg-surface-container-low p-xs rounded-lg border border-outline-variant">
+<button class="p-xs bg-surface rounded shadow-sm text-primary">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+</div>
+</div>
+<!-- High-Density Data Grid -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-x-auto shadow-sm">
+<table class="w-full text-left whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider w-[40px]" scope="col">
+<input class="rounded-[4px] border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider" scope="col">User</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider" scope="col">Role</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider" scope="col">Status</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider" scope="col">Assigned Bay</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-sm px-md font-semibold tracking-wider" scope="col">Last Login</th>
+<th class="relative py-sm px-md w-[60px]" scope="col"><span class="sr-only">Actions</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface">
+<!-- Row 1: Admin / Active -->
+<tr class="hover:bg-surface-container-lowest transition-colors group h-[48px]">
+<td class="px-md py-sm">
+<input class="rounded-[4px] border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-sm">
+<img alt="Avatar" class="w-[32px] h-[32px] rounded-full object-cover border border-outline-variant" data-alt="A clean, modern headshot of a female workshop administrator with a neat hairstyle, wearing a crisp dark grey polo shirt. The background is a solid light grey. The lighting is even and professional, suitable for a corporate B2B SaaS application user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1i5AqilJTBTP7nzY1AKha-hdBZdM3jDnnzMsT1os7NdQToXj0JezyMq0a9TDEZjx94flwnD8Hnnm2C0cjF1BFI-e2UIOZV2Y44AUwCGsXt2NofF6zad8NTBjSMd0xDvLrXZ8i7EwSBiy5sOKtnPieYNYRnQXKUtE2yhk4JdrY0DjP1jqjBFcOE2x8MQr9Du7rJpGkQlaZiIkYbtI29Vuz7yAtAgmLb0N22_UgxThUL_tzmUD_spbRX6LhbTJ3haeKhosloSv7uBY"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Sarah Jenkins</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-[11px]">s.jenkins@gomech.com</div>
+</div>
+</div>
+</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-[4px] px-[6px] py-[2px] rounded-[4px] bg-secondary-container text-on-secondary-container font-label-sm text-[10px] uppercase border border-outline-variant/50">
+<span class="material-symbols-outlined text-[12px]">shield_person</span> Admin
+                                </span>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-[6px]">
+<div class="w-[6px] h-[6px] rounded-full bg-tertiary"></div>
+<span class="font-body-sm text-body-sm text-on-surface">Active</span>
+</div>
+</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant">All Bays</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant">Today, 08:42 AM</td>
+<td class="px-md py-sm text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-[2px] rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Mechanic / Active -->
+<tr class="hover:bg-surface-container-lowest transition-colors group h-[48px]">
+<td class="px-md py-sm">
+<input class="rounded-[4px] border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-sm">
+<div class="w-[32px] h-[32px] rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-label-md text-primary">MR</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Marcus Reed</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-[11px]">m.reed@gomech.com</div>
+</div>
+</div>
+</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-[4px] font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">build</span> Mechanic
+                                </span>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-[6px]">
+<div class="w-[6px] h-[6px] rounded-full bg-tertiary"></div>
+<span class="font-body-sm text-body-sm text-on-surface">Active</span>
+</div>
+</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface">Bay 4 (Heavy)</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant">Yesterday, 17:15 PM</td>
+<td class="px-md py-sm text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-[2px] rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Consultant / Invited -->
+<tr class="hover:bg-surface-container-lowest transition-colors group h-[48px]">
+<td class="px-md py-sm">
+<input class="rounded-[4px] border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-sm opacity-60">
+<div class="w-[32px] h-[32px] border border-dashed border-outline-variant rounded-full flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface italic">Awaiting Acceptance</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-[11px]">d.chen@contractor.com</div>
+</div>
+</div>
+</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-[4px] font-body-sm text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">support_agent</span> Consultant
+                                </span>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-[6px] bg-surface-container-high inline-flex px-[6px] py-[2px] rounded-[4px]">
+<span class="material-symbols-outlined text-[12px] text-on-surface-variant">schedule</span>
+<span class="font-label-sm text-[10px] uppercase text-on-surface-variant">Invited</span>
+</div>
+</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant">-</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant italic">Never</td>
+<td class="px-md py-sm text-right">
+<button class="text-primary font-label-sm text-[11px] hover:underline px-[4px] opacity-0 group-hover:opacity-100 transition-opacity">Resend</button>
+</td>
+</tr>
+<!-- Row 4: Mechanic / Suspended -->
+<tr class="hover:bg-surface-container-lowest transition-colors group h-[48px]">
+<td class="px-md py-sm">
+<input class="rounded-[4px] border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-sm">
+<img alt="Avatar" class="w-[32px] h-[32px] rounded-full object-cover border border-outline-variant grayscale" data-alt="A portrait photo of a male automotive mechanic, looking slightly serious. He is wearing a faded work shirt. The image is cropped closely as a circular profile picture, set against a stark, high-contrast white background typical of industrial SaaS systems." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrkMWCa8_jSWg_Dsl3I2LvqkQNpO8n4b0ZLpEzTklc5xdsFk-w14Wxan_pPiMiGv7fmbnyM_Ulz9lHbltYA2iR3PxymOY3HPNUfemn01t3tHFXfayY28lcb4WJUvRsUx1hdkS74gqeFsNBM96qrYH19KFY9ROLuAdwPQg8PQng6pRennJ5B14v-WK-ZCHxENFrVufvWe2p_fyhNSIVyxWKaJYNKaU5rLvw9HPIt0xwVr5O6yyr96mDLrx4AOm6oLspZ38alv-WaU8"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface line-through decoration-outline-variant">Tom Hardy</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-[11px]">t.hardy@gomech.com</div>
+</div>
+</div>
+</td>
+<td class="px-md py-sm">
+<span class="inline-flex items-center gap-[4px] font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">build</span> Mechanic
+                                </span>
+</td>
+<td class="px-md py-sm">
+<div class="flex items-center gap-[6px] bg-error-container text-on-error-container inline-flex px-[6px] py-[2px] rounded-[4px]">
+<div class="w-[4px] h-[4px] rounded-full bg-error"></div>
+<span class="font-label-sm text-[10px] uppercase">Suspended</span>
+</div>
+</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant text-error">Access Revoked</td>
+<td class="px-md py-sm font-body-sm text-body-sm text-on-surface-variant">Oct 12, 2023</td>
+<td class="px-md py-sm text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-[2px] rounded hover:bg-surface-container-high opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Footer / Pagination -->
+<div class="bg-surface-container-lowest px-md py-sm border-t border-outline-variant flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 4 of 24 staff</span>
+<div class="flex items-center gap-xs">
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-[24px] h-[24px] flex items-center justify-center rounded bg-primary text-on-primary font-label-sm text-[11px]">1</button>
+<button class="w-[24px] h-[24px] flex items-center justify-center rounded hover:bg-surface-container-high text-on-surface font-label-sm text-[11px]">2</button>
+<button class="w-[24px] h-[24px] flex items-center justify-center rounded hover:bg-surface-container-high text-on-surface font-label-sm text-[11px]">3</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

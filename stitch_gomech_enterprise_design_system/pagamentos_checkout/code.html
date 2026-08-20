@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Secure Checkout</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#d9e3f6",
+                    "inverse-primary": "#ffb596",
+                    "surface-tint": "#a33e00",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#555f6f",
+                    "primary-fixed": "#ffdbcd",
+                    "surface-variant": "#f8ddd2",
+                    "on-primary-container": "#551d00",
+                    "primary-fixed-dim": "#ffb596",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "on-tertiary-fixed-variant": "#005321",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#ffe9e2",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#6bff8f",
+                    "primary": "#a33e00",
+                    "surface-dim": "#f0d4ca",
+                    "on-surface": "#271812",
+                    "on-secondary-fixed-variant": "#3d4756",
+                    "outline-variant": "#e3bfb1",
+                    "on-tertiary-container": "#003714",
+                    "on-secondary-fixed": "#121c2a",
+                    "error": "#ba1a1a",
+                    "primary-container": "#ff6500",
+                    "surface-container-highest": "#f8ddd2",
+                    "surface-bright": "#fff8f6",
+                    "on-primary-fixed": "#360f00",
+                    "surface": "#fff8f6",
+                    "tertiary-container": "#00ad4e",
+                    "secondary-container": "#d6e0f3",
+                    "on-surface-variant": "#5a4136",
+                    "on-secondary-container": "#596373",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#fff1ec",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#006e2f",
+                    "surface-container-high": "#fee2d8",
+                    "background": "#fff8f6",
+                    "inverse-on-surface": "#ffede7",
+                    "on-primary-fixed-variant": "#7d2d00",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#271812",
+                    "outline": "#8e7164",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#3d2d26",
+                    "secondary-fixed-dim": "#bdc7d9",
+                    "on-tertiary-fixed": "#002109"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "sidebar-width": "260px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "2xl": "48px",
+                    "topbar-height": "64px",
+                    "3xl": "64px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Manrope"],
+                    "headline-sm": ["Manrope"],
+                    "headline-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["13px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3bfb1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a33e00; }
+        
+        /* Input focus glow based on style guidance */
+        .gomech-input {
+            transition: all 0.2s ease-in-out;
+        }
+        .gomech-input:focus {
+            outline: none;
+            border-color: #a33e00;
+            box-shadow: 0 0 0 3px rgba(255, 181, 150, 0.4); /* soft orange glow using inverse-primary */
+        }
+
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #a33e00;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #a33e00;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Minimal Header (Transactional Screen - Suppressed Main Nav) -->
+<header class="w-full bg-surface-container-lowest border-b border-outline-variant py-md px-gutter flex justify-between items-center sticky top-0 z-50">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">GoMech</h1>
+</div>
+<a class="font-label-md text-label-md text-secondary hover:text-on-surface transition-colors flex items-center gap-xs" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Cancel &amp; Return
+        </a>
+</header>
+<!-- Main Checkout Canvas -->
+<main class="flex-grow w-full max-w-6xl mx-auto px-gutter py-xl md:py-2xl grid grid-cols-1 lg:grid-cols-12 gap-xl items-start">
+<!-- Left Column: Payment Form -->
+<div class="lg:col-span-7 space-y-lg">
+<div class="mb-md">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Secure Checkout</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Complete your subscription to unlock GoMech Workshop Admin.</p>
+</div>
+<!-- Payment Method Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg md:p-xl shadow-[0_10px_15px_-3px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">credit_card</span>
+                    Payment Details
+                </h3>
+<form class="space-y-md">
+<!-- Name on Card -->
+<div class="space-y-xs">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase" for="cardName">Name on Card</label>
+<input class="gomech-input w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50" id="cardName" placeholder="e.g. Jane Doe" type="text"/>
+</div>
+<!-- Card Number -->
+<div class="space-y-xs">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase" for="cardNumber">Card Number</label>
+<div class="relative">
+<input class="gomech-input w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-md pr-xl py-sm font-body-md text-body-md text-on-surface tracking-wide placeholder:text-on-surface-variant/50" id="cardNumber" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-md pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">credit_score</span>
+</div>
+</div>
+</div>
+<!-- Expiry & CVV Row -->
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase" for="expiry">Expiry Date</label>
+<input class="gomech-input w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50" id="expiry" placeholder="MM/YY" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase flex items-center gap-xs" for="cvv">
+                                CVV
+                                <span class="material-symbols-outlined text-[14px] cursor-help" title="3 digits on back of card">info</span>
+</label>
+<input class="gomech-input w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50" id="cvv" placeholder="123" type="text"/>
+</div>
+</div>
+</form>
+</div>
+<!-- Billing Address (Simplified) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-[0_10px_15px_-3px_rgba(0,0,0,0.05)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                    Billing Zip/Postal Code
+                </h3>
+<div class="space-y-xs max-w-sm">
+<input class="gomech-input w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50" placeholder="Enter Zip Code" type="text"/>
+</div>
+</div>
+</div>
+<!-- Right Column: Order Summary -->
+<div class="lg:col-span-5 lg:sticky lg:top-[100px]">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-[0_10px_15px_-3px_rgba(0,0,0,0.05)]">
+<!-- Plan Header -->
+<div class="bg-surface-container-low p-lg border-b border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-on-surface">GoMech Pro</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Full access to Workshop Admin tools.</p>
+</div>
+<div class="p-lg space-y-lg">
+<!-- Billing Toggle -->
+<div class="flex items-center justify-between bg-surface p-md rounded-lg border border-outline-variant">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Annual Billing</span>
+<span class="font-label-sm text-label-sm text-tertiary-container bg-tertiary-container/10 px-xs py-[2px] rounded inline-block mt-xs w-max">Save 20%</span>
+</div>
+<!-- Custom Toggle -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-all duration-300" id="billingToggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-outline-variant cursor-pointer transition-colors duration-300" for="billingToggle"></label>
+</div>
+</div>
+<!-- Line Items -->
+<div class="space-y-sm font-body-md text-body-md border-b border-outline-variant pb-md">
+<div class="flex justify-between text-on-surface">
+<span>Subscription <span class="text-on-surface-variant" id="cycleText">(Annual)</span></span>
+<span class="font-label-md text-label-md" id="priceDisplay">$890.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Taxes &amp; Fees</span>
+<span>Calculated at next step</span>
+</div>
+</div>
+<!-- Total -->
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Total due today</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary" id="totalDisplay">$890.00</span>
+</div>
+<!-- Submit Action -->
+<button class="w-full bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container font-label-md text-label-md py-md rounded-lg transition-colors duration-200 flex justify-center items-center gap-sm active:translate-y-[1px]">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+                        Pay Securely
+                    </button>
+<p class="font-body-sm text-body-sm text-center text-on-surface-variant">By confirming your subscription, you agree to our Terms of Service and Privacy Policy.</p>
+</div>
+</div>
+<!-- Security Trust Badges -->
+<div class="mt-lg flex justify-center gap-lg text-secondary">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="font-label-sm text-label-sm">256-bit Encryption</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+<span class="font-label-sm text-label-sm">PCI Compliant</span>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for the billing toggle
+        const toggle = document.getElementById('billingToggle');
+        const cycleText = document.getElementById('cycleText');
+        const priceDisplay = document.getElementById('priceDisplay');
+        const totalDisplay = document.getElementById('totalDisplay');
+
+        const monthlyPrice = "$89.00";
+        const annualPrice = "$890.00"; // roughly 20% off 12 months
+
+        toggle.addEventListener('change', function() {
+            if (this.checked) {
+                cycleText.textContent = "(Annual)";
+                priceDisplay.textContent = annualPrice;
+                totalDisplay.textContent = annualPrice;
+                // Add a subtle flash effect
+                totalDisplay.style.opacity = '0.5';
+                setTimeout(() => totalDisplay.style.opacity = '1', 150);
+            } else {
+                cycleText.textContent = "(Monthly)";
+                priceDisplay.textContent = monthlyPrice;
+                totalDisplay.textContent = monthlyPrice;
+                // Add a subtle flash effect
+                totalDisplay.style.opacity = '0.5';
+                setTimeout(() => totalDisplay.style.opacity = '1', 150);
+            }
+        });
+    </script>
+</body></html>

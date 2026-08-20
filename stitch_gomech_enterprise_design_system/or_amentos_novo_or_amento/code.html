@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - New Quote</title>
+<!-- Google Fonts: Manrope (Headlines) & Inter (Body) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config (Injected from Style Guidance) -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#fff8f6",
+                    "on-tertiary-fixed-variant": "#005321",
+                    "inverse-on-surface": "#ffede7",
+                    "background": "#fff8f6",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#6bff8f",
+                    "on-surface-variant": "#5a4136",
+                    "surface-dim": "#f0d4ca",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#360f00",
+                    "secondary-fixed": "#d9e3f6",
+                    "outline-variant": "#e3bfb1",
+                    "outline": "#8e7164",
+                    "on-surface": "#271812",
+                    "primary-fixed": "#ffdbcd",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#fff1ec",
+                    "surface-container": "#ffe9e2",
+                    "primary-container": "#ff6500",
+                    "on-background": "#271812",
+                    "surface-variant": "#f8ddd2",
+                    "on-tertiary-fixed": "#002109",
+                    "surface": "#fff8f6",
+                    "on-tertiary-container": "#003714",
+                    "on-primary-fixed-variant": "#7d2d00",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#fee2d8",
+                    "tertiary": "#006e2f",
+                    "inverse-surface": "#3d2d26",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#f8ddd2",
+                    "secondary-container": "#d6e0f3",
+                    "surface-tint": "#a33e00",
+                    "inverse-primary": "#ffb596",
+                    "tertiary-container": "#00ad4e",
+                    "tertiary-fixed-dim": "#4ae176",
+                    "secondary": "#555f6f",
+                    "on-secondary-container": "#596373",
+                    "primary-fixed-dim": "#ffb596",
+                    "primary": "#a33e00",
+                    "on-secondary-fixed-variant": "#3d4756",
+                    "on-secondary-fixed": "#121c2a",
+                    "secondary-fixed-dim": "#bdc7d9",
+                    "on-primary-container": "#551d00",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "3xl": "64px",
+                    "xl": "32px",
+                    "topbar-height": "64px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "sidebar-width": "260px",
+                    "gutter": "20px",
+                    "2xl": "48px",
+                    "sm": "8px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Manrope"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                    "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                    "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                    "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom Utilities for High Density */
+        .input-hd {
+            @apply border border-outline-variant rounded bg-surface-container-lowest px-sm py-[4px] focus:border-primary focus:ring-1 focus:ring-primary outline-none text-body-sm font-body-sm text-on-surface w-full transition-all;
+        }
+        .btn-ghost {
+            @apply text-primary font-label-md text-label-md hover:bg-surface-container-low px-sm py-[6px] rounded transition-colors flex items-center gap-xs;
+        }
+        .btn-secondary {
+            @apply bg-surface border border-outline-variant text-on-surface font-label-md text-label-md px-md py-[8px] rounded hover:bg-surface-container-low transition-colors;
+        }
+        .btn-primary {
+            @apply bg-primary text-on-primary font-label-md text-label-md px-md py-[8px] rounded hover:bg-[#E85D00] transition-colors active:translate-y-[1px];
+        }
+        
+        /* Material Symbols Fill Configuration */
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen flex flex-col">
+<!-- Task-Focused Header (Navigation Shell Suppressed) -->
+<header class="h-topbar-height bg-surface border-b border-outline-variant flex items-center justify-between px-lg sticky top-0 z-40">
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="h-[24px] w-[1px] bg-outline-variant"></div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-sm">
+                    Quote #DRAFT-8492
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-high text-on-surface-variant uppercase tracking-wider">Draft</span>
+</h1>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="btn-ghost">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                Save Draft
+            </button>
+<button class="btn-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                Preview &amp; Send
+            </button>
+</div>
+</header>
+<!-- Main Editor Canvas -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto p-lg grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Primary Details & Items (Span 8) -->
+<div class="lg:col-span-8 flex flex-col gap-lg">
+<!-- Client & Vehicle Selection Card -->
+<section class="bg-surface border border-outline-variant rounded-lg p-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Client Selection -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase">Client</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">person</span>
+<input class="input-hd pl-[32px]" placeholder="Search or add client..." type="text" value="Acme Logistics Corp"/>
+<button class="absolute right-sm top-1/2 -translate-y-1/2 text-primary hover:text-surface-tint">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Vehicle Selection -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase">Vehicle</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">directions_car</span>
+<input class="input-hd pl-[32px]" placeholder="Select vehicle..." type="text" value="2019 Ford Transit 350HD"/>
+<button class="absolute right-sm top-1/2 -translate-y-1/2 text-primary hover:text-surface-tint">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Items Table Card (High Density) -->
+<section class="bg-surface border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="bg-surface-container-low px-md py-sm border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Line Items</h2>
+<div class="flex gap-sm">
+<button class="btn-ghost text-body-sm">
+<span class="material-symbols-outlined text-[16px]">build</span>
+                            Add Part
+                        </button>
+<button class="btn-ghost text-body-sm">
+<span class="material-symbols-outlined text-[16px]">handyman</span>
+                            Add Service
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead>
+<tr class="bg-surface-bright border-b border-outline-variant">
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[40px] text-center">Type</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase">Item Description</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[80px] text-right">Qty</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[120px] text-right">Unit Price</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[100px] text-right">Disc %</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[120px] text-right">Subtotal</th>
+<th class="py-xs px-sm font-label-sm text-label-sm text-on-surface-variant uppercase w-[40px]"></th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Part -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="py-[6px] px-sm text-center text-secondary">
+<span class="material-symbols-outlined text-[16px]" data-weight="fill">build</span>
+</td>
+<td class="py-[6px] px-sm">
+<input class="input-hd bg-transparent border-transparent focus:bg-surface-container-lowest" type="text" value="Premium Ceramic Brake Pads (Front)"/>
+<div class="text-[10px] text-on-surface-variant mt-[2px]">SKU: BP-CER-F-092</div>
+</td>
+<td class="py-[6px] px-sm text-right">
+<input class="input-hd text-right bg-transparent border-transparent focus:bg-surface-container-lowest" type="number" value="1"/>
+</td>
+<td class="py-[6px] px-sm text-right">
+<div class="relative">
+<span class="absolute left-xs top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="input-hd pl-[16px] text-right bg-transparent border-transparent focus:bg-surface-container-lowest" type="text" value="85.00"/>
+</div>
+</td>
+<td class="py-[6px] px-sm text-right">
+<input class="input-hd text-right bg-transparent border-transparent focus:bg-surface-container-lowest text-surface-tint" type="number" value="10"/>
+</td>
+<td class="py-[6px] px-sm text-right font-medium text-on-surface">
+                                    $76.50
+                                </td>
+<td class="py-[6px] px-sm text-center">
+<button class="text-on-surface-variant hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Service -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<td class="py-[6px] px-sm text-center text-primary">
+<span class="material-symbols-outlined text-[16px]" data-weight="fill">handyman</span>
+</td>
+<td class="py-[6px] px-sm">
+<input class="input-hd bg-transparent border-transparent focus:bg-surface-container-lowest" type="text" value="Brake Pad Replacement Labor"/>
+<div class="text-[10px] text-on-surface-variant mt-[2px]">Est. Time: 1.5 hrs</div>
+</td>
+<td class="py-[6px] px-sm text-right">
+<input class="input-hd text-right bg-transparent border-transparent focus:bg-surface-container-lowest" type="number" value="1.5"/>
+</td>
+<td class="py-[6px] px-sm text-right">
+<div class="relative">
+<span class="absolute left-xs top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="input-hd pl-[16px] text-right bg-transparent border-transparent focus:bg-surface-container-lowest" type="text" value="120.00"/>
+</div>
+</td>
+<td class="py-[6px] px-sm text-right">
+<input class="input-hd text-right bg-transparent border-transparent focus:bg-surface-container-lowest" type="number" value="0"/>
+</td>
+<td class="py-[6px] px-sm text-right font-medium text-on-surface">
+                                    $180.00
+                                </td>
+<td class="py-[6px] px-sm text-center">
+<button class="text-on-surface-variant hover:text-error opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Add New Row Trigger area -->
+<tr>
+<td class="py-sm px-sm text-center bg-surface-bright border-b border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer border-dashed" colspan="7">
+<span class="font-label-md text-label-md text-primary flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                                        Click to add row
+                                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Right Column: Summary & Notes (Span 4) -->
+<div class="lg:col-span-4 flex flex-col gap-lg sticky top-[88px]">
+<!-- Financial Summary Card -->
+<section class="bg-surface border border-outline-variant rounded-lg p-md flex flex-col gap-md shadow-[0_10px_15px_-3px_rgba(0,0,0,0.02)]">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider pb-xs border-b border-outline-variant">Summary</h3>
+<div class="flex flex-col gap-sm font-body-sm text-body-sm">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Subtotal</span>
+<span class="font-medium text-on-surface">$265.00</span>
+</div>
+<div class="flex justify-between items-center text-surface-tint">
+<span>Total Discount</span>
+<span>-$8.50</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span>Taxes</span>
+<span class="text-[10px] bg-surface-container px-1 rounded">8.5%</span>
+</div>
+<span class="font-medium text-on-surface">$21.80</span>
+</div>
+</div>
+<div class="pt-sm border-t border-outline-variant flex justify-between items-end mt-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">$278.30</span>
+</div>
+</section>
+<!-- Notes Section -->
+<section class="bg-surface border border-outline-variant rounded-lg flex flex-col">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-sm font-label-sm text-label-sm uppercase tracking-wider text-primary border-b-2 border-primary bg-surface-bright">
+                        Customer Msg
+                    </button>
+<button class="flex-1 py-sm font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:bg-surface-container-lowest transition-colors">
+                        Internal Notes
+                    </button>
+</div>
+<!-- Textarea Area -->
+<div class="p-md">
+<textarea class="w-full h-[120px] input-hd resize-none p-sm" placeholder="Message visible to the customer on their quote link...">We noticed uneven wear on the front tires during the brake inspection. Recommend a rotation and alignment soon. Thank you for choosing GoMech!</textarea>
+</div>
+</section>
+</div>
+</main>
+</body></html>

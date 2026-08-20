@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Onboarding</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#360f00",
+                      "surface-container": "#ffe9e2",
+                      "inverse-on-surface": "#ffede7",
+                      "inverse-surface": "#3d2d26",
+                      "on-primary-container": "#551d00",
+                      "on-tertiary-fixed": "#002109",
+                      "on-secondary-fixed": "#121c2a",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#f0d4ca",
+                      "tertiary-container": "#00ad4e",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#f8ddd2",
+                      "on-tertiary-container": "#003714",
+                      "surface-bright": "#fff8f6",
+                      "on-secondary-fixed-variant": "#3d4756",
+                      "on-surface-variant": "#5a4136",
+                      "surface-container-high": "#fee2d8",
+                      "secondary-fixed": "#d9e3f6",
+                      "on-primary-fixed-variant": "#7d2d00",
+                      "primary": "#a33e00",
+                      "on-error-container": "#93000a",
+                      "surface-container-low": "#fff1ec",
+                      "secondary-fixed-dim": "#bdc7d9",
+                      "on-secondary-container": "#596373",
+                      "surface-container-highest": "#f8ddd2",
+                      "primary-fixed": "#ffdbcd",
+                      "background": "#fff8f6",
+                      "tertiary-fixed-dim": "#4ae176",
+                      "secondary-container": "#d6e0f3",
+                      "secondary": "#555f6f",
+                      "primary-fixed-dim": "#ffb596",
+                      "inverse-primary": "#ffb596",
+                      "surface-tint": "#a33e00",
+                      "surface": "#fff8f6",
+                      "on-surface": "#271812",
+                      "primary-container": "#ff6500",
+                      "outline-variant": "#e3bfb1",
+                      "tertiary-fixed": "#6bff8f",
+                      "on-tertiary-fixed-variant": "#005321",
+                      "tertiary": "#006e2f",
+                      "on-background": "#271812",
+                      "on-secondary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "outline": "#8e7164"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "3xl": "64px",
+                      "sidebar-width": "260px",
+                      "topbar-height": "64px",
+                      "sm": "8px",
+                      "2xl": "48px",
+                      "lg": "24px",
+                      "base": "4px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-sm": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Manrope"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["13px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean look in tags */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex">
+<!-- Left Brand Panel (Desktop Only) -->
+<div class="hidden lg:flex flex-col w-5/12 bg-surface-container border-r border-outline-variant relative overflow-hidden">
+<!-- Brand Logo Anchor -->
+<div class="absolute top-0 left-0 p-xl z-20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[32px] text-primary" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">GoMech</span>
+</div>
+<!-- Atmospheric Image -->
+<div class="absolute inset-0 z-10 w-full h-full bg-cover bg-center opacity-60 mix-blend-multiply grayscale-[20%]" data-alt="A highly detailed, cinematic photograph of a pristine, modern automotive service bay. The lighting is bright and high-key, emphasizing a clean, organized, and technologically advanced workspace. The color palette is dominated by cool industrial grays and bright whites, with sharp accents of GoMech primary orange on tool chests and diagnostic equipment. The composition is precise and geometric, reflecting a highly efficient, professional environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMtX-v6_lyzpz2qdKXC-dQVLQ1WNR8ktxybx3JDde3xZ8aQhngJG8UHSe8B429iOAFkocZfHyrhIhcL8P-Z-aua8kOf-Va1F-2neXTdAt0Sxo1jEci6RbGU0ScK5IeZDhwguQBYubOm-BLK1LPAfAl8Q1GxFDCkcwfUZgy047-if7O00OYIosq6W5JJQj9sk7jIz8aPwO8v2hxHBtMjJ-xpOffPn-s5KoM7jJuJPTJFM8WC__vx31MOGz6ASCp30W2Gnl3xny1Lwk');">
+</div>
+<!-- Overlay Text -->
+<div class="absolute bottom-0 left-0 p-xl z-20 w-full bg-gradient-to-t from-surface-container to-transparent pt-3xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Precision in every bay.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">Join thousands of high-performance workshops managing jobs, inventory, and clients with industrial-grade tools.</p>
+</div>
+</div>
+<!-- Right Wizard Panel -->
+<div class="flex-1 flex flex-col items-center justify-center p-md sm:p-xl relative bg-surface-container-lowest">
+<!-- Mobile Logo (Hidden on Desktop) -->
+<div class="lg:hidden absolute top-md left-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">GoMech</span>
+</div>
+<!-- Wizard Container (Level 1 Surface) -->
+<div class="w-full max-w-[560px] flex flex-col mt-xl lg:mt-0">
+<!-- Progress Indicator -->
+<div class="mb-xl w-full">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-md">Step 1 of 3</p>
+<div class="flex gap-2 w-full">
+<div class="h-1.5 flex-1 rounded-full bg-primary transition-all duration-500"></div>
+<div class="h-1.5 flex-1 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 flex-1 rounded-full bg-surface-variant"></div>
+</div>
+</div>
+<!-- Header -->
+<div class="mb-xl">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Workshop Profile</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Let's set up the core identity of your service center.</p>
+</div>
+<!-- Form Area -->
+<div class="flex flex-col gap-lg w-full">
+<!-- Logo Upload -->
+<div class="group border border-dashed border-outline-variant rounded-xl p-md flex items-center gap-md cursor-pointer hover:bg-surface-container-low hover:border-primary transition-colors bg-surface">
+<div class="w-[64px] h-[64px] rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-primary transition-colors flex-shrink-0">
+<span class="material-symbols-outlined text-[28px]" data-icon="add_a_photo" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_a_photo</span>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface mb-xs">Upload Workshop Logo</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drag and drop or click to browse. Recommended size: 256x256px (PNG, JPG).</p>
+</div>
+</div>
+<!-- Workshop Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="workshop_name">Workshop Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg px-md py-[10px] font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-sm" id="workshop_name" placeholder="e.g. Downtown Auto Repair" type="text"/>
+</div>
+<!-- Address -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="workshop_address">Primary Address</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg px-md py-[10px] font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-sm resize-none" id="workshop_address" placeholder="Full street address..." rows="2"></textarea>
+</div>
+<!-- Bays & Capacity -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface" for="service_bays">Number of Service Bays</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-md text-on-surface-variant pointer-events-none">
+<span class="material-symbols-outlined text-[20px]" data-icon="garage">garage</span>
+</span>
+<input class="w-full bg-surface border border-outline-variant rounded-lg pl-[44px] pr-md py-[10px] font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-sm" id="service_bays" min="1" placeholder="0" type="number"/>
+</div>
+</div>
+<!-- Main Services (Bento/Tag style) -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface">Main Services Provided</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-md py-sm rounded-full border border-primary bg-primary-fixed text-on-primary-fixed font-label-md text-label-md transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span> General Repair
+                        </button>
+<button class="px-md py-sm rounded-full border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md hover:border-outline hover:text-on-surface transition-colors">
+                            Diagnostics
+                        </button>
+<button class="px-md py-sm rounded-full border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md hover:border-outline hover:text-on-surface transition-colors">
+                            Bodywork &amp; Paint
+                        </button>
+<button class="px-md py-sm rounded-full border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md hover:border-outline hover:text-on-surface transition-colors">
+                            Tire &amp; Alignment
+                        </button>
+<button class="px-md py-sm rounded-full border border-dashed border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md hover:text-primary hover:border-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span> Custom
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-xl pt-lg border-t border-outline-variant flex justify-between items-center w-full">
+<button class="px-lg py-[10px] font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors invisible">
+                    Back
+                </button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-xl py-[12px] rounded-lg hover:opacity-90 active:translate-y-[1px] transition-all flex items-center gap-2 shadow-sm">
+                    Continue
+                    <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GoMech - Company Settings</title>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f6",
+                        "surface-tint": "#a33e00",
+                        "surface": "#fff8f6",
+                        "surface-dim": "#f0d4ca",
+                        "tertiary": "#006e2f",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#6bff8f",
+                        "secondary-fixed": "#d9e3f6",
+                        "outline-variant": "#e3bfb1",
+                        "on-secondary-container": "#596373",
+                        "surface-container": "#ffe9e2",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#3d2d26",
+                        "primary-fixed": "#ffdbcd",
+                        "on-secondary-fixed-variant": "#3d4756",
+                        "secondary-container": "#d6e0f3",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fff8f6",
+                        "on-secondary": "#ffffff",
+                        "primary": "#a33e00",
+                        "secondary-fixed-dim": "#bdc7d9",
+                        "on-tertiary-fixed": "#002109",
+                        "inverse-on-surface": "#ffede7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#f8ddd2",
+                        "on-tertiary-container": "#003714",
+                        "surface-container-low": "#fff1ec",
+                        "on-primary-fixed": "#360f00",
+                        "on-primary-container": "#551d00",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#ffb596",
+                        "outline": "#8e7164",
+                        "on-surface": "#271812",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "secondary": "#555f6f",
+                        "on-primary-fixed-variant": "#7d2d00",
+                        "surface-container-high": "#fee2d8",
+                        "on-surface-variant": "#5a4136",
+                        "on-background": "#271812",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#00ad4e",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#ffb596",
+                        "surface-variant": "#f8ddd2",
+                        "primary-container": "#ff6500",
+                        "on-secondary-fixed": "#121c2a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "3xl": "64px",
+                        "base": "4px",
+                        "2xl": "48px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "topbar-height": "64px",
+                        "sidebar-width": "260px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope", "sans-serif"],
+                        "headline-md": ["Manrope", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"],
+                        "display-lg": ["Manrope", "sans-serif"],
+                        "headline-sm": ["Manrope", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "label-md": ["13px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base styles for material symbols */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for mechanical feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff8f6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3bfb1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a33e00; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-sidebar-width bg-surface border-r border-outline-variant flex flex-col py-lg z-20">
+<!-- Brand -->
+<div class="px-md mb-xl flex flex-col">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">build_circle</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">GoMech</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Workshop Admin</span>
+</div>
+<!-- CTA -->
+<div class="px-md mb-lg">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-surface-tint transition-colors duration-200 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Job
+            </button>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 px-sm flex flex-col gap-xs overflow-y-auto">
+<!-- Inactive -->
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">build</span>
+                Jobs
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span>
+                Customers
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                Staff &amp; Roles
+            </a>
+<!-- Active -->
+<a class="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-xl px-md py-sm border-l-4 border-primary translate-x-1 transition-transform duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Settings
+            </a>
+</div>
+<!-- Footer Links -->
+<div class="px-sm mt-auto flex flex-col gap-xs pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span>
+                Help Center
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm rounded-xl hover:bg-surface-container-high transition-colors duration-200 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Wrapper -->
+<div class="flex-1 flex flex-col ml-sidebar-width relative h-full">
+<!-- TopNavBar -->
+<header class="absolute top-0 w-full h-topbar-height bg-surface border-b border-outline-variant flex justify-between items-center px-lg z-10">
+<!-- Search Left -->
+<div class="flex-1 flex items-center">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-10 pl-xl pr-sm bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none text-on-surface transition-colors" placeholder="Search jobs, customers, or parts..." type="text"/>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-xs"></div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">
+                    Switch Workshop
+                </button>
+<button class="flex items-center gap-sm pl-sm border-l border-outline-variant hover:opacity-80 transition-opacity">
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of an automotive workshop manager, clean cut, wearing a branded dark polo shirt, well lit against a neutral gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACGajyh7RuG56nGmq0tcSsYHo6UeFCfvJBAsTWr9zxe0oTHWOCBiLsvUdfdvfCYSNBH9INY_6K2kzeAt7VTdDNh7bk_OsATvJDd3mGQMAVQ0I9tOJNpdD72kX3d9cQMq9dL89Ks13pX5b6xmmdMoBaMSX4PS72e_z61HihgDzpga1VTEBPkIJ4cjX5VHv9_HMqohqJd7HQViTXjSubh1we7VTx4wDSShQb5Tx12KqeA0KSGbeW-_VABs4tzo8MtLN38zCsW-5tHag"/>
+<span class="font-label-md text-label-md text-primary font-bold">Profile</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas Content -->
+<main class="flex-1 overflow-y-auto mt-topbar-height p-lg bg-background">
+<!-- Page Header -->
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Company Settings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage your workshop's global identity, operational hours, and system preferences.</p>
+</div>
+<!-- Tab Navigation (Clean Tabbed Interface) -->
+<div class="flex items-center gap-lg border-b border-outline-variant mb-lg">
+<button class="pb-sm border-b-2 border-primary font-label-md text-label-md text-primary font-bold">General Information</button>
+<button class="pb-sm border-b-2 border-transparent hover:border-outline font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Business Hours</button>
+<button class="pb-sm border-b-2 border-transparent hover:border-outline font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Notifications</button>
+<button class="pb-sm border-b-2 border-transparent hover:border-outline font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Integrations</button>
+</div>
+<!-- Settings Grid (High Data Density) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-lg pb-xl">
+<!-- Left Column: Primary Forms -->
+<div class="xl:col-span-8 flex flex-col gap-lg">
+<!-- Company Profile Card -->
+<section class="bg-surface border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="border-b border-outline-variant pb-sm mb-md flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Company Profile</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container py-xs px-sm rounded-full">Primary</span>
+</div>
+<div class="flex gap-lg items-start">
+<!-- Logo Upload Area -->
+<div class="flex flex-col items-center gap-sm">
+<div class="w-32 h-32 rounded-lg border-2 border-dashed border-outline-variant bg-surface-container-low flex flex-col items-center justify-center cursor-pointer hover:border-primary hover:bg-surface-container transition-colors group relative overflow-hidden">
+<span class="material-symbols-outlined text-[32px] text-outline group-hover:text-primary transition-colors">add_photo_alternate</span>
+<span class="font-label-sm text-label-sm text-outline mt-xs group-hover:text-primary">Upload Logo</span>
+<!-- Simulated existing logo faintly visible -->
+<div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-center max-w-[128px]">Recommended: 512x512px, PNG or JPG.</span>
+</div>
+<!-- Input Fields Grid -->
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-md gap-y-sm">
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-sm text-label-sm text-on-surface">Legal Company Name</label>
+<input class="h-10 px-sm bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="GoMech Automotive Services Ltd."/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">Trading Name (DBA)</label>
+<input class="h-10 px-sm bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="GoMech Downtown"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">CNPJ / Tax ID</label>
+<input class="h-10 px-sm bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-mono" type="text" value="12.345.678/0001-90"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">Primary Contact Email</label>
+<input class="h-10 px-sm bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="email" value="admin@gomech.com"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">Main Workshop Phone</label>
+<input class="h-10 px-sm bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="tel" value="+1 (555) 019-2834"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Regional Settings Card -->
+<section class="bg-surface border border-outline-variant rounded-xl p-md shadow-sm">
+<div class="border-b border-outline-variant pb-sm mb-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Regional &amp; Localization</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">Base Currency</label>
+<div class="relative">
+<select class="w-full h-10 pl-sm pr-lg bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>USD ($)</option>
+<option>EUR (€)</option>
+<option>BRL (R$)</option>
+</select>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">Timezone</label>
+<div class="relative">
+<select class="w-full h-10 pl-sm pr-lg bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>(UTC-05:00) Eastern Time (US &amp; Canada)</option>
+<option>(UTC-08:00) Pacific Time (US &amp; Canada)</option>
+<option>(UTC-03:00) Brasilia</option>
+</select>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface">System Language</label>
+<div class="relative">
+<select class="w-full h-10 pl-sm pr-lg bg-surface border border-outline-variant rounded-md font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>English (US)</option>
+<option>Spanish</option>
+<option>Portuguese (BR)</option>
+</select>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Secondary Info & Actions -->
+<div class="xl:col-span-4 flex flex-col gap-lg">
+<!-- Quick Actions / Save State -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md flex flex-col gap-sm">
+<p class="font-body-sm text-body-sm text-on-surface-variant">You have unsaved changes in the Company Profile section.</p>
+<div class="flex gap-sm w-full">
+<button class="flex-1 bg-surface border border-outline-variant text-on-surface font-label-md text-label-md py-sm rounded-lg hover:bg-surface-container transition-colors">Discard</button>
+<button class="flex-1 bg-primary text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-surface-tint transition-colors">Save Changes</button>
+</div>
+</div>
+<!-- Workshop Status Preview -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="h-24 bg-surface-container-high relative">
+<!-- Pattern placeholder for cover -->
+<div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#a33e00 1px, transparent 1px); background-size: 16px 16px;"></div>
+</div>
+<div class="p-md relative pt-10">
+<div class="absolute -top-8 left-md w-16 h-16 bg-surface border-4 border-surface rounded-lg flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[32px] text-primary">storefront</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">GoMech Downtown</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-sm">Active Workshop • EST Timezone</p>
+<div class="flex items-center gap-xs text-tertiary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-sm text-label-sm">Profile 100% Complete</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
