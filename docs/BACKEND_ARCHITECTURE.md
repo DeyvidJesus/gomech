@@ -34,13 +34,13 @@ com.gomech.api
 
 ### 1.1 Camadas Internas de um Módulo
 Dentro de cada módulo (ex: `com.gomech.api.modules.crm`), a divisão segue as quatro camadas
-definidas pela [ADR-002](adr/ADR-002-module-layering-and-dependency-rules.md):
+definidas pela [ADR-002](adr/ADR-002-camadas-e-regras-de-dependencia.md):
 
 - `.api` (Endpoints REST, DTOs de Request/Response e contratos públicos do módulo)
 - `.application` (Casos de uso, orquestração e transações)
 - `.domain` (Conceitos e regras de negócio, sem dependência de framework)
 - `.infrastructure` (Entidades JPA, repositórios Spring Data, adaptadores e configuração)
-- `.events` (Eventos publicados para outros módulos — ver [ADR-003](adr/ADR-003-domain-events.md))
+- `.events` (Eventos publicados para outros módulos — ver [ADR-003](adr/ADR-003-eventos-de-dominio.md))
 
 Exemplo, já aplicado ao módulo IAM:
 

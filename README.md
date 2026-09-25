@@ -1,84 +1,99 @@
 # GoMech
 
-GoMech is the orchestration repository for the GoMech V2 platform used by mechanical workshops to manage operations, customers, services, finances, and AI-assisted workflows in one place.
+Plataforma web para gestão de oficinas mecânicas. O GoMech reúne em um só sistema o cadastro de clientes e veículos, a agenda de serviços, orçamentos, ordens de serviço, estoque, ferramentas, financeiro e indicadores. A plataforma também inclui fluxos assistidos por IA para apoiar operações da oficina.
 
-## Repository Architecture
+Este repositório é o ponto de entrada do projeto: fixa as versões dos serviços mantidos em repositórios próprios, documenta decisões compartilhadas, contém a infraestrutura como código e orquestra a stack local.
 
-This workspace orchestrates independent domain repositories via **Git Submodules**:
+## Visão geral
 
 ```text
-gomech/
-├── ai/        # Git Submodule -> DeyvidJesus/gomech-ai-service-v2 (FastAPI AI Service)
-├── backend/   # Git Submodule -> DeyvidJesus/gomech-backend-v2 (Spring Boot 3.3 Modular Monolith)
-├── frontend/  # Git Submodule -> DeyvidJesus/gomech-frontend-v2 (React 18 + Vite Web App)
-├── docs/      # Shared architecture ADRs, blueprints, and database specifications
-└── docker-compose.yml # Unified local development stack
+┌──────────────────┐       ┌────────────────────────┐
+│ React + TypeScript├──────►│ API Spring Boot        │──────► PostgreSQL 16
+└──────────────────┘       │ Monólito modular       │
+                           └───────────┬────────────┘
+                                       │ gateway interno
+                           ┌───────────▼────────────┐
+                           │ Serviço de IA          │──────► Gemini / mock
+                           │ FastAPI                 │
+                           └────────────────────────┘
 ```
 
-### Component Repositories
+- **Frontend:** aplicação web SPA com React, TypeScript, Vite e TanStack Router/Query.
+- **Backend:** API REST em Java 21 e Spring Boot 3, organizada como monólito modular. PostgreSQL é versionado por migrations Flyway; autenticação e autorização usam JWT, RBAC e isolamento por oficina/unidade.
+- **Serviço de IA:** serviço Python com FastAPI, isolado do backend e acessado pelo gateway de IA. Pode usar provider mock para desenvolvimento ou Gemini quando configurado.
+- **Persistência:** PostgreSQL 16, com controles de isolamento de dados por tenant e políticas Row Level Security.
+- **Infraestrutura:** Terraform mantém implementações de referência para GCP e AWS. O ambiente atualmente implantado está na **GCP**.
 
-| Submodule | Repository | Technology | Description |
-| :--- | :--- | :--- | :--- |
-| **`ai`** | [`gomech-ai-service-v2`](https://github.com/DeyvidJesus/gomech-ai-service-v2) | Python 3.12, FastAPI | Autonomous diagnostic agents and AI processing |
-| **`backend`** | [`gomech-backend-v2`](https://github.com/DeyvidJesus/gomech-backend-v2) | Java 21, Spring Boot 3.3, PostgreSQL 16 | Core business logic, Clean Architecture, RLS multi-tenancy |
-| **`frontend`** | [`gomech-frontend-v2`](https://github.com/DeyvidJesus/gomech-frontend-v2) | React 18, TypeScript, Vite, TanStack | Modern workshop management web application |
+## Repositórios e diretórios
 
----
+`ai/`, `backend/` e `frontend/` são Git submodules. O repositório raiz registra um commit específico de cada serviço, permitindo evoluir cada componente separadamente e reproduzir uma composição conhecida da plataforma.
 
-## Cloning & Working with Submodules
+| Caminho | Responsabilidade |
+| :--- | :--- |
+| [`ai/`](ai) | Serviço de IA em Python/FastAPI (`gomech-ai-service-v2`) |
+| [`backend/`](backend) | API de negócio em Java/Spring Boot (`gomech-backend-v2`) |
+| [`frontend/`](frontend) | Aplicação web em React/TypeScript (`gomech-frontend-v2`) |
+| [`terraform/`](terraform) | Módulos reutilizáveis e ambientes Terraform para GCP e AWS |
+| [`docs/`](docs) | Arquitetura, decisões, contratos, guias e protótipos de interface |
+| [`.github/workflows/`](.github/workflows) | CI do repositório de orquestração |
+| [`docker-compose.yml`](docker-compose.yml) | Ambiente local integrado |
 
-### Clone with Submodules
+Cada backend domain module mantém suas próprias camadas `api`, `application`, `domain`, `events` e `infrastructure`. O diretório `core` contém capacidades transversais, como segurança, autorização, tenancy, auditoria e eventos. No serviço de IA, `api`, `application`, `domain`, `infrastructure` e `core` separam contrato HTTP, casos de uso, conceitos de domínio e integrações.
 
-To clone the entire project including all service repositories:
+## Executar localmente
+
+**Pré-requisitos:** Git com suporte a submodules e Docker Engine/Desktop com Docker Compose v2.
 
 ```bash
-git clone --recurse-submodules git@github.com:DeyvidJesus/gomech.git
+git clone --recurse-submodules https://github.com/DeyvidJesus/gomech.git
+cd gomech
+cp .env.example .env
+docker compose up --build
 ```
 
-### If Already Cloned
-
-To initialize and fetch all submodules:
+Se o projeto já estiver clonado sem os submodules:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-### Pulling Latest Changes for All Submodules
+A stack inicializa PostgreSQL, backend, serviço de IA e frontend. O Flyway aplica as migrations quando a API inicia. A configuração local usa provider de IA `mock` por padrão e valores de integração simulados; credenciais reais são opcionais.
 
-```bash
-git submodule update --remote --merge
-```
+| Serviço | Endereço local |
+| :--- | :--- |
+| Frontend | <http://localhost:5173> |
+| API | <http://localhost:8080/api/v1> |
+| Health da API | <http://localhost:8080/actuator/health> |
+| Swagger UI | <http://localhost:8080/swagger-ui.html> |
+| Health da IA | <http://localhost:8000/health> |
+| OpenAPI da IA | <http://localhost:8000/docs> |
+| PostgreSQL | `localhost:5432` |
 
----
+Para configurar variáveis, depurar serviços ou encerrar a stack, consulte o [guia do ambiente local](docs/guias/ambiente-local.md). Não use credenciais de produção no arquivo `.env` local.
 
-## Local Development Stack
+## Cloud e Terraform
 
-The local development stack is orchestrated from the repository root with Docker Compose:
+O projeto também serve como estudo prático de infraestrutura como código com Terraform e dos serviços de nuvem da AWS e da Google Cloud Platform. Há configurações de referência para os dois provedores, que representam componentes equivalentes da plataforma.
 
-1. Copy the shared environment template:
-   ```bash
-   cp .env.example .env
-   ```
+A plataforma está rodando na **GCP**. A escolha foi pragmática: eu já tinha o plano Pro do Google, o que facilitou o processo de conta e faturamento. O ambiente AWS permanece como configuração de estudo e referência de arquitetura; não está implantado. A decisão e o escopo de cada ambiente estão descritos na [ADR-020](docs/adr/ADR-020-terraform-multicloud-e-gcp.md) e no [guia Terraform](terraform/README.md).
 
-2. Start the full stack:
-   ```bash
-   docker compose up --build
-   ```
+## Documentação
 
-### Active Services:
+- [Guia de estudo para entrevista](docs/guias/guia-de-estudo-entrevista.md)
+- [Arquitetura do backend](docs/BACKEND_ARCHITECTURE.md) e [arquitetura do frontend](docs/FRONTEND_ARCHITECTURE.md)
+- [Mapa de implementação do frontend](docs/FRONTEND_IMPLEMENTATION_GUIDE.md) e [integração IAM](docs/iam-frontend-integration.md)
+- [Contratos e especificação do serviço de IA](docs/AI_SERVICE_SPECIFICATION.md), [contrato do gateway](docs/contratos/gateway-de-ia.md) e [fluxo de confirmação de ações](docs/AI_ACTION_CONFIRMATION_FLOW.md)
+- [Semântica dos indicadores e KPIs](docs/ANALYTICS_KPI_CONTRACTS_AND_SEMANTICS.md)
+- [Decisões de arquitetura (ADRs)](docs/adr/README.md)
+- [Design system e protótipos](docs/design/README.md)
+- [Convenções do repositório](docs/guias/convencoes-do-repositorio.md)
+- [CI e validações](docs/guias/ci.md)
+- [Integrações Resend e WhatsApp](docs/integrations-resend-whatsapp.md)
 
-- **Frontend**: [http://localhost:5173](http://localhost:5173)
-- **Backend API**: [http://localhost:8080](http://localhost:8080)
-- **AI Service**: [http://localhost:8000](http://localhost:8000)
-- **PostgreSQL 16**: `localhost:5432` (`gomech_db`)
+## Validação contínua
 
----
+A CI da raiz valida os ponteiros dos submodules, o formato e a validação dos ambientes Terraform, a configuração do Docker Compose e os links relativos da documentação. Os projetos de frontend, backend e IA têm seus próprios workflows e comandos; veja o [guia de CI](docs/guias/ci.md) para reproduzi-los.
 
-## Documentation
+## Licença
 
-- [docs/adr/README.md](docs/adr/README.md) — Architecture Decision Records (ADRs 001–012)
-- [docs/BACKEND_ARCHITECTURE.md](docs/BACKEND_ARCHITECTURE.md) — Modular monolith & Clean Architecture guide
-- [docs/DATABASE_READINESS_REPORT.md](docs/DATABASE_READINESS_REPORT.md) — PostgreSQL, Flyway, and RLS specifications
-- [docs/STARTUP_GUIDE.md](docs/STARTUP_GUIDE.md) — Local environment setup and execution
-- [docs/CI_GUIDE.md](docs/CI_GUIDE.md) — CI/CD validation baseline
-
+Ainda não há uma licença definida para este repositório.

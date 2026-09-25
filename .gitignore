@@ -12,27 +12,21 @@ Thumbs.db
 *.local
 *.secret
 
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
 # Logs
 *.log
 logs/
-
-# Node / frontend
-node_modules/
-dist/
-coverage/
-.vite/
-
-# Java / Spring Boot
-target/
-
-# Python / FastAPI
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.venv/
-venv/
 
 # Tooling
 .cache/

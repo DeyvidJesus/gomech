@@ -1,9 +1,11 @@
+# Local development stack: PostgreSQL + backend + AI service + frontend.
+# Values come from the root .env (cp .env.example .env).
+# Each service receives only the variables it needs.
+
 services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -25,8 +27,6 @@ services:
     build:
       context: ./backend
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       DB_HOST: postgres
@@ -34,10 +34,12 @@ services:
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
-      AI_SERVICE_URL: http://ai:8000
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-mock-google-client-id}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-mock-google-client-secret}
       GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-http://localhost:5173/auth/callback/google}
+      PAGARME_MOCK_ENABLED: ${PAGARME_MOCK_ENABLED:-true}
+      GOMECH_AI_BASE_URL: http://ai:8000
+      GOMECH_AI_SERVICE_SECRET: ${AI_SERVICE_AUTH_SECRET}
     ports:
       - "${BACKEND_PORT}:8080"
     depends_on:
@@ -52,23 +54,22 @@ services:
     networks:
       - gomech-net
 
+  # Stateless by design (ADR-019): no database connection, reachable only from the backend in
+  # deployed environments. The port is published locally to make the OpenAPI docs reachable.
   ai:
     build:
       context: ./ai
     restart: unless-stopped
-    env_file:
-      - .env
-      - ./ai/.env.example
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     environment:
       AI_SERVICE_NAME: ${AI_SERVICE_NAME}
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      SERVICE_AUTH_SECRET: ${AI_SERVICE_AUTH_SECRET}
+      DEFAULT_PROVIDER: ${AI_DEFAULT_PROVIDER:-mock}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     ports:
       - "${AI_PORT}:8000"
     volumes:
-      - ./ai:/app
-    depends_on:
-      postgres:
-        condition: service_healthy
+      - ./ai/app:/app/app
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()\""]
       interval: 15s
@@ -83,8 +84,6 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       VITE_API_URL: ${VITE_API_URL}
     ports:
@@ -94,8 +93,6 @@ services:
       - frontend-node-modules:/app/node_modules
     depends_on:
       backend:
-        condition: service_healthy
-      ai:
         condition: service_healthy
     networks:
       - gomech-net
