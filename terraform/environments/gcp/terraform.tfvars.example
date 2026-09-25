@@ -1,0 +1,22 @@
+# Copie para terraform.tfvars (ignorado pelo git) e preencha com os valores reais.
+
+project_id  = "seu-projeto-gcp"
+region      = "us-central1"
+environment = "production"
+app_name    = "gomech"
+
+# db_tier = "db-f1-micro"   # opção mais barata para estudo
+# db_authorized_networks = [{ name = "casa", cidr = "203.0.113.10/32" }]
+
+db_password         = "troque-por-uma-senha-forte"
+jwt_secret          = "troque-por-uma-chave-hex-de-256-bits"   # openssl rand -hex 32
+service_auth_secret = "troque-por-um-segredo-compartilhado"    # openssl rand -hex 32
+
+gemini_api_key = ""   # vazio = serviço de IA com provider mock (sem custo)
+
+google_client_id     = ""
+google_client_secret = ""
+
+backend_image    = "us-central1-docker.pkg.dev/seu-projeto-gcp/gomech-repo/backend:latest"
+ai_service_image = "us-central1-docker.pkg.dev/seu-projeto-gcp/gomech-repo/ai-service:latest"
+frontend_image   = "us-central1-docker.pkg.dev/seu-projeto-gcp/gomech-repo/frontend:latest"
