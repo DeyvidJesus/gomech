@@ -79,7 +79,6 @@ A plataforma está rodando na **GCP**. A escolha foi pragmática: eu já tinha o
 
 ## Documentação
 
-- [Guia de estudo para entrevista](docs/guias/guia-de-estudo-entrevista.md)
 - [Arquitetura do backend](docs/BACKEND_ARCHITECTURE.md) e [arquitetura do frontend](docs/FRONTEND_ARCHITECTURE.md)
 - [Mapa de implementação do frontend](docs/FRONTEND_IMPLEMENTATION_GUIDE.md) e [integração IAM](docs/iam-frontend-integration.md)
 - [Contratos e especificação do serviço de IA](docs/AI_SERVICE_SPECIFICATION.md), [contrato do gateway](docs/contratos/gateway-de-ia.md) e [fluxo de confirmação de ações](docs/AI_ACTION_CONFIRMATION_FLOW.md)
