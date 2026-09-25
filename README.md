@@ -26,7 +26,7 @@ Este repositório é o ponto de entrada do projeto: fixa as versões dos serviç
 
 ## Repositórios e diretórios
 
-`ai/`, `backend/` e `frontend/` são Git submodules. O repositório raiz registra um commit específico de cada serviço, permitindo evoluir cada componente separadamente e reproduzir uma composição conhecida da plataforma.
+`ai/`, `backend/` e `frontend/` são Git submodules. O repositório raiz registra um commit específico de cada serviço, permitindo evoluir cada componente separadamente e reproduzir uma composição conhecida da plataforma. As URLs dos submodules são relativas ao repositório raiz, então o clone funciona tanto por HTTPS quanto por SSH.
 
 | Caminho | Responsabilidade |
 | :--- | :--- |
