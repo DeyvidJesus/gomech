@@ -48,14 +48,14 @@ graph TD
     subgraph Guardrails["Guardrails do monolito Spring Boot"]
         GatewayService -->|1. Verifica cota| Entitlement[EntitlementService]
         GatewayService -->|2. Remove PII| Sanitizer[SensitiveDataSanitizer]
-        GatewayService -->|3. Chamada resiliente| ClientImpl[DefaultAiServiceExecutor]
+        GatewayService -->|3. Chamada resiliente| ClientImpl[FastApiAiServiceClient]
         GatewayService -->|4. Registra consumo| Entitlement
         GatewayService -->|5. Log de auditoria + RLS| AuditRepo[AiGatewayAuditLogRepository]
         GatewayService -->|6. Publica evento| EventBus[DomainEventBus]
         GatewayService -->|7. Registra métricas| Metrics[AiGatewayMetrics]
     end
 
-    ClientImpl -->|Contrato de serviço autenticado<br/>X-Tenant-Id, X-User-Id, HMAC| RemoteAI[Provedor externo de modelo de IA]
+    ClientImpl -->|HTTP autenticado + contexto<br/>segredo de serviço e ID token na GCP| RemoteAI[GoMech AI Service / FastAPI]
 ```
 
 ## Alternativas consideradas

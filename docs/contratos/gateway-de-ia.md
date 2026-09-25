@@ -3,14 +3,11 @@
 Contrato entre o frontend, o backend (AI Gateway, módulo `com.gomech.api.modules.ai` do monolito Spring Boot) e o AI Service (FastAPI). Ele define os endpoints REST autenticados que o frontend consome, as regras de governança aplicadas antes de qualquer inferência (autorização, cota e sanitização de PII) e a política de resiliência da chamada ao AI Service.
 
 > [!IMPORTANT]
-> **Status da integração backend → AI Service.** A chamada HTTP do backend para o AI Service ainda não está ligada. Hoje o `DefaultAiServiceExecutor` (`backend/src/main/java/com/gomech/api/modules/ai/infrastructure/client/`) devolve respostas simuladas dentro do próprio processo e não faz nenhuma chamada HTTP. As propriedades `gomech.ai.base-url` e `gomech.ai.service-secret` existem em `AiClientConfig`, mas nenhum código as lê.
+> **Integração implementada.** `FastApiAiServiceClient` chama os endpoints autenticados do serviço Python em `/api/v1/ai`. O gateway converte os DTOs Java para snake_case, encaminha o contexto de tenant/usuário/unidade e converte as respostas para os contratos públicos do backend. O endpoint público de completions usa a rota FastAPI `/chat`.
 >
-> Este documento descreve a integração-alvo, que o AI Service em Python já implementa do lado dele: os mesmos caminhos sob `/api/v1/ai`, autenticação serviço a serviço pelo header `X-GoMech-Service-Auth` (ou `Authorization: Bearer <segredo>`) e contexto nos headers `X-Tenant-Id` (obrigatório), `X-User-Id`, `X-Unit-Id` e `X-Correlation-Id`. Os detalhes estão na [especificação do AI Service](../AI_SERVICE_SPECIFICATION.md). O contrato REST exposto ao frontend (seção 2) e as regras de governança (seção 1) já valem hoje.
+> A autenticação usa `X-GoMech-Service-Auth` e os headers `X-Tenant-Id` (obrigatório), `X-User-Id`, `X-Unit-Id` e `X-Correlation-Id`. Na GCP, o cliente também obtém e envia um ID token do Cloud Run para a audiência do serviço FastAPI; a identidade do backend tem `roles/run.invoker`. Timeouts e tentativas são configuráveis por variáveis de ambiente. No Compose local, os containers compartilham a rede e usam o segredo de desenvolvimento.
 >
-> Pontos que o cliente HTTP vai precisar resolver quando for implementado:
-> - O AI Service usa snake_case nos payloads (`symptoms_description`, `usage.model_used`), enquanto os DTOs do gateway usam camelCase.
-> - O AI Service não tem equivalente para `POST /api/v1/ai/completions`.
-> - O `docker-compose.yml` define `AI_SERVICE_URL=http://ai:8000`, mas nenhuma propriedade do backend lê essa variável.
+> **Provedor é uma configuração separada da integração.** O FastAPI continua com `mock` como padrão local. O adaptador Gemini só chama o modelo de forma real em `/chat`; as demais capacidades delegam ao provedor mock no estado atual. A chamada HTTP entre backend e FastAPI não significa que todas as operações já usam um modelo externo.
 
 ---
 
@@ -203,7 +200,7 @@ Todos os endpoints exigem `Authorization: Bearer <accessToken>`. Erros de valida
 ---
 
 ### 2.5. Processamento genérico (completions)
-- **Endpoint**: `POST /api/v1/ai/completions`
+- **Endpoint público**: `POST /api/v1/ai/completions` (o backend chama `POST /api/v1/ai/chat` no FastAPI).
 - **Permissão**: `AI_QUERY` ou `Proprietário`
 - **Request body**: `prompt` (obrigatório, até 4000 caracteres), `model` (opcional: `FAST_TURBO`, `REASONING_PRO` ou `VISION_MULTIMODAL`), `maxTokens` e `temperature` (opcionais).
 - **Response body**: `completionText`, `finishReason` e `usage` (mesmo formato das seções anteriores).
@@ -231,7 +228,7 @@ Todos os endpoints exigem `Authorization: Bearer <accessToken>`. Erros de valida
 
 ## 3. Política de resiliência e tolerância a falhas
 
-Os erros seguem RFC 7807 (Problem Details) e trazem `errorCode` e `timestamp` como campos extras.
+Os erros seguem RFC 7807 (Problem Details) e trazem `errorCode` e `timestamp` como campos extras. O cliente FastAPI não repete respostas 4xx nem rate limits; falhas de rede e respostas 5xx usam backoff exponencial com jitter.
 
 | Cenário de falha | Comportamento do gateway | Código de retorno |
 | :--- | :--- | :--- |

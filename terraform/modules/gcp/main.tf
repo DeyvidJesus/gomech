@@ -352,6 +352,10 @@ resource "google_cloud_run_v2_service" "backend" {
         value = google_cloud_run_v2_service.ai_service.uri
       }
       env {
+        name  = "GOMECH_AI_ID_TOKEN_AUDIENCE"
+        value = google_cloud_run_v2_service.ai_service.uri
+      }
+      env {
         name = "GOMECH_AI_SERVICE_SECRET"
         value_source {
           secret_key_ref {

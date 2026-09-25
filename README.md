@@ -20,7 +20,7 @@ Este repositório é o ponto de entrada do projeto: fixa as versões dos serviç
 
 - **Frontend:** aplicação web SPA com React, TypeScript, Vite e TanStack Router/Query.
 - **Backend:** API REST em Java 21 e Spring Boot 3, organizada como monólito modular. PostgreSQL é versionado por migrations Flyway; autenticação e autorização usam JWT, RBAC e isolamento por oficina/unidade.
-- **Serviço de IA:** serviço Python com FastAPI, isolado do backend e acessado pelo gateway de IA. Pode usar provider mock para desenvolvimento ou Gemini quando configurado.
+- **Serviço de IA:** serviço Python com FastAPI, isolado do backend e acessado pelo gateway de IA. O provider mock é o padrão local; o adaptador Gemini usa o modelo externo em /chat, enquanto outras capacidades ainda usam o mock no estado atual.
 - **Persistência:** PostgreSQL 16, com controles de isolamento de dados por tenant e políticas Row Level Security.
 - **Infraestrutura:** Terraform mantém implementações de referência para GCP e AWS. O ambiente atualmente implantado está na **GCP**.
 
