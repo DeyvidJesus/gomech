@@ -60,7 +60,7 @@ Pontos de leitura: [`TenantContextHolder.java`](../../backend/src/main/java/com/
 
 O desenho coloca o gateway no backend para aplicar autenticação, permissão, quota, sanitização de dados sensíveis, auditoria e métricas. A IA pode produzir uma proposta estruturada; alterações de negócio passam por uma proposta com validade e estado, e exigem confirmação explícita do operador. Quando confirmada, a ação usa um contrato público do módulo dono, como `OperationsActionContract`, em vez de gravar diretamente nas entidades de Operations.
 
-**Estado importante do código:** o FastAPI está implementado e a infraestrutura Terraform prevê um serviço de IA privado. Porém, `DefaultAiServiceExecutor` no backend ainda gera respostas simuladas dentro do processo; a integração HTTP do backend com o serviço FastAPI não está conectada. Apresente o gateway e o serviço Python como componentes existentes, e a ligação entre eles como trabalho futuro. O detalhe está em [`docs/contratos/gateway-de-ia.md`](../contratos/gateway-de-ia.md) e nas ADRs [018](../adr/ADR-018-gateway-de-ia.md) e [019](../adr/ADR-019-isolamento-do-servico-de-ia.md).
+**Estado importante do código:** o gateway Spring Boot chama o FastAPI por HTTP nas operações de diagnóstico, orçamento, resumo de OS, rascunho de mensagem e chat. A comunicação envia o segredo interno e o contexto de tenant; na GCP, também usa ID token IAM do Cloud Run. O cliente tem timeout e tentativas para falhas transitórias. A configuração do provider é independente: o padrão local é `mock`; com Gemini, só `/chat` chama o modelo externo no estado atual, enquanto as outras capacidades ainda usam o mock do provider. Portanto, explique a integração entre serviços sem afirmar que todo recurso já usa inferência real. O detalhe está em [`docs/contratos/gateway-de-ia.md`](../contratos/gateway-de-ia.md), [`FastApiAiServiceClient.java`](../../backend/src/main/java/com/gomech/api/modules/ai/infrastructure/client/FastApiAiServiceClient.java) e nas ADRs [018](../adr/ADR-018-gateway-de-ia.md) e [019](../adr/ADR-019-isolamento-do-servico-de-ia.md).
 
 Para acompanhar a confirmação no código, leia [`AiActionConfirmationService.java`](../../backend/src/main/java/com/gomech/api/modules/ai/application/AiActionConfirmationService.java), [`OperationsActionContract.java`](../../backend/src/main/java/com/gomech/api/modules/operations/api/OperationsActionContract.java) e os componentes em `frontend/src/features/ai/`.
 
@@ -92,7 +92,7 @@ cp .env.example .env
 docker compose up --build
 ```
 
-A configuração padrão usa o provider `mock` no serviço Python e simulação no executor do gateway do backend; chaves externas de IA não são necessárias para subir a stack. Endereços locais:
+A configuração padrão usa o provider `mock` no serviço Python, mas todas as operações do gateway passam pelo FastAPI; chaves externas de IA não são necessárias para subir a stack. Configure `AI_DEFAULT_PROVIDER=gemini` e `GEMINI_API_KEY` para habilitar a chamada Gemini de `/chat`. Endereços locais:
 
 - Frontend: <http://localhost:5173>
 - API: <http://localhost:8080/api/v1>
@@ -108,14 +108,14 @@ O passo a passo completo, as variáveis e os comandos para desligar a stack est�
 1. **Mapa geral:** leia este guia, o README e percorra a aplicação local, se o ambiente estiver disponível.
 2. **Backend:** siga um fluxo de ordem de serviço no controller, serviço de aplicação, repositório e evento. Leia as ADRs 001–004.
 3. **Segurança:** revise autenticação, contexto de tenant, unidade, permissões e RLS. Prepare um exemplo concreto de como o sistema evita acesso cruzado entre oficinas.
-4. **IA:** leia o gateway, o serviço FastAPI e o fluxo de confirmação. Memorize a diferença entre integração alvo e executor simulado atual.
+4. **IA:** siga `AiGatewayService` até `FastApiAiServiceClient`, depois acompanhe a rota FastAPI e o provider. Explique os headers de serviço/tenant, a identidade IAM na GCP, o mapeamento snake_case e a diferença entre integração HTTP e respostas do provider mock.
 5. **Analytics:** siga um evento até a projeção e explique idempotência e consistência eventual.
 6. **Nuvem:** percorra o módulo GCP e compare com AWS. Explique o motivo prático da escolha da GCP e quais partes são apenas exercício.
 7. **Ensaio:** pratique a apresentação de 90 segundos abaixo e responda às perguntas sem ler o texto.
 
 ## Apresentação de 90 segundos
 
-> O GoMech é uma plataforma de gestão para oficinas mecânicas. Eu organizei o backend como um monólito modular Spring Boot: os domínios de IAM, CRM, operações, estoque, ferramentas, financeiro, billing, analytics e IA têm limites internos e conversam por contratos ou eventos. Essa escolha mantém um deploy operacionalmente simples sem abandonar separação de domínio. O PostgreSQL usa migrations versionadas e Row Level Security para defesa em profundidade no isolamento entre oficinas. O frontend é uma SPA React e existe também um serviço Python/FastAPI isolado para capacidades de IA. No estado atual, o serviço Python está implementado, mas o executor do gateway no backend ainda usa respostas simuladas; a integração HTTP é uma evolução pendente. Também descrevi a infraestrutura com Terraform para GCP e AWS. O ambiente ativo roda na GCP, que escolhi porque já tinha o plano Pro do Google e isso facilitou conta e faturamento; AWS é referência de estudo. Uma decisão que eu revisaria conforme a escala é a entrega de eventos assíncronos: hoje o barramento é in-process, então avaliar outbox e broker seria um próximo passo para obter entrega durável.
+> O GoMech é uma plataforma de gestão para oficinas mecânicas. Eu organizei o backend como um monólito modular Spring Boot: os domínios de IAM, CRM, operações, estoque, ferramentas, financeiro, billing, analytics e IA têm limites internos e conversam por contratos ou eventos. Essa escolha mantém um deploy operacionalmente simples sem abandonar separação de domínio. O PostgreSQL usa migrations versionadas e Row Level Security para defesa em profundidade no isolamento entre oficinas. O frontend é uma SPA React e existe também um serviço Python/FastAPI isolado para capacidades de IA. O gateway do backend chama o serviço Python por HTTP com contexto de tenant e autenticação de serviço; na GCP, também usa identidade IAM do Cloud Run. O provider `mock` segue como padrão local, e hoje somente o endpoint de chat tem caminho real para Gemini. Também descrevi a infraestrutura com Terraform para GCP e AWS. O ambiente ativo roda na GCP, que escolhi porque já tinha o plano Pro do Google e isso facilitou conta e faturamento; AWS é referência de estudo. Uma decisão que eu revisaria conforme a escala é a entrega de eventos assíncronos: hoje o barramento é in-process, então avaliar outbox e broker seria um próximo passo para obter entrega durável.
 
 Ajuste a apresentação para refletir sua participação exata nas decisões e na implementação.
 
@@ -135,7 +135,7 @@ O tenant autenticado vem do token/contexto validado, a unidade faz parte do esco
 
 **A IA altera dados sozinha?**
 
-Não deve. O serviço retorna conteúdo ou propostas estruturadas; uma ação que muda o domínio exige confirmação autenticada e passa pelo contrato do módulo responsável. Além disso, a chamada da aplicação ao FastAPI ainda não está conectada no executor atual.
+Não deve. O serviço retorna conteúdo ou propostas estruturadas; uma ação que muda o domínio exige confirmação autenticada e passa pelo contrato do módulo responsável. O gateway envia as solicitações ao FastAPI; revise também a seleção do provider, porque várias capacidades ainda usam respostas mock no serviço Python.
 
 **O que acontece se um consumidor de evento falhar?**
 
@@ -147,7 +147,7 @@ A escolha operacional foi a GCP porque o plano Pro já estava disponível e simp
 
 **Qual o principal próximo passo técnico?**
 
-Conectar o `AiServiceClient` do backend ao FastAPI com autenticação de serviço, timeouts, tratamento de falhas e mapeamento dos contratos; depois, automatizar publicação e deploy, e considerar estado Terraform remoto e entrega durável de eventos.
+Expandir os adaptadores Gemini para as capacidades estruturadas além de chat e decidir se elas devem continuar com fallback mock; depois, automatizar publicação e deploy, e considerar estado Terraform remoto e entrega durável de eventos.
 
 ## Leituras de apoio
 
