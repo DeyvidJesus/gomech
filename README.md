@@ -1,5 +1,11 @@
 # GoMech
 
+[![CI](https://github.com/DeyvidJesus/gomech/actions/workflows/ci.yml/badge.svg)](https://github.com/DeyvidJesus/gomech/actions/workflows/ci.yml)
+[![Backend CI](https://github.com/DeyvidJesus/gomech-backend-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/DeyvidJesus/gomech-backend-v2/actions/workflows/ci.yml)
+[![Frontend CI](https://github.com/DeyvidJesus/gomech-frontend-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/DeyvidJesus/gomech-frontend-v2/actions/workflows/ci.yml)
+[![AI Service CI](https://github.com/DeyvidJesus/gomech-ai-service-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/DeyvidJesus/gomech-ai-service-v2/actions/workflows/ci.yml)
+[![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue.svg)](LICENSE)
+
 Plataforma web para gestão de oficinas mecânicas. O GoMech reúne em um só sistema o cadastro de clientes e veículos, a agenda de serviços, orçamentos, ordens de serviço, estoque, ferramentas, financeiro e indicadores. A plataforma também inclui fluxos assistidos por IA para apoiar operações da oficina.
 
 Este repositório é o ponto de entrada do projeto: fixa as versões dos serviços mantidos em repositórios próprios, documenta decisões compartilhadas, contém a infraestrutura como código e orquestra a stack local.
@@ -91,8 +97,8 @@ A plataforma está rodando na **GCP**. A escolha foi pragmática: eu já tinha o
 
 ## Validação contínua
 
-A CI da raiz valida os ponteiros dos submodules, o formato e a validação dos ambientes Terraform, a configuração do Docker Compose e os links relativos da documentação. Os projetos de frontend, backend e IA têm seus próprios workflows e comandos; veja o [guia de CI](docs/guias/ci.md) para reproduzi-los.
+A CI da raiz valida os ponteiros dos submodules, o formato e a validação dos ambientes Terraform, a configuração do Docker Compose e os links relativos da documentação. Cada serviço tem o próprio workflow no seu repositório: o backend roda testes unitários, regras de arquitetura (ArchUnit) e testes de integração com PostgreSQL via Testcontainers; o frontend roda lint, checagem de tipos e build; o serviço de IA roda Ruff, pytest e um boot check. Os badges no topo mostram o estado de cada um, e o [guia de CI](docs/guias/ci.md) explica como reproduzir tudo localmente.
 
 ## Licença
 
-Ainda não há uma licença definida para este repositório.
+Distribuído sob a licença [MIT](LICENSE). Os repositórios do backend, do frontend e do serviço de IA usam a mesma licença.
