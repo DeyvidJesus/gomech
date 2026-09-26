@@ -48,7 +48,7 @@ graph TD
     subgraph Guardrails["Guardrails do monolito Spring Boot"]
         GatewayService -->|1. Verifica cota| Entitlement[EntitlementService]
         GatewayService -->|2. Remove PII| Sanitizer[SensitiveDataSanitizer]
-        GatewayService -->|3. Chamada resiliente| ClientImpl[FastApiAiServiceClient]
+        GatewayService -->|3. Chamada resiliente| ClientImpl[FastApiAiServiceAdapter]
         GatewayService -->|4. Registra consumo| Entitlement
         GatewayService -->|5. Log de auditoria + RLS| AuditRepo[AiGatewayAuditLogRepository]
         GatewayService -->|6. Publica evento| EventBus[DomainEventBus]
@@ -88,5 +88,5 @@ graph TD
 
 ## Verificação e testes de arquitetura
 
-- Testado por `AiGatewayServiceTest`, `AiServiceClientResilienceTest`, `SensitiveDataSanitizerTest` e `AiGatewayControllerTest`.
+- Testado por `AiGatewayServiceTest`, `FastApiAiServiceAdapterTest`, `SensitiveDataSanitizerTest` e `AiGatewayControllerTest`.
 - Validado pelas regras ArchUnit em `ModuleArchitectureRulesTest`.

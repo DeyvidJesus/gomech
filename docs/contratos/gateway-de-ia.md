@@ -3,7 +3,7 @@
 Contrato entre o frontend, o backend (AI Gateway, módulo `com.gomech.api.modules.ai` do monolito Spring Boot) e o AI Service (FastAPI). Ele define os endpoints REST autenticados que o frontend consome, as regras de governança aplicadas antes de qualquer inferência (autorização, cota e sanitização de PII) e a política de resiliência da chamada ao AI Service.
 
 > [!IMPORTANT]
-> **Integração implementada.** `FastApiAiServiceClient` chama os endpoints autenticados do serviço Python em `/api/v1/ai`. O gateway converte os DTOs Java para snake_case, encaminha o contexto de tenant/usuário/unidade e converte as respostas para os contratos públicos do backend. O endpoint público de completions usa a rota FastAPI `/chat`.
+> **Integração implementada.** `FastApiAiServiceAdapter` (implementação da porta `AiServiceClient`) chama os endpoints autenticados do serviço Python em `/api/v1/ai`. O gateway converte os DTOs Java para snake_case, encaminha o contexto de tenant/usuário/unidade e converte as respostas para os contratos públicos do backend. O endpoint público de completions usa a rota FastAPI `/chat`.
 >
 > A autenticação usa `X-GoMech-Service-Auth` e os headers `X-Tenant-Id` (obrigatório), `X-User-Id`, `X-Unit-Id` e `X-Correlation-Id`. Na GCP, o cliente também obtém e envia um ID token do Cloud Run para a audiência do serviço FastAPI; a identidade do backend tem `roles/run.invoker`. Timeouts e tentativas são configuráveis por variáveis de ambiente. No Compose local, os containers compartilham a rede e usam o segredo de desenvolvimento.
 >
