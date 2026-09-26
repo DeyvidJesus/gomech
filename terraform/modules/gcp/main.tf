@@ -153,7 +153,11 @@ resource "google_sql_user" "db_user" {
 resource "google_cloud_run_v2_service" "ai_service" {
   name     = "${var.app_name}-ai-service"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_ALL"
+  # Network ingress stays open because the backend reaches this service through its public run.app
+  # URL: it has no VPC egress, and an internal-only ingress would reject its calls. Access is
+  # restricted by identity instead: only the backend service account holds roles/run.invoker (below)
+  # and the shared secret is checked on every request. See ADR-019, "Implementação na GCP".
+  ingress = "INGRESS_TRAFFIC_ALL"
 
   template {
     service_account = google_service_account.ai_service.email

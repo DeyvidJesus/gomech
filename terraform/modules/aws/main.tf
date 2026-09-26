@@ -64,26 +64,158 @@ resource "aws_iam_role_policy" "read_app_secrets" {
   })
 }
 
-# 3. AMAZON RDS (PostgreSQL 16)
-# publicly_accessible keeps the study setup simple (App Runner reaches RDS over the internet,
-# SSL-only on the application side). A production setup would place RDS in private subnets and
-# attach an App Runner VPC connector.
+# 3. NETWORK
+# RDS lives in private subnets and is reachable only from the backend, through an App Runner VPC
+# connector. Once VPC egress is on, all of the backend's outbound traffic goes through the VPC, so a
+# NAT gateway keeps Google OAuth, Pagar.me and the AI service URL reachable.
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+locals {
+  azs = slice(data.aws_availability_zones.available.names, 0, 2)
+}
+
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+  tags                 = merge(local.tags, { Name = "${var.app_name}-vpc-${var.environment}" })
+}
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+  tags   = local.tags
+}
+
+resource "aws_subnet" "public" {
+  count             = length(local.azs)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
+  availability_zone = local.azs[count.index]
+  tags              = merge(local.tags, { Name = "${var.app_name}-public-${local.azs[count.index]}" })
+}
+
+resource "aws_subnet" "private" {
+  count             = length(local.azs)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 10)
+  availability_zone = local.azs[count.index]
+  tags              = merge(local.tags, { Name = "${var.app_name}-private-${local.azs[count.index]}" })
+}
+
+resource "aws_eip" "nat" {
+  domain = "vpc"
+  tags   = local.tags
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
+  tags          = local.tags
+
+  depends_on = [aws_internet_gateway.main]
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+
+  tags = local.tags
+}
+
+resource "aws_route_table_association" "public" {
+  count          = length(aws_subnet.public)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.main.id
+  }
+
+  tags = local.tags
+}
+
+resource "aws_route_table_association" "private" {
+  count          = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_security_group" "backend_connector" {
+  name        = "${var.app_name}-backend-connector-${var.environment}"
+  description = "App Runner VPC connector used by the backend"
+  vpc_id      = aws_vpc.main.id
+
+  egress {
+    description = "Outbound traffic (RDS, and the internet through the NAT gateway)"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = local.tags
+}
+
+resource "aws_security_group" "rds" {
+  name        = "${var.app_name}-rds-${var.environment}"
+  description = "PostgreSQL reachable only from the backend VPC connector"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description     = "PostgreSQL from the backend"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.backend_connector.id]
+  }
+
+  tags = local.tags
+}
+
+resource "aws_db_subnet_group" "postgres" {
+  name       = "${var.app_name}-db-${var.environment}"
+  subnet_ids = aws_subnet.private[*].id
+  tags       = local.tags
+}
+
+resource "aws_apprunner_vpc_connector" "backend" {
+  vpc_connector_name = "${var.app_name}-backend-${var.environment}"
+  subnets            = aws_subnet.private[*].id
+  security_groups    = [aws_security_group.backend_connector.id]
+  tags               = local.tags
+}
+
+# 3.1 AMAZON RDS (PostgreSQL 16)
+# Private: no public endpoint, reachable only from the backend security group above.
 resource "aws_db_instance" "postgres" {
-  identifier            = "${var.app_name}-db-${var.environment}"
-  engine                = "postgres"
-  engine_version        = "16"
-  instance_class        = "db.t4g.medium"
-  allocated_storage     = 20
-  max_allocated_storage = 100
-  storage_type          = "gp3"
-  db_name               = "${var.app_name}_${var.environment}"
-  username              = "gomech_admin"
-  password              = var.db_password
-  multi_az              = var.environment == "production"
-  publicly_accessible   = true
-  skip_final_snapshot   = var.environment != "production"
-  storage_encrypted     = true
-  deletion_protection   = var.environment == "production"
+  identifier             = "${var.app_name}-db-${var.environment}"
+  engine                 = "postgres"
+  engine_version         = "16"
+  instance_class         = "db.t4g.medium"
+  allocated_storage      = 20
+  max_allocated_storage  = 100
+  storage_type           = "gp3"
+  db_name                = "${var.app_name}_${var.environment}"
+  username               = "gomech_admin"
+  password               = var.db_password
+  multi_az               = var.environment == "production"
+  publicly_accessible    = false
+  db_subnet_group_name   = aws_db_subnet_group.postgres.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  skip_final_snapshot    = var.environment != "production"
+  storage_encrypted      = true
+  deletion_protection    = var.environment == "production"
 
   tags = local.tags
 }
@@ -163,6 +295,14 @@ resource "aws_apprunner_service" "backend" {
     cpu               = "2 vCPU"
     memory            = "4 GB"
     instance_role_arn = aws_iam_role.apprunner_instance.arn
+  }
+
+  # All outbound traffic leaves through the VPC connector: RDS directly, everything else via NAT.
+  network_configuration {
+    egress_configuration {
+      egress_type       = "VPC"
+      vpc_connector_arn = aws_apprunner_vpc_connector.backend.arn
+    }
   }
 
   health_check_configuration {

@@ -65,3 +65,9 @@ variable "google_client_secret" {
   sensitive   = true
   default     = ""
 }
+
+variable "vpc_cidr" {
+  description = "CIDR block of the VPC that holds RDS (private subnets) and the NAT gateway (public subnets)"
+  type        = string
+  default     = "10.20.0.0/16"
+}

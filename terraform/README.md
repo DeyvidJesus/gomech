@@ -21,8 +21,9 @@ flowchart LR
 | :--- | :--- | :--- |
 | Frontend (SPA) | Cloud Run (nginx) | S3 privado + CloudFront (OAI) |
 | Backend | Cloud Run (`min_instances = 1`) | App Runner |
-| AI Service | Cloud Run (não público, invocável só pelo backend) | App Runner |
-| Banco de dados | Cloud SQL PostgreSQL 16 (SSL obrigatório, backup diário, HA em produção) | RDS PostgreSQL 16 (criptografado, Multi-AZ em produção) |
+| AI Service | Cloud Run (invocável só pela service account do backend, via IAM) | App Runner |
+| Banco de dados | Cloud SQL PostgreSQL 16 (SSL obrigatório, backup diário, HA em produção) | RDS PostgreSQL 16 em subnets privadas (criptografado, Multi-AZ em produção) |
+| Rede | Sem VPC dedicada | VPC com subnets públicas e privadas, NAT gateway e VPC connector do App Runner para o backend |
 | Segredos | Secret Manager, com acesso por service account | Secrets Manager, lido pela *instance role* do App Runner |
 | Imagens | Artifact Registry | ECR Public |
 
@@ -33,7 +34,7 @@ terraform/
 ├── modules/
 │   ├── gcp/            # módulo reutilizável: APIs, Artifact Registry, service accounts,
 │   │                   # Secret Manager, Cloud SQL e 3 serviços Cloud Run
-│   └── aws/            # módulo reutilizável: Secrets Manager, IAM, RDS, App Runner, S3 + CloudFront
+│   └── aws/            # módulo reutilizável: VPC, Secrets Manager, IAM, RDS, App Runner, S3 + CloudFront
 └── environments/
     ├── gcp/            # raiz executável (terraform init/plan/apply) para a GCP
     └── aws/            # raiz executável para a AWS
@@ -45,7 +46,8 @@ Os módulos concentram os recursos. Os ambientes só configuram o provider e rep
 
 - **Nenhum segredo em texto puro nos serviços.** Senha do banco, chave JWT, segredo do AI Service e chaves de API ficam no Secret Manager (GCP) ou no Secrets Manager (AWS) e são injetados como variáveis de ambiente no boot.
 - **Menor privilégio.** Na GCP, backend e AI Service rodam com service accounts próprias, e cada uma só lê os segredos de que precisa.
-- **AI Service fechado.** Na GCP, só a service account do backend tem `roles/run.invoker` no AI Service. O header de segredo compartilhado validado pelo serviço é uma segunda camada ([ADR-019](../docs/adr/ADR-019-isolamento-do-servico-de-ia.md)).
+- **AI Service fechado por identidade.** Na GCP, só a service account do backend tem `roles/run.invoker` no AI Service. O header de segredo compartilhado validado pelo serviço é uma segunda camada. O ingress de rede continua `INGRESS_TRAFFIC_ALL`, porque o backend chama a URL `run.app` sem sair pela VPC ([ADR-019](../docs/adr/ADR-019-isolamento-do-servico-de-ia.md#implementação-na-gcp)).
+- **Banco privado na AWS.** O RDS fica em subnets privadas, com `publicly_accessible = false`, e o security group só aceita a porta 5432 vinda do VPC connector do backend. Com a saída do backend pela VPC, o NAT gateway mantém o acesso a Google OAuth, Pagar.me e ao AI Service. O NAT gateway tem custo por hora, mesmo sem tráfego.
 - **Banco com SSL obrigatório** (`ssl_mode = ENCRYPTED_ONLY` no Cloud SQL, `sslmode=require` no JDBC do profile `prod`).
 - **Proteção contra exclusão** e alta disponibilidade (`REGIONAL` / Multi-AZ) ligadas automaticamente quando `environment = "production"`.
 
@@ -105,7 +107,7 @@ O CI do repositório raiz roda `terraform fmt -check` e `terraform validate` nos
 | Tema | Hoje | Próximo passo |
 | :--- | :--- | :--- |
 | Rede do banco (GCP) | Cloud SQL com IP público, SSL obrigatório e redes autorizadas via `db_authorized_networks` | IP privado + Direct VPC egress no Cloud Run, ou Cloud SQL Auth Proxy |
-| Rede do banco (AWS) | RDS `publicly_accessible` | Subnets privadas + VPC connector do App Runner |
+| Ingress do AI Service (GCP) | `INGRESS_TRAFFIC_ALL`, com acesso restrito por IAM e segredo de serviço | Direct VPC egress no backend e ingress interno no AI Service |
 | Estado do Terraform | Local (bloco `backend` comentado nos ambientes) | Bucket GCS/S3 com lock |
 | Deploy contínuo | Build e push manuais das imagens | Pipeline (Cloud Build ou GitHub Actions com Workload Identity Federation) |
 | Integrações opcionais | Pagar.me, Resend e WhatsApp usam os defaults do backend | Adicionar os respectivos segredos ao módulo |

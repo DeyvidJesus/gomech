@@ -71,6 +71,17 @@ graph TD
     end
 ```
 
+## Implementação na GCP
+
+O isolamento de rede ainda não é total. No Terraform (`terraform/modules/gcp/main.tf`), o Cloud Run do serviço de IA usa `ingress = "INGRESS_TRAFFIC_ALL"`: a URL `run.app` aceita conexões da internet. O backend chama essa URL pública e não tem saída pela VPC (Direct VPC egress ou Serverless VPC Access). Por isso, trocar o ingress para `INGRESS_TRAFFIC_INTERNAL_ONLY` hoje faria o Cloud Run recusar as chamadas do próprio backend.
+
+Hoje a restrição é feita por identidade, em duas camadas:
+
+1. **IAM do Cloud Run:** só a service account do backend tem `roles/run.invoker`. O backend envia um ID token com audience do serviço (`GOMECH_AI_ID_TOKEN_AUDIENCE`), e o Cloud Run rejeita qualquer requisição sem token válido antes que ela chegue ao container.
+2. **Segredo de serviço:** o FastAPI confere `X-GoMech-Service-Auth` com comparação em tempo constante e não sobe fora de ambientes locais com um segredo público ou curto.
+
+Para ter isolamento também na rede, o próximo passo é ligar Direct VPC egress no backend, com todo o tráfego saindo pela VPC, e mudar o serviço de IA para ingress interno.
+
 ## Alternativas consideradas
 
 ### Acesso direto do serviço de IA ao banco
