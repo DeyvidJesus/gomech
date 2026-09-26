@@ -64,6 +64,7 @@ services:
     restart: unless-stopped
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     environment:
+      ENVIRONMENT: ${AI_ENVIRONMENT:-local}
       AI_SERVICE_NAME: ${AI_SERVICE_NAME}
       SERVICE_AUTH_SECRET: ${AI_SERVICE_AUTH_SECRET}
       DEFAULT_PROVIDER: ${AI_DEFAULT_PROVIDER:-mock}

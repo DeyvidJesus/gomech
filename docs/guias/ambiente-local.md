@@ -47,9 +47,10 @@ Tudo é configurado pelo `.env` da raiz, a partir do [`.env.example`](../../.env
 | `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_PORT` | postgres, backend | Banco local |
 | `BACKEND_PORT`, `FRONTEND_PORT`, `AI_PORT` | compose | Portas publicadas no host |
 | `SPRING_PROFILES_ACTIVE` | backend | Profile do Spring (`local` por padrão) |
-| `JWT_SECRET` | backend | Chave de assinatura dos access tokens |
+| `JWT_SECRET` | backend | Chave de assinatura dos access tokens. O valor do `.env.example` é público e só é aceito no profile `local` |
 | `PAGARME_MOCK_ENABLED` | backend | `true` simula o gateway de pagamento sem chave real |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` | backend | Login com Google (opcional) |
+| `AI_ENVIRONMENT` | ai | Ambiente do AI Service (`local` por padrão no compose). Fora de `local`, `development`, `dev` e `test`, o serviço recusa segredos públicos |
 | `AI_SERVICE_AUTH_SECRET` | backend, ai | Segredo compartilhado entre o AI Gateway e o AI Service |
 | `AI_DEFAULT_PROVIDER`, `GEMINI_API_KEY` | ai | Provider de IA (`mock` por padrão, sem custo) |
 | `VITE_API_URL` | frontend | URL base da API consumida pelo navegador |
